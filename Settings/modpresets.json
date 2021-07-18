@@ -1,0 +1,16 @@
+[
+    {
+        "Title": "Default",
+        "Author": null,
+        "Description": null,
+        "SettingsVersion": null,
+        "Values": {
+            "Bestiary": {
+                "Hotkey": "B",
+                "Background?": "False",
+                "Text": "False"
+            }
+        },
+        "$version": "v1"
+    }
+]

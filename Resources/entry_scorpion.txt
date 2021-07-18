@@ -1,0 +1,6 @@
+picture_scorpion.png
+
+Bestiary
+Scorpion
+Location: *The Alik'r Desert and the blighted Dak'fron of Hammerfell. 
+History: *The Giant Scorpions are aggressive, inteligent hunters that have fallen like a plague in the Alik'r Desert. They avoid human settlements, but have killed many a lone traveler.
