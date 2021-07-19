@@ -1,4 +1,4 @@
-picture_fire_daedra.png
+281*5
 
 Bestiary
 Fire Daedra

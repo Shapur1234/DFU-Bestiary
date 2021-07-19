@@ -5,6 +5,7 @@ using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
 
+
 namespace BestiaryMod
 {
     public class BestiaryMain : MonoBehaviour
@@ -24,7 +25,10 @@ namespace BestiaryMod
             {
                 DisplayBestiaryUI();
             }
-
+            else if (bestiaryUIScreen.isShowing  && InputManager.Instance.GetKeyDown(openMenuKeyCode))
+            {
+                bestiaryUIScreen.CloseWindow();
+            }
             else if (openMenuKeyCode != KeyCode.None && !InputManager.Instance.IsPaused && InputManager.Instance.GetKeyDown(openMenuKeyCode))
                 {
                     if (bestiaryUIScreen.isShowing)
@@ -44,12 +48,7 @@ namespace BestiaryMod
 
         void Awake()
         {
-            Debug.Log("Begin mod init: Bestiary");
-
-            //ModSettings settings = mod.GetSettings();
-
-            Debug.Log("Finished mod init: Bestiary");
-        }        
+        }
         public static void DisplayBestiaryUI()
         {
             DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);

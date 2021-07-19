@@ -1,0 +1,14 @@
+[
+    {
+        "Title": "Default",
+        "Author": "Shapur",
+        "Description": "Default settings.",
+        "SettingsVersion": null,
+        "Values": {
+            "Main": {
+                "Animations": "True"
+            }
+        },
+        "$version": "v1"
+    }
+]

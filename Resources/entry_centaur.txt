@@ -1,4 +1,4 @@
-picture_centaur.png
+263*1
 
 Bestiary
 Centaur

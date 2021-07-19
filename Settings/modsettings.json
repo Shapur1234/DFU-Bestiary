@@ -1,0 +1,29 @@
+{
+    "Version": null,
+    "Sections": [
+        {
+            "Name": "Main",
+            "Description": null,
+            "IsAdvanced": true,
+            "Keys": [
+                {
+                    "Value": true,
+                    "Name": "Animations",
+                    "Description": "Enable animated pictures?",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
+                },
+                {
+                    "Min": 1,
+                    "Max": 240,
+                    "Value": 45,
+                    "Name": "AnimationDelay",
+                    "Description": "Set the delay between animation stages.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.SliderIntKey"
+                }
+            ],
+            "$version": "v1"
+        }
+    ]
+}

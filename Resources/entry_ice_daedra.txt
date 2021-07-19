@@ -1,4 +1,4 @@
-picture_ice_daedra.png
+280*0
 
 Bestiary
 Ice Daedra, or Frost Daedra

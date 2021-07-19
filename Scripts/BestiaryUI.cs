@@ -17,11 +17,14 @@ namespace BestiaryMod
     class BestiaryUI : DaggerfallPopupWindow
     {
         Mod mod = ModManager.Instance.GetMod("Bestiary");
-
         public bool isShowing = false;
+        bool animate;
+        public string currentEntry = "";
+        int animationUpdateDelay = 45;
+        bool reloadTexture = false;
+        int[] currentTexture = { 267, 0, 0 };
 
         string backgroundTextureName = "base_background.png";
-        //string pictureTextureName = "picture_default.png";
 
         string defaultEntry;
 
@@ -42,6 +45,7 @@ namespace BestiaryMod
         Texture2D pictureTexture;
 
         Vector2 backgroundSizeVector;
+        Vector2 picturebackgroundPosVector;
         Vector2 picturebackgroundSizeVector;
         Vector2 exitButtonSize;
         Vector2 entryButtonSize;
@@ -105,11 +109,15 @@ namespace BestiaryMod
         {
             base.Setup();
             LoadTextures();
+            ModSettings settings = mod.GetSettings();
 
+            animate = settings.GetBool("Main", "Animations");
+            animationUpdateDelay = settings.GetValue<int>("Main", "AnimationDelay");
             defaultEntry = pathToSprigganEntry;
 
             backgroundSizeVector = new Vector2(320, 200);
-            picturebackgroundSizeVector = new Vector2(106, 106);
+            picturebackgroundSizeVector = new Vector2(102, 102);
+            picturebackgroundPosVector = new Vector2(18, 51);
 
             setUpUIElements();
             loadContent(defaultEntry);
@@ -117,10 +125,63 @@ namespace BestiaryMod
 
         public override void Update()
         {
+            int newWidth = 0;
+            int newHeight = 0;
+            int newPosX = 0;
+            int newPosY = 0;
+            float temp = 0;
+
             base.Update();
 
             if (Input.GetKeyUp(exitKey))
                 CloseWindow();
+
+            DaggerfallWorkshop.Utility.TextureReader textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
+            if (animate == true)
+            {
+                if (currentTexture[2] % animationUpdateDelay == 0)
+                {
+                    pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1], currentTexture[2] / animationUpdateDelay);
+                }
+
+                if (currentTexture[2] < (animationUpdateDelay * 4) - 1)
+                {
+                    currentTexture[2]++;
+                }
+                else
+                {
+                    currentTexture[2] = 0;
+                }
+            }
+            else
+            {
+                pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1]);
+            }
+
+            if (reloadTexture == true)
+            {
+                if (pictureTexture.height > pictureTexture.width)
+                {
+                    temp = picturebackgroundSizeVector[0] / pictureTexture.height;
+                    newWidth = (int)Math.Round(temp * pictureTexture.width);
+                    newHeight = (int)Math.Round(temp * pictureTexture.height);
+                }
+                else
+                {
+                    temp = picturebackgroundSizeVector[1] / pictureTexture.width;
+                    newWidth = (int)Math.Round(temp * pictureTexture.width);
+                    newHeight = (int)Math.Round(temp * pictureTexture.height);
+                }
+                newPosX = (int)picturebackgroundPosVector[0] + (((int)picturebackgroundSizeVector[0] - newWidth) / 2);
+                newPosY = (int)picturebackgroundPosVector[1] + (((int)picturebackgroundSizeVector[1] - newHeight) / 2);
+
+                imagePanel.Size = new Vector2(newWidth, newHeight);
+                imagePanel.Position = new Vector2(newPosX, newPosY);
+
+                reloadTexture = false;
+            }
+            pictureTexture.filterMode = FilterMode.Point;
+            imagePanel.BackgroundTexture = pictureTexture;
         }
 
         public override void OnPush()
@@ -145,8 +206,6 @@ namespace BestiaryMod
         void loadContent(string assetPath)
         {
             resetTextLabels();
-
-            DaggerfallWorkshop.Utility.TextureReader textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
             string entryText = "";
 
             TextAsset textAsset = mod.GetAsset<TextAsset>(assetPath);
@@ -165,28 +224,26 @@ namespace BestiaryMod
                 switch (i)
                 {
                     case 0:
-                        // pictureTexture = DaggerfallUI.GetTextureFromResources(result[0]);
-                        // pictureTexture.filterMode = FilterMode.Point;
-                        // if (!pictureTexture)
-                        //     throw new Exception("BestiaryUI: Could not load pictureTexture.");
+                        var textureArray = result[0].Split(new[] { '*' });
 
-                        // imagePanel.BackgroundTexture = pictureTexture;
+                        if (result[3] == currentEntry)
+                        {
+                            break;
+                        }
+                        currentTexture[0] = int.Parse(textureArray[0]);
+                        currentTexture[1] = int.Parse(textureArray[1]);
+                        currentTexture[2] = 0;
 
-                        pictureTexture = textureReader.GetTexture2D(267, 15);
-                        imagePanel.BackgroundTexture = pictureTexture;
+                        reloadTexture = true;
                         break;
                     case 1:
-                        //pictureTexture = DaggerfallUI.GetTextureFromResources(result[1]);
-                        //if (!pictureTexture)
-                        //    throw new Exception("BestiaryUI: Could not load pictureTexture.");
-                        //
-                        //imagePanel.BackgroundTexture = pictureTexture;
                         break;
                     case 2:
                         titleLable.Text = result[2];
                         break;
                     case 3:
                         monsterNameLabel.Text = result[3];
+                        currentEntry = result[3];
                         break;
                     case 4:
                         current_label = applyText(result[4], current_label);
@@ -269,7 +326,7 @@ namespace BestiaryMod
             descriptionLable14.Text = "";
         }
 
-        static string SplitLineToMultiline(string input, int rowLength) // stolen from here: https://codereview.stackexchange.com/questions/54697/convert-string-to-multiline-text
+        static string SplitLineToMultiline(string input, int rowLength) // taken from here: https://codereview.stackexchange.com/questions/54697/convert-string-to-multiline-text
         {
             StringBuilder result = new StringBuilder();
             StringBuilder line = new StringBuilder();
@@ -457,7 +514,7 @@ namespace BestiaryMod
             imagePanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
             imagePanel.Size = picturebackgroundSizeVector;
             imagePanel.BackgroundTexture = pictureTexture;
-            imagePanel.Position = new Vector2(16, 49);
+            imagePanel.Position = picturebackgroundPosVector;
 
             titleLable = new TextLabel();
             titleLable.Position = new Vector2(16, 16);

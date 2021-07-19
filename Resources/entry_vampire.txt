@@ -1,4 +1,4 @@
-picture_vampire.png
+283*1
 
 Bestiary
 Vampire
