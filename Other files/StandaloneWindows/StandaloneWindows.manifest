@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 2842101479
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: bestiary.dfmod
+      Dependencies: {}

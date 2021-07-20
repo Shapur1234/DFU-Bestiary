@@ -1,0 +1,27 @@
+{
+    "ModTitle": "Bestiary",
+    "ModVersion": "0.2.1",
+    "ModAuthor": "Shapur",
+    "ContactInfo": "Shapur on the DFU Forums",
+    "DFUnity_Version": "0.11.4",
+    "ModDescription": "A mod that reintroduces the Bestiary from one of Daggerfalls demos. (Press B)",
+    "GUID": "59f5432c-88cb-4f04-b019-895aeea0d3f3",
+    "Files": [
+        "Assets/Game/Mods/Bestiary/Textures/base_background.png",
+        "Assets/Game/Mods/Bestiary/Settings/modpresets.json",
+        "Assets/Game/Mods/Bestiary/Settings/modsettings.json",
+        "Assets/Game/Mods/Bestiary/Scripts/BestiaryUI.cs",
+        "Assets/Game/Mods/Bestiary/Scripts/BestiaryMain.cs",
+        "Assets/Game/Mods/Bestiary/Resources/entry_dreugh.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_daedroth.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_centaur.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_vampire.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_orc.txt",
+        "Assets/Game/Mods/Bestiary.dfmod.json",
+        "Assets/Game/Mods/Bestiary/Textures/base_background_hd.png"
+    ]
+}
