@@ -202,7 +202,7 @@ namespace BestiaryMod
         void LoadTextures()
         {
             bool dreamMOBSFound = dreamMobs != null;
-            
+
             if (dreamMOBSFound == true)
             {
                 backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundHDTextureName);
@@ -219,7 +219,7 @@ namespace BestiaryMod
         {
             resetTextLabels();
             string entryText = "";
-            var entryTextTemp = new List<string>();;
+            var entryTextTemp = new List<string>(); ;
 
             TextAsset textAsset = mod.GetAsset<TextAsset>(assetPath);
             entryText = textAsset.text;

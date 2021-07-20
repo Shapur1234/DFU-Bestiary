@@ -25,15 +25,15 @@ namespace BestiaryMod
             {
                 DisplayBestiaryUI();
             }
-            else if (bestiaryUIScreen.isShowing  && InputManager.Instance.GetKeyDown(openMenuKeyCode))
+            else if (bestiaryUIScreen.isShowing && InputManager.Instance.GetKeyDown(openMenuKeyCode))
             {
                 bestiaryUIScreen.CloseWindow();
             }
             else if (openMenuKeyCode != KeyCode.None && !InputManager.Instance.IsPaused && InputManager.Instance.GetKeyDown(openMenuKeyCode))
-                {
-                    if (bestiaryUIScreen.isShowing)
-                        bestiaryUIScreen.CloseWindow();
-                }
+            {
+                if (bestiaryUIScreen.isShowing)
+                    bestiaryUIScreen.CloseWindow();
+            }
 
         }
 
@@ -42,7 +42,7 @@ namespace BestiaryMod
         {
             GameObject bestiaryGO = new GameObject("bestiary");
             BestiaryMain bestiary = bestiaryGO.AddComponent<BestiaryMain>();
-            
+
             ModManager.Instance.GetMod(initParams.ModTitle).IsReady = true;
         }
 
