@@ -17,14 +17,17 @@ namespace BestiaryMod
     class BestiaryUI : DaggerfallPopupWindow
     {
         Mod mod = ModManager.Instance.GetMod("Bestiary");
+        Mod dreamMobs = ModManager.Instance.GetMod("DREAM - MOBS");
         public bool isShowing = false;
         bool animate;
+
         public string currentEntry = "";
         int animationUpdateDelay = 45;
         bool reloadTexture = false;
         int[] currentTexture = { 267, 0, 0 };
 
         string backgroundTextureName = "base_background.png";
+        string backgroundHDTextureName = "base_background_hd.png";
 
         string defaultEntry;
 
@@ -198,7 +201,16 @@ namespace BestiaryMod
 
         void LoadTextures()
         {
-            backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundTextureName);
+            bool dreamMOBSFound = dreamMobs != null;
+            
+            if (dreamMOBSFound == true)
+            {
+                backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundHDTextureName);
+            }
+            else
+            {
+                backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundTextureName);
+            }
             if (!backgroundTexture)
                 throw new Exception("BestiaryUI: Could not load background texture.");
         }
