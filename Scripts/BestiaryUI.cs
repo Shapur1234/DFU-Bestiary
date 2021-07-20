@@ -207,13 +207,21 @@ namespace BestiaryMod
         {
             resetTextLabels();
             string entryText = "";
+            var entryTextTemp = new List<string>();;
 
             TextAsset textAsset = mod.GetAsset<TextAsset>(assetPath);
             entryText = textAsset.text;
-
             var result = entryText.Split(new[] { '\r', '\n' });
 
+            foreach (var item in result)
+            {
+                if (!string.IsNullOrEmpty(item)) entryTextTemp.Add(item);
+            }
+
+            result = entryTextTemp.ToArray();
+
             int current_label = 1;
+
             for (int i = 0; i < result.Length; i++)
             {
                 if (i > 3 && result[i].Length < 2)
@@ -237,13 +245,14 @@ namespace BestiaryMod
                         reloadTexture = true;
                         break;
                     case 1:
+                        titleLable.Text = result[1];
                         break;
                     case 2:
-                        titleLable.Text = result[2];
+                        monsterNameLabel.Text = result[2];
+                        currentEntry = result[2];
                         break;
                     case 3:
-                        monsterNameLabel.Text = result[3];
-                        currentEntry = result[3];
+                        current_label = applyText(result[3], current_label);
                         break;
                     case 4:
                         current_label = applyText(result[4], current_label);
@@ -283,9 +292,6 @@ namespace BestiaryMod
                         break;
                     case 16:
                         current_label = applyText(result[16], current_label);
-                        break;
-                    case 17:
-                        current_label = applyText(result[17], current_label);
                         break;
                     default:
                         break;
