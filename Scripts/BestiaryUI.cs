@@ -18,36 +18,48 @@ namespace BestiaryMod
     {
         Mod mod = ModManager.Instance.GetMod("Bestiary");
         Mod dreamMobs = ModManager.Instance.GetMod("DREAM - MOBS");
+        // Settings
         public bool isShowing = false;
-        bool animate;
-        bool oldFont = false;
+        public bool animate;
+        public bool oldFont = false;
+        public bool classicMode = false;
+        int animationUpdateDelay = 45;
+        int descriptionLableMaxCharacters;
+        int textLabelXOffset;
 
         public string currentEntry = "";
-        int animationUpdateDelay = 45;
-        int textLabelXOffset;
         bool reloadTexture = false;
         int[] currentTexture = { 267, 0, 0 };
 
-        string backgroundTextureName = "base_background.png";
-        string backgroundHDTextureName = "base_background_hd.png";
+        // Texture names
+        const string backgroundTextureName = "base_background.png";
+        const string backgroundHDTextureName = "base_background_hd.png";
+        // Path to entries
 
+        const string pathToSprigganEntry = "entry_spriggan";
+        const string pathToOrcEntry = "entry_orc";
+        const string pathToCentaurEntry = "entry_centaur";
+        const string pathToScorpionEntry = "entry_scorpion";
+        const string pathToIceDaedraEntry = "entry_ice_daedra";
+        const string pathToFireDaedraEntry = "entry_fire_daedra";
+        const string pathToVampireEntry = "entry_vampire";
+        const string pathToDreughEntry = "entry_dreugh";
+        const string pathToDaedrothEntry = "entry_daedroth";
+        
         string defaultEntry;
-
-        string pathToSprigganEntry = "entry_spriggan";
-        string pathToOrcEntry = "entry_orc";
-        string pathToCentaurEntry = "entry_centaur";
-        string pathToScorpionEntry = "entry_scorpion";
-        string pathToIceDaedraEntry = "entry_ice_daedra";
-        string pathToFireDaedraEntry = "entry_fire_daedra";
-        string pathToVampireEntry = "entry_vampire";
-        string pathToDreughEntry = "entry_dreugh";
-        string pathToDaedrothEntry = "entry_daedroth";
-
-        int descriptionLableMaxCharacters;
-
+        string[,] currentEntries = new string[9, 2];
 
         Texture2D backgroundTexture;
         Texture2D pictureTexture;
+        Texture2D contentButtonTexture1;
+        Texture2D contentButtonTexture2;
+        Texture2D contentButtonTexture3;
+        Texture2D contentButtonTexture4;
+        Texture2D contentButtonTexture5;
+        Texture2D contentButtonTexture6;
+        Texture2D contentButtonTexture7;
+        Texture2D contentButtonTexture8;
+        Texture2D contentButtonTexture9;
 
         Vector2 backgroundSizeVector;
         Vector2 picturebackgroundPosVector;
@@ -92,15 +104,15 @@ namespace BestiaryMod
         TextLabel descriptionLable14;
 
         Button exitButton;
-        Button centaurButton;
-        Button sprigannButton;
-        Button orcsButton;
-        Button scorpionButton;
-        Button iceDaedraButton;
-        Button fireDaedraButton;
-        Button vampireButton;
-        Button dreughButton;
-        Button daedrothButton;
+        Button contentButton3;
+        Button contentButton1;
+        Button contentButton2;
+        Button contentButton4;
+        Button contentButton5;
+        Button contentButton6;
+        Button contentButton7;
+        Button contentButton8;
+        Button contentButton9;
 
         #endregion
         public BestiaryUI(IUserInterfaceManager uiManager)
@@ -116,11 +128,24 @@ namespace BestiaryMod
             LoadTextures();
             ModSettings settings = mod.GetSettings();
 
+            classicMode = settings.GetBool("Settings", "ClassicMode");
             oldFont = settings.GetBool("Settings", "Font");
             animate = settings.GetBool("Settings", "Animations");
             animationUpdateDelay = settings.GetValue<int>("Settings", "AnimationDelay");
-            defaultEntry = pathToSprigganEntry;
+            
 
+            if (classicMode == true)
+            {
+                Debug.Log("Classic enabeled");
+                currentEntries = new string[,] {{"entry_spriggan", "button_spriggan"}, {"entry_orc", "button_orcs"}, {"entry_centaur", "button_centaur"}, {"entry_scorpion", "button_scorpion"}, {"entry_ice_daedra", "button_ice_daedra"}, {"entry_fire_daedra", "button_fire_daedra"}, {"entry_vampire", "button_vampire"}, {"entry_dreugh", "button_dreugh"}, {"entry_daedroth", "button_daedroth"}};
+                // currentEntries = new string[] {{"entry_spriggan", "button_spriggan"}, {"entry_orc", "button_orcs"}, {"entry_centaur", "button_centaur"}, {"entry_ice_daedra", "button_ice_daedra"}, {"entry_fire_daedra", "button_fire_daedra"}, {"entry_vampire", "button_vampire"}, {"entry_dreugh", "button_dreugh"}, {"entry_daedroth", "button_daedroth"}};
+            }
+
+            foreach (var i in currentEntries)
+            {
+                Debug.Log(i);
+            }
+            
             if (oldFont == false)
             {
                 descriptionLableMaxCharacters = 48;
@@ -129,7 +154,7 @@ namespace BestiaryMod
             else
             {
                 descriptionLableMaxCharacters = 24;
-                textLabelXOffset = 18;
+                textLabelXOffset = 16;
             }
 
             backgroundSizeVector = new Vector2(320, 200);
@@ -137,7 +162,10 @@ namespace BestiaryMod
             picturebackgroundPosVector = new Vector2(18, 51);
 
             setUpUIElements();
-            loadContent(defaultEntry);
+            loadPage();
+            LoadContentButtons();
+
+            loadContent(currentEntries[0, 0]);
         }
 
         public override void Update()
@@ -229,8 +257,61 @@ namespace BestiaryMod
                 throw new Exception("BestiaryUI: Could not load background texture.");
         }
 
+        
+        void loadPage()
+        {
+            defaultEntry = currentEntries[0, 0];
+            
+            if(!String.IsNullOrEmpty(currentEntries[0, 0]) && !String.IsNullOrEmpty(currentEntries[0, 1]))
+            {
+                contentButtonTexture1 = DaggerfallUI.GetTextureFromResources(currentEntries[0, 1]);
+                contentButtonTexture1.filterMode = FilterMode.Point;
+            }
+            if(!String.IsNullOrEmpty(currentEntries[1, 0]) && !String.IsNullOrEmpty(currentEntries[1, 1]))
+            {
+                contentButtonTexture2 = DaggerfallUI.GetTextureFromResources(currentEntries[1, 1]);
+                contentButtonTexture2.filterMode = FilterMode.Point;
+            }
+            if(!String.IsNullOrEmpty(currentEntries[2, 0]) && !String.IsNullOrEmpty(currentEntries[2, 1]))
+            {
+                contentButtonTexture3 = DaggerfallUI.GetTextureFromResources(currentEntries[2, 1]);
+                contentButtonTexture3.filterMode = FilterMode.Point;
+            }
+            if(!String.IsNullOrEmpty(currentEntries[3, 0]) && !String.IsNullOrEmpty(currentEntries[3, 1]))
+            {
+                contentButtonTexture4 = DaggerfallUI.GetTextureFromResources(currentEntries[3, 1]);
+                contentButtonTexture4.filterMode = FilterMode.Point;
+            }
+            if(!String.IsNullOrEmpty(currentEntries[4, 0]) && !String.IsNullOrEmpty(currentEntries[4, 1]))
+            {
+                contentButtonTexture5 = DaggerfallUI.GetTextureFromResources(currentEntries[4, 1]);
+                contentButtonTexture5.filterMode = FilterMode.Point;
+            }
+            if(!String.IsNullOrEmpty(currentEntries[5, 0]) && !String.IsNullOrEmpty(currentEntries[5, 1]))
+            {
+                contentButtonTexture6 = DaggerfallUI.GetTextureFromResources(currentEntries[5, 1]);
+                contentButtonTexture6.filterMode = FilterMode.Point;
+            }
+            if(!String.IsNullOrEmpty(currentEntries[6, 0]) && !String.IsNullOrEmpty(currentEntries[6, 1]))
+            {
+                contentButtonTexture7 = DaggerfallUI.GetTextureFromResources(currentEntries[6, 1]);
+                contentButtonTexture7.filterMode = FilterMode.Point;
+            }
+            if(!String.IsNullOrEmpty(currentEntries[7, 0]) && !String.IsNullOrEmpty(currentEntries[7, 1]))
+            {
+                contentButtonTexture8 = DaggerfallUI.GetTextureFromResources(currentEntries[7, 1]);
+                contentButtonTexture8.filterMode = FilterMode.Point;
+            }
+            if(!String.IsNullOrEmpty(currentEntries[8, 0]) && !String.IsNullOrEmpty(currentEntries[8, 1]))
+            {
+                contentButtonTexture9 = DaggerfallUI.GetTextureFromResources(currentEntries[8, 1]);
+                contentButtonTexture9.filterMode = FilterMode.Point;
+            }
+        }
         void loadContent(string assetPath)
         {
+            Debug.Log(assetPath);
+            
             resetTextLabels();
             string entryText = "";
             var entryTextTemp = new List<string>(); ;
@@ -745,77 +826,77 @@ namespace BestiaryMod
             descriptionLable14.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable14);
 
-
             exitButton = new Button();
             exitButton.Position = new Vector2(216, 187);
             exitButton.Size = entryButtonSize;
-            exitButton.Name = "exit_button";
             exitButton.OnMouseClick += ExitButton_OnMouseClick;
             mainPanel.Components.Add(exitButton);
+        }
+        void LoadContentButtons()
+        {
+            contentButton1 = new Button();
+            contentButton1.Position = new Vector2(4, 162);
+            contentButton1.Size = entryButtonSize;
+            contentButton1.BackgroundTexture = contentButtonTexture1;
+            contentButton1.OnMouseClick += ContentButton1_OnMouseClick;
+            mainPanel.Components.Add(contentButton1);
 
+            contentButton2 = new Button();
+            contentButton2.Position = new Vector2(50, 162);
+            contentButton2.Size = entryButtonSize;
+            contentButton2.BackgroundTexture = contentButtonTexture2;
+            contentButton2.OnMouseClick += ContentButton2_OnMouseClick;
+            mainPanel.Components.Add(contentButton2);
 
-            sprigannButton = new Button();
-            sprigannButton.Position = new Vector2(4, 162);
-            sprigannButton.Size = entryButtonSize;
-            sprigannButton.Name = "spriggan_button";
-            sprigannButton.OnMouseClick += SprigannButton_OnMouseClick;
-            mainPanel.Components.Add(sprigannButton);
+            contentButton3 = new Button();
+            contentButton3.Position = new Vector2(96, 162);
+            contentButton3.Size = entryButtonSize;
+            contentButton3.BackgroundTexture = contentButtonTexture3;
+            contentButton3.OnMouseClick += ContentButton3_OnMouseClick;
+            mainPanel.Components.Add(contentButton3);
 
-            orcsButton = new Button();
-            orcsButton.Position = new Vector2(50, 162);
-            orcsButton.Size = entryButtonSize;
-            orcsButton.Name = "orcs_button";
-            orcsButton.OnMouseClick += OrcsButton_OnMouseClick;
-            mainPanel.Components.Add(orcsButton);
+            contentButton4 = new Button();
+            contentButton4.Position = new Vector2(4, 174);
+            contentButton4.Size = entryButtonSize;
+            contentButton4.BackgroundTexture = contentButtonTexture4;
+            contentButton4.OnMouseClick += ContentButton4_OnMouseClick;
+            mainPanel.Components.Add(contentButton4);
 
-            centaurButton = new Button();
-            centaurButton.Position = new Vector2(96, 162);
-            centaurButton.Size = entryButtonSize;
-            centaurButton.Name = "centaur_button";
-            centaurButton.OnMouseClick += CentaurButton_OnMouseClick;
-            mainPanel.Components.Add(centaurButton);
+            contentButton5 = new Button();
+            contentButton5.Position = new Vector2(50, 174);
+            contentButton5.Size = entryButtonSize;
+            contentButton5.BackgroundTexture = contentButtonTexture5;
+            contentButton5.OnMouseClick += ContentButton5_OnMouseClick;
+            mainPanel.Components.Add(contentButton5);
 
-            scorpionButton = new Button();
-            scorpionButton.Position = new Vector2(4, 174);
-            scorpionButton.Size = entryButtonSize;
-            scorpionButton.Name = "scorpion_button";
-            scorpionButton.OnMouseClick += ScorpionButton_OnMouseClick;
-            mainPanel.Components.Add(scorpionButton);
+            contentButton6 = new Button();
+            contentButton6.Position = new Vector2(96, 174);
+            contentButton6.Size = entryButtonSize;
+            contentButton6.BackgroundTexture = contentButtonTexture6;
+            contentButton6.OnMouseClick += ContentButton6_OnMouseClick;
+            mainPanel.Components.Add(contentButton6);
 
-            iceDaedraButton = new Button();
-            iceDaedraButton.Position = new Vector2(50, 174);
-            iceDaedraButton.Size = entryButtonSize;
-            iceDaedraButton.Name = "ice_daedra_button";
-            iceDaedraButton.OnMouseClick += IceDaedraButton_OnMouseClick;
-            mainPanel.Components.Add(iceDaedraButton);
+            contentButton7 = new Button();
+            contentButton7.Position = new Vector2(4, 186);
+            contentButton7.Size = entryButtonSize;
+            contentButton7.BackgroundTexture = contentButtonTexture7;
+            contentButton7.OnMouseClick += ContentButton7_OnMouseClick;
+            mainPanel.Components.Add(contentButton7);
 
-            fireDaedraButton = new Button();
-            fireDaedraButton.Position = new Vector2(96, 174);
-            fireDaedraButton.Size = entryButtonSize;
-            fireDaedraButton.Name = "fire_daedra_button";
-            fireDaedraButton.OnMouseClick += FireDaedraButton_OnMouseClick;
-            mainPanel.Components.Add(fireDaedraButton);
+            contentButton8 = new Button();
+            contentButton8.Position = new Vector2(50, 186);
+            contentButton8.Size = entryButtonSize;
+            contentButton8.BackgroundTexture = contentButtonTexture8;
+            contentButton8.OnMouseClick += ContentButton8_OnMouseClick;
+            mainPanel.Components.Add(contentButton8);
 
-            vampireButton = new Button();
-            vampireButton.Position = new Vector2(4, 186);
-            vampireButton.Size = entryButtonSize;
-            vampireButton.Name = "vampire_button";
-            vampireButton.OnMouseClick += VampireButton_OnMouseClick;
-            mainPanel.Components.Add(vampireButton);
-
-            dreughButton = new Button();
-            dreughButton.Position = new Vector2(50, 186);
-            dreughButton.Size = entryButtonSize;
-            dreughButton.Name = "dreugh_button";
-            dreughButton.OnMouseClick += DreughButton_OnMouseClick;
-            mainPanel.Components.Add(dreughButton);
-
-            daedrothButton = new Button();
-            daedrothButton.Position = new Vector2(96, 186);
-            daedrothButton.Size = entryButtonSize;
-            daedrothButton.Name = "daedroth_button";
-            daedrothButton.OnMouseClick += DaedrothButton_OnMouseClick;
-            mainPanel.Components.Add(daedrothButton);
+            contentButton9 = new Button();
+            contentButton9.Position = new Vector2(96, 186);
+            contentButton9.Size = entryButtonSize;
+            contentButton9.BackgroundTexture = contentButtonTexture9;
+            contentButton9.Name = "daedroth_button";
+            contentButton9.OnMouseClick += ContentButton9_OnMouseClick;
+            mainPanel.Components.Add(contentButton9);
         }
 
 
@@ -826,58 +907,85 @@ namespace BestiaryMod
         }
 
 
-        protected void SprigannButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton1_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToSprigganEntry);
+            if(!String.IsNullOrEmpty(currentEntries[0, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[0, 0]);
+            }
         }
 
-        protected void OrcsButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton2_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToOrcEntry);
+            if(!String.IsNullOrEmpty(currentEntries[1, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[1, 0]);
+            }
         }
 
-        protected void CentaurButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton3_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToCentaurEntry);
+            if(!String.IsNullOrEmpty(currentEntries[2, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[2, 0]);
+            }
         }
 
-        protected void ScorpionButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton4_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToScorpionEntry);
+            if(!String.IsNullOrEmpty(currentEntries[3, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[3, 0]);
+            }
         }
 
-        protected void IceDaedraButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton5_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToIceDaedraEntry);
+            if(!String.IsNullOrEmpty(currentEntries[4, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[4, 0]);
+            }
         }
 
-        protected void FireDaedraButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton6_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToFireDaedraEntry);
+            if(!String.IsNullOrEmpty(currentEntries[5, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[5, 0]);
+            }
         }
 
-        protected void VampireButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton7_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToVampireEntry);
+            if(!String.IsNullOrEmpty(currentEntries[6, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[6, 0]);
+            }
         }
 
-        protected void DreughButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton8_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToDreughEntry);
+            if(!String.IsNullOrEmpty(currentEntries[7, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[7, 0]);
+            }
         }
 
-        protected void DaedrothButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton9_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            loadContent(pathToDaedrothEntry);
+            if(!String.IsNullOrEmpty(currentEntries[8, 0]))
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                loadContent(currentEntries[8, 0]);
+            }
         }
 
     }

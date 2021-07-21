@@ -8,6 +8,13 @@
             "Keys": [
                 {
                     "Value": false,
+                    "Name": "ClassicMode",
+                    "Description": "Check this, if you want the original version, as seen in the demo.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
+                },
+                {
+                    "Value": false,
                     "Name": "Font",
                     "Description": "Check this, if you use the original font.",
                     "$version": "v1",

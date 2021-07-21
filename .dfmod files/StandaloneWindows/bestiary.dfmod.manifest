@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 771303129
+CRC: 4267009637
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 327fea8daf682de7d9ed7262d67ed644
+    Hash: 756e2a4cb5215278abcc68f293afe2ac
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -15,19 +15,28 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt
+- Assets/Game/Mods/Bestiary/Textures/button_orcs.png
 - Assets/Game/Mods/Bestiary/Settings/modsettings.json
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
+- Assets/Game/Mods/Bestiary/Textures/button_centaur.png
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt
+- Assets/Game/Mods/Bestiary/Textures/button_fire_daedra.png
 - Assets/Game/Mods/Bestiary/Settings/modpresets.json
 - Assets/Game/Mods/Bestiary/Resources/entry_dreugh.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background_hd.png
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra.txt
+- Assets/Game/Mods/Bestiary/Textures/button_dreugh.png
 - Assets/Game/Mods/Bestiary.dfmod.json
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
+- Assets/Game/Mods/Bestiary/Textures/button_scorpion.png
 - Assets/Game/Mods/Bestiary/Resources/entry_orc.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_centaur.txt
+- Assets/Game/Mods/Bestiary/Textures/button_vampire.png
 - Assets/Game/Mods/Bestiary/Resources/entry_daedroth.txt
+- Assets/Game/Mods/Bestiary/Textures/button_spriggan.png
 - Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
+- Assets/Game/Mods/Bestiary/Textures/button_daedroth.png
 - Assets/Game/Mods/Bestiary/Textures/base_background.png
+- Assets/Game/Mods/Bestiary/Textures/button_ice_daedra.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 Dependencies: []
