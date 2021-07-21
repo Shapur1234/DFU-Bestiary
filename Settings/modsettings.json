@@ -2,10 +2,17 @@
     "Version": null,
     "Sections": [
         {
-            "Name": "Main",
+            "Name": "Settings",
             "Description": null,
             "IsAdvanced": true,
             "Keys": [
+                {
+                    "Value": false,
+                    "Name": "Font",
+                    "Description": "Check this, if you use the original font.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
+                },
                 {
                     "Value": true,
                     "Name": "Animations",

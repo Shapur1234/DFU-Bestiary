@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3349334712
+CRC: 771303129
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 361b9dba76be3fb44edac410c7520059
+    Hash: 327fea8daf682de7d9ed7262d67ed644
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -19,15 +19,15 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Settings/modpresets.json
 - Assets/Game/Mods/Bestiary/Resources/entry_dreugh.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background_hd.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra.txt
 - Assets/Game/Mods/Bestiary.dfmod.json
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_orc.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_centaur.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_daedroth.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background.png
 Dependencies: []

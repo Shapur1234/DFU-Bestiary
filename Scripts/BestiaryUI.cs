@@ -20,9 +20,11 @@ namespace BestiaryMod
         Mod dreamMobs = ModManager.Instance.GetMod("DREAM - MOBS");
         public bool isShowing = false;
         bool animate;
+        bool oldFont = false;
 
         public string currentEntry = "";
         int animationUpdateDelay = 45;
+        int textLabelXOffset;
         bool reloadTexture = false;
         int[] currentTexture = { 267, 0, 0 };
 
@@ -41,7 +43,7 @@ namespace BestiaryMod
         string pathToDreughEntry = "entry_dreugh";
         string pathToDaedrothEntry = "entry_daedroth";
 
-        int descriptionLableMaxCharacters = 48;
+        int descriptionLableMaxCharacters;
 
 
         Texture2D backgroundTexture;
@@ -114,9 +116,21 @@ namespace BestiaryMod
             LoadTextures();
             ModSettings settings = mod.GetSettings();
 
-            animate = settings.GetBool("Main", "Animations");
-            animationUpdateDelay = settings.GetValue<int>("Main", "AnimationDelay");
+            oldFont = settings.GetBool("Settings", "Font");
+            animate = settings.GetBool("Settings", "Animations");
+            animationUpdateDelay = settings.GetValue<int>("Settings", "AnimationDelay");
             defaultEntry = pathToSprigganEntry;
+
+            if (oldFont == false)
+            {
+                descriptionLableMaxCharacters = 48;
+                textLabelXOffset = 0;
+            }
+            else
+            {
+                descriptionLableMaxCharacters = 24;
+                textLabelXOffset = 18;
+            }
 
             backgroundSizeVector = new Vector2(320, 200);
             picturebackgroundSizeVector = new Vector2(102, 102);
@@ -634,98 +648,98 @@ namespace BestiaryMod
 
 
             descriptionLable1 = new TextLabel();
-            descriptionLable1.Position = new Vector2(172, 40);
+            descriptionLable1.Position = new Vector2(textLabelXOffset + 172, 40);
             descriptionLable1.Size = new Vector2(124, 10);
             descriptionLable1.Name = "title_label_1";
             descriptionLable1.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable1);
 
             descriptionLable2 = new TextLabel();
-            descriptionLable2.Position = new Vector2(172, 50);
+            descriptionLable2.Position = new Vector2(textLabelXOffset + 172, 50);
             descriptionLable2.Size = new Vector2(120, 10);
             descriptionLable2.Name = "title_label_2";
             descriptionLable2.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable2);
 
             descriptionLable3 = new TextLabel();
-            descriptionLable3.Position = new Vector2(172, 60);
+            descriptionLable3.Position = new Vector2(textLabelXOffset + 172, 60);
             descriptionLable3.Size = new Vector2(120, 10);
             descriptionLable3.Name = "title_label_3";
             descriptionLable3.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable3);
 
             descriptionLable4 = new TextLabel();
-            descriptionLable4.Position = new Vector2(172, 70);
+            descriptionLable4.Position = new Vector2(textLabelXOffset + 172, 70);
             descriptionLable4.Size = new Vector2(120, 10);
             descriptionLable4.Name = "title_label_4";
             descriptionLable4.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable4);
 
             descriptionLable5 = new TextLabel();
-            descriptionLable5.Position = new Vector2(172, 80);
+            descriptionLable5.Position = new Vector2(textLabelXOffset + 172, 80);
             descriptionLable5.Size = new Vector2(120, 10);
             descriptionLable5.Name = "title_label_5";
             descriptionLable5.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable5);
 
             descriptionLable6 = new TextLabel();
-            descriptionLable6.Position = new Vector2(172, 90);
+            descriptionLable6.Position = new Vector2(textLabelXOffset + 172, 90);
             descriptionLable6.Size = new Vector2(120, 10);
             descriptionLable6.Name = "title_label_6";
             descriptionLable6.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable6);
 
             descriptionLable7 = new TextLabel();
-            descriptionLable7.Position = new Vector2(172, 100);
+            descriptionLable7.Position = new Vector2(textLabelXOffset + 172, 100);
             descriptionLable7.Size = new Vector2(120, 10);
             descriptionLable7.Name = "title_label_7";
             descriptionLable7.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable7);
 
             descriptionLable8 = new TextLabel();
-            descriptionLable8.Position = new Vector2(172, 110);
+            descriptionLable8.Position = new Vector2(textLabelXOffset + 172, 110);
             descriptionLable8.Size = new Vector2(120, 10);
             descriptionLable8.Name = "title_label_8";
             descriptionLable8.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable8);
 
             descriptionLable9 = new TextLabel();
-            descriptionLable9.Position = new Vector2(172, 120);
+            descriptionLable9.Position = new Vector2(textLabelXOffset + 172, 120);
             descriptionLable9.Size = new Vector2(120, 10);
             descriptionLable9.Name = "title_label_9";
             descriptionLable9.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable9);
 
             descriptionLable10 = new TextLabel();
-            descriptionLable10.Position = new Vector2(172, 130);
+            descriptionLable10.Position = new Vector2(textLabelXOffset + 172, 130);
             descriptionLable10.Size = new Vector2(120, 10);
             descriptionLable10.Name = "title_label_10";
             descriptionLable10.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable10);
 
             descriptionLable11 = new TextLabel();
-            descriptionLable11.Position = new Vector2(172, 140);
+            descriptionLable11.Position = new Vector2(textLabelXOffset + 172, 140);
             descriptionLable11.Size = new Vector2(120, 10);
             descriptionLable11.Name = "title_label_11";
             descriptionLable11.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable11);
 
             descriptionLable12 = new TextLabel();
-            descriptionLable12.Position = new Vector2(172, 150);
+            descriptionLable12.Position = new Vector2(textLabelXOffset + 172, 150);
             descriptionLable12.Size = new Vector2(120, 10);
             descriptionLable12.Name = "title_label_12";
             descriptionLable12.MaxCharacters = descriptionLableMaxCharacters;
             mainPanel.Components.Add(descriptionLable12);
 
             descriptionLable13 = new TextLabel();
-            descriptionLable13.Position = new Vector2(172, 160);
+            descriptionLable13.Position = new Vector2(textLabelXOffset + 172, 160);
             descriptionLable13.Size = new Vector2(120, 10);
             descriptionLable13.Name = "title_label_13";
             descriptionLable13.MaxCharacters = 50;
             mainPanel.Components.Add(descriptionLable13);
 
             descriptionLable14 = new TextLabel();
-            descriptionLable14.Position = new Vector2(172, 170);
+            descriptionLable14.Position = new Vector2(textLabelXOffset + 172, 170);
             descriptionLable14.Size = new Vector2(120, 10);
             descriptionLable14.Name = "title_label_14";
             descriptionLable14.MaxCharacters = descriptionLableMaxCharacters;
