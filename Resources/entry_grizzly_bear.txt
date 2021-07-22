@@ -1,4 +1,5 @@
 259*1
+button_grizzly_bear
 Bestiary
 Grizzly bear
 Location: *Some forest I dunno.

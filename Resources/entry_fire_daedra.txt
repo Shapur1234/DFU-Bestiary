@@ -1,4 +1,5 @@
 281*1
+button_fire_daedra
 Bestiary
 Fire Daedra
 Location: *Oblivion

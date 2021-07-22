@@ -1,0 +1,6 @@
+290*1
+button_fire_atronach
+Bestiary
+Fire atronach
+Location: *Forests and pastureland throughout the Bay.
+History: *Blah blah blah

@@ -1,4 +1,5 @@
 283*1
+button_vampire
 Bestiary
 Vampire
 Location: *Everywhere

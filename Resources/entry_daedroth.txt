@@ -1,4 +1,5 @@
 282*1
+button_daedroth
 Bestiary
 Daedroth
 Location: *Oblivion

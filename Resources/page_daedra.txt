@@ -1,6 +1,6 @@
 ﻿Daedra
-entry_daedra_lord*button_daedra_lord
-entry_daedra_seducer*button_daedra_seducer
-entry_daedroth*button_daedroth
-entry_fire_daedra*button_fire_daedra
-entry_ice_daedra*button_ice_daedra
+entry_daedra_lord
+entry_daedra_seducer
+entry_daedroth
+entry_fire_daedra
+entry_ice_daedra

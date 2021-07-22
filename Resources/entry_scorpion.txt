@@ -1,4 +1,5 @@
 275*6
+button_scorpion
 Bestiary
 Scorpion
 Location: *The Alik'r Desert and the blighted Dak'fron of Hammerfell. 

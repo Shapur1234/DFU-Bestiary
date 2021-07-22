@@ -1,4 +1,5 @@
 257*1
+button_spriggan
 Bestiary
 Spriggan
 Location: *Woodlands and rural areas of the Imperial Province of High Rock.

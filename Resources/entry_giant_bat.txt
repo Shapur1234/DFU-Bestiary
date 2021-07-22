@@ -1,4 +1,5 @@
 258*0
+button_giant_bat
 Bestiary
 Giant Bat
 Location: *Placeholder bat

@@ -29,6 +29,7 @@ namespace BestiaryMod
 
         public string currentEntry = "";
         public string currentPage = "";
+        string currentPagePath = "";
         bool reloadTexture = false;
         int[] currentTexture = { 267, 0, 0 };
 
@@ -37,19 +38,9 @@ namespace BestiaryMod
         const string backgroundHDTextureName = "base_background_hd.png";
         // Path to pages
         const string pathToClassicPage = "page_classic";
-
-        // Path to entries
-        const string pathToSprigganEntry = "entry_spriggan";
-        const string pathToOrcEntry = "entry_orc";
-        const string pathToCentaurEntry = "entry_centaur";
-        const string pathToScorpionEntry = "entry_scorpion";
-        const string pathToIceDaedraEntry = "entry_ice_daedra";
-        const string pathToFireDaedraEntry = "entry_fire_daedra";
-        const string pathToVampireEntry = "entry_vampire";
-        const string pathToDreughEntry = "entry_dreugh";
-        const string pathToDaedrothEntry = "entry_daedroth";
         
         string defaultEntry;
+        string[] allPages = {"page_animals", "page_atronachs", "page_daedra"};
         string[,] currentEntries = new string[9, 2];
 
         Texture2D blankTexture;
@@ -134,23 +125,19 @@ namespace BestiaryMod
         protected override void Setup()
         {
             base.Setup();
-            string textPath = "";
             LoadTextures();
+            
             ModSettings settings = mod.GetSettings();
+            
+            string textPath = "";
+            backgroundSizeVector = new Vector2(320, 200);
+            picturebackgroundSizeVector = new Vector2(102, 102);
+            picturebackgroundPosVector = new Vector2(18, 51);
 
             classicMode = settings.GetBool("Settings", "ClassicMode");
             oldFont = settings.GetBool("Settings", "Font");
             animate = settings.GetBool("Settings", "Animations");
             animationUpdateDelay = settings.GetValue<int>("Settings", "AnimationDelay");
-
-            if (classicMode == true)
-            {
-                textPath = pathToClassicPage;
-            }
-            else
-            {
-                textPath = "page_animals";
-            }
 
             if (oldFont == false)
             {
@@ -163,15 +150,21 @@ namespace BestiaryMod
                 textLabelXOffset = 16;
             }
 
-            backgroundSizeVector = new Vector2(320, 200);
-            picturebackgroundSizeVector = new Vector2(102, 102);
-            picturebackgroundPosVector = new Vector2(18, 51);
-
             setUpUIElements();
+
+            if (classicMode == true)
+            {
+                textPath = pathToClassicPage;
+            }
+            else
+            {
+                textPath = "page_animals";
+                LoadArrowsNStuff();
+            }
+            
             currentEntries = getcurrentEntriesFromFile(textPath);
 
             loadPage();
-            LoadArrowsNStuff();
 
             loadContent(currentEntries[0, 0]);
         }
@@ -273,7 +266,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[0, 0]) && !String.IsNullOrEmpty(currentEntries[0, 1]))
             {
                 contentButtonTexture1 = DaggerfallUI.GetTextureFromResources(currentEntries[0, 1]);
-                contentButtonTexture1.filterMode = FilterMode.Point;
+                // contentButtonTexture1.filterMode = FilterMode.Point;
 
                 contentButton1 = new Button();
                 contentButton1.Position = new Vector2(4, 162);
@@ -285,7 +278,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[1, 0]) && !String.IsNullOrEmpty(currentEntries[1, 1]))
             {
                 contentButtonTexture2 = DaggerfallUI.GetTextureFromResources(currentEntries[1, 1]);
-                contentButtonTexture2.filterMode = FilterMode.Point;
+                // contentButtonTexture2.filterMode = FilterMode.Point;
 
                 contentButton2 = new Button();
                 contentButton2.Position = new Vector2(50, 162);
@@ -297,7 +290,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[2, 0]) && !String.IsNullOrEmpty(currentEntries[2, 1]))
             {
                 contentButtonTexture3 = DaggerfallUI.GetTextureFromResources(currentEntries[2, 1]);
-                contentButtonTexture3.filterMode = FilterMode.Point;
+                // contentButtonTexture3.filterMode = FilterMode.Point;
 
                 contentButton3 = new Button();
                 contentButton3.Position = new Vector2(96, 162);
@@ -309,7 +302,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[3, 0]) && !String.IsNullOrEmpty(currentEntries[3, 1]))
             {
                 contentButtonTexture4 = DaggerfallUI.GetTextureFromResources(currentEntries[3, 1]);
-                contentButtonTexture4.filterMode = FilterMode.Point;
+                // contentButtonTexture4.filterMode = FilterMode.Point;
 
                 contentButton4 = new Button();
                 contentButton4.Position = new Vector2(4, 174);
@@ -321,7 +314,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[4, 0]) && !String.IsNullOrEmpty(currentEntries[4, 1]))
             {
                 contentButtonTexture5 = DaggerfallUI.GetTextureFromResources(currentEntries[4, 1]);
-                contentButtonTexture5.filterMode = FilterMode.Point;
+                // contentButtonTexture5.filterMode = FilterMode.Point;
 
                 contentButton5 = new Button();
                 contentButton5.Position = new Vector2(50, 174);
@@ -333,7 +326,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[5, 0]) && !String.IsNullOrEmpty(currentEntries[5, 1]))
             {
                 contentButtonTexture6 = DaggerfallUI.GetTextureFromResources(currentEntries[5, 1]);
-                contentButtonTexture6.filterMode = FilterMode.Point;
+                // contentButtonTexture6.filterMode = FilterMode.Point;
 
                 contentButton6 = new Button();
                 contentButton6.Position = new Vector2(96, 174);
@@ -345,7 +338,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[6, 0]) && !String.IsNullOrEmpty(currentEntries[6, 1]))
             {
                 contentButtonTexture7 = DaggerfallUI.GetTextureFromResources(currentEntries[6, 1]);
-                contentButtonTexture7.filterMode = FilterMode.Point;
+                // contentButtonTexture7.filterMode = FilterMode.Point;
 
                 contentButton7 = new Button();
                 contentButton7.Position = new Vector2(4, 186);
@@ -358,7 +351,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[7, 0]) && !String.IsNullOrEmpty(currentEntries[7, 1]))
             {
                 contentButtonTexture8 = DaggerfallUI.GetTextureFromResources(currentEntries[7, 1]);
-                contentButtonTexture8.filterMode = FilterMode.Point;
+                // contentButtonTexture8.filterMode = FilterMode.Point;
 
                 contentButton8 = new Button();
                 contentButton8.Position = new Vector2(50, 186);
@@ -370,7 +363,7 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[8, 0]) && !String.IsNullOrEmpty(currentEntries[8, 1]))
             {
                 contentButtonTexture9 = DaggerfallUI.GetTextureFromResources(currentEntries[8, 1]);
-                contentButtonTexture9.filterMode = FilterMode.Point;
+                // contentButtonTexture9.filterMode = FilterMode.Point;
 
                 contentButton9 = new Button();
                 contentButton9.Position = new Vector2(96, 186);
@@ -384,7 +377,10 @@ namespace BestiaryMod
         void loadContent(string assetPath)
         {
             resetTextLabels();
-            pageNameLabel.Text = currentPage;
+            if (classicMode == false)
+            {
+                pageNameLabel.Text = currentPage;
+            }
             string entryText = "";
             var entryTextTemp = new List<string>(); ;
 
@@ -423,15 +419,12 @@ namespace BestiaryMod
 
                         reloadTexture = true;
                         break;
-                    case 1:
-                        titleLable.Text = result[1];
-                        break;
                     case 2:
-                        monsterNameLabel.Text = result[2];
-                        currentEntry = result[2];
+                        titleLable.Text = result[2];
                         break;
                     case 3:
-                        current_label = applyText(result[3], current_label);
+                        monsterNameLabel.Text = result[3];
+                        currentEntry = result[3];
                         break;
                     case 4:
                         current_label = applyText(result[4], current_label);
@@ -471,6 +464,9 @@ namespace BestiaryMod
                         break;
                     case 16:
                         current_label = applyText(result[16], current_label);
+                        break;
+                    case 17:
+                        current_label = applyText(result[17], current_label);
                         break;
                     default:
                         break;
@@ -696,12 +692,17 @@ namespace BestiaryMod
 
         string[,] getcurrentEntriesFromFile(string path)
         {
+            currentPagePath = path;
+            TextAsset textAssetPage;
+            TextAsset textAssetEntry;
+            
             string entryText = "";
+            string entry2Text = "";
             string[,] resultEntries = new string[9, 2];
             var pageTextTemp = new List<string>(); ;
 
-            TextAsset textAsset = mod.GetAsset<TextAsset>(path);
-            entryText = textAsset.text;
+            textAssetPage = mod.GetAsset<TextAsset>(path);
+            entryText = textAssetPage.text;
             var result = entryText.Split(new[] { '\r', '\n' });
 
             foreach (var item in result)
@@ -715,127 +716,25 @@ namespace BestiaryMod
 
             for (int i = 0; i < result.Length; i++)
             {
-                string[] temp = new string [2];
                 switch (i)
                 {
                     case 0:
                         currentPage = result[0];
                         break;
-                    case 1:
-                        if (!string.IsNullOrEmpty(result[1]))
+                    default:
+                        if (!string.IsNullOrEmpty(result[i]))
                         {
-                            temp = result[1].Split('*');
-                            resultEntries[0, 0] = temp[0];
-                            resultEntries[0, 1] = temp[1];
+                            resultEntries[i - 1, 0] = result[i];
+                            
+                            textAssetEntry = mod.GetAsset<TextAsset>(resultEntries[i - 1, 0]);
+                            entry2Text = textAssetEntry.text;
+                            var result0 = entry2Text.Split(new[] { '\r', '\n' });
+                            resultEntries[i - 1, 1] = result0[2];
                         }
                         else
                         {
-                            resultEntries[0, 0] = "";
-                            resultEntries[0, 1] = "";
-                        }
-                        break;
-                    case 2: 
-                        if (!string.IsNullOrEmpty(result[2]))
-                        {
-                            temp = result[2].Split('*');
-                            resultEntries[1, 0] = temp[0];
-                            resultEntries[1, 1] = temp[1];
-                        }
-                        else
-                        {
-                            resultEntries[1, 0] = "";
-                            resultEntries[1, 1] = "";
-                        }
-                        break;
-                    case 3:
-                        if (!string.IsNullOrEmpty(result[3]))
-                        {
-                            temp = result[3].Split('*');
-                            resultEntries[2, 0] = temp[0];
-                            resultEntries[2, 1] = temp[1];
-                        }
-                        else
-                        {
-                            resultEntries[2, 0] = "";
-                            resultEntries[2, 1] = "";
-                        }
-                        break;
-                    case 4:
-                        if (!string.IsNullOrEmpty(result[4]))
-                        {
-                            temp = result[4].Split('*');
-                            resultEntries[3, 0] = temp[0];
-                            resultEntries[3, 1] = temp[1];
-                        }
-                        else
-                        {
-                            resultEntries[3, 0] = "";
-                            resultEntries[3, 1] = "";
-                        }
-                        break;
-                    case 5:
-                        if (!string.IsNullOrEmpty(result[5]))
-                        {
-                            temp = result[5].Split('*');
-                            resultEntries[4, 0] = temp[0];
-                            resultEntries[4, 1] = temp[1];
-                        }
-                        else
-                        {
-                            resultEntries[4, 0] = "";
-                            resultEntries[4, 1] = "";
-                        }
-                        break;
-                    case 6:
-                        if (!string.IsNullOrEmpty(result[6]))
-                        {
-                            temp = result[6].Split('*');
-                            resultEntries[5, 0] = temp[0];
-                            resultEntries[5, 1] = temp[1];
-                        }
-                        else
-                        {
-                            resultEntries[5, 0] = "";
-                            resultEntries[5, 1] = "";
-                        }
-                        break;
-                    case 7:
-                        if (!string.IsNullOrEmpty(result[7]))
-                        {
-                            temp = result[7].Split('*');
-                            resultEntries[6, 0] = temp[0];
-                            resultEntries[6, 1] = temp[1];
-                        }
-                        else
-                        {
-                            resultEntries[6, 0] = "";
-                            resultEntries[6, 1] = "";
-                        }
-                        break;
-                    case 8:
-                        if (!string.IsNullOrEmpty(result[8]))
-                        {
-                            temp = result[8].Split('*');
-                            resultEntries[7, 0] = temp[0];
-                            resultEntries[7, 1] = temp[1];
-                        }
-                        else
-                        {
-                            resultEntries[7, 0] = "";
-                            resultEntries[7, 1] = "";
-                        }
-                        break;
-                    case 9:
-                        if (!string.IsNullOrEmpty(result[9]))
-                        {
-                            temp = result[9].Split('*');
-                            resultEntries[8, 0] = temp[0];
-                            resultEntries[8, 1] = temp[1];
-                        }
-                        else
-                        {
-                            resultEntries[8, 0] = "";
-                            resultEntries[8, 1] = "";
+                            resultEntries[i - 1, 0] = "";
+                            resultEntries[i - 1, 1] = "";
                         }
                         break;
                 }
@@ -1088,12 +987,52 @@ namespace BestiaryMod
             pageNameLabel.Size = new Vector2(40, 13);
             mainPanel.Components.Add(pageNameLabel);
         }
+        void changePage(bool right)
+        {   
+            int currentEntryNum = Array.IndexOf(allPages, currentPagePath);;
+            
+            if (right == true && currentEntryNum > 0)
+            {
+                currentEntryNum -= 1;
+
+                currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
+                resetLabelTextures();
+                loadPage();
+                loadContent(currentEntries[0, 0]);
+            }
+            else if (right == true && currentEntryNum <= 0)
+            {
+                currentEntryNum = allPages.Length - 1;
+
+                currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
+                resetLabelTextures();
+                loadPage();
+                loadContent(currentEntries[0, 0]);
+            }
+            else if (right == false && currentEntryNum < (allPages.Length - 1))
+            {
+                currentEntryNum += 1;
+
+                currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
+                resetLabelTextures();
+                loadPage();
+                loadContent(currentEntries[0, 0]);
+            }
+            else
+            {
+                currentEntryNum = 0;
+
+                currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
+                resetLabelTextures();
+                loadPage();
+                loadContent(currentEntries[0, 0]);
+            }
+        }
         protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
             CloseWindow();
         }
-
 
         protected void ContentButton1_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
@@ -1177,19 +1116,11 @@ namespace BestiaryMod
         }
         protected void RightArrowButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            currentEntries = getcurrentEntriesFromFile("page_animals");
-
-            resetLabelTextures();
-            loadPage();
-            loadContent(currentEntries[0, 0]);
+            changePage(true);
         }
         protected void LeftArrowButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            currentEntries = getcurrentEntriesFromFile("page_daedra");
-
-            resetLabelTextures();
-            loadPage();
-            loadContent(currentEntries[0, 0]);
+            changePage(false);
         }
     }
 }

@@ -1,4 +1,5 @@
 284*21
+button_daedra_seducer
 Bestiary
 Daedra Seducer
 Location: *Oblivion

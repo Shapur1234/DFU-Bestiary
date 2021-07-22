@@ -1,4 +1,5 @@
 263*1
+button_centaur
 Bestiary
 Centaur
 Location: *Forests and pastureland throughout the Bay.

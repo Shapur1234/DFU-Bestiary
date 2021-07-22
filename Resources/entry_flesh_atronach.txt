@@ -1,0 +1,6 @@
+292*1
+button_flesh_atronach
+Bestiary
+Flesh Atronach
+Location: *Placeholder flesh
+History: *Flesh

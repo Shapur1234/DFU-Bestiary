@@ -1,0 +1,6 @@
+293*1
+button_ice_atronach
+Bestiary
+Ice atronach
+Location: *Forests and pastureland throughout the Bay.
+History: *Ice atronachs

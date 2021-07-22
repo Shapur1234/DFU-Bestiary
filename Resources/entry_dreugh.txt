@@ -1,4 +1,5 @@
 296*0
+button_dreugh
 Bestiary
 Dreugh
 Location: *The Abecean Sea, the Illiac Bay, lakes and rivers.

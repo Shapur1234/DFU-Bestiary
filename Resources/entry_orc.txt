@@ -1,4 +1,5 @@
 279*1
+button_orcs
 Bestiary
 Orc
 Location: *Everywhere, particularly the southern Wrothgarian mountains near Wayrest. 

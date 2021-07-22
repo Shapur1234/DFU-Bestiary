@@ -1,4 +1,5 @@
 261*0
+button_spider
 Bestiary
 Spider
 Location: *Oblivion
