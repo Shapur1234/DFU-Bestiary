@@ -1,4 +1,4 @@
-280*0
+280*1
 Bestiary
 Ice Daedra, or Frost Daedra
 Location: *Oblivion

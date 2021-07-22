@@ -1,0 +1,5 @@
+258*0
+Bestiary
+Giant Bat
+Location: *Placeholder bat
+History: *Placeholder bat

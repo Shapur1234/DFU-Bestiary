@@ -1,0 +1,8 @@
+﻿Animals
+entry_giant_bat*button_giant_bat
+entry_scorpion*button_scorpion
+entry_grizzly_bear*button_grizzly_bear
+entry_rat*button_rat
+entry_sabertooth_tiger*button_sabertooth_tiger
+entry_slaughterfish*button_slaughterfish
+entry_spider*button_spider

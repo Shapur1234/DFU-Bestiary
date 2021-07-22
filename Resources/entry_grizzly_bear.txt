@@ -1,0 +1,6 @@
+259*1
+Bestiary
+Grizzly bear
+Location: *Some forest I dunno.
+History: *Some history here.
+Use: *Making jackets

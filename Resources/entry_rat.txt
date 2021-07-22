@@ -1,0 +1,5 @@
+255*1
+Bestiary
+Giant Rat
+Location: *Rat
+History: *Just a rat

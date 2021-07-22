@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4267009637
+CRC: 4030499367
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 756e2a4cb5215278abcc68f293afe2ac
+    Hash: 6f89f664b21ed420cbbdf9f6fcad056e
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -14,15 +14,32 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
+- Assets/Game/Mods/Bestiary/Textures/button_grizzly_bear.png
 - Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt
+- Assets/Game/Mods/Bestiary/Textures/blank.png
+- Assets/Game/Mods/Bestiary/Textures/button_giant_bat.png
+- Assets/Game/Mods/Bestiary/Textures/button_daedra_lord.png
 - Assets/Game/Mods/Bestiary/Textures/button_orcs.png
 - Assets/Game/Mods/Bestiary/Settings/modsettings.json
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
+- Assets/Game/Mods/Bestiary/Textures/button_daedra_seducer.png
 - Assets/Game/Mods/Bestiary/Textures/button_centaur.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
+- Assets/Game/Mods/Bestiary/Textures/button_spider.png
+- Assets/Game/Mods/Bestiary/Textures/button_sabertooth_tiger.png
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire.txt
+- Assets/Game/Mods/Bestiary/Resources/entry_sabertooth_tiger.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt
+- Assets/Game/Mods/Bestiary/Resources/entry_giant_bat.txt
 - Assets/Game/Mods/Bestiary/Textures/button_fire_daedra.png
+- Assets/Game/Mods/Bestiary/Resources/page_daedra.txt
+- Assets/Game/Mods/Bestiary/Resources/entry_rat.txt
+- Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord.txt
+- Assets/Game/Mods/Bestiary/Resources/page_classic.txt
 - Assets/Game/Mods/Bestiary/Settings/modpresets.json
+- Assets/Game/Mods/Bestiary/Textures/button_arrow_right.png
+- Assets/Game/Mods/Bestiary/Resources/entry_slaughterfish.txt
+- Assets/Game/Mods/Bestiary/Textures/button_arrow_left.png
 - Assets/Game/Mods/Bestiary/Resources/entry_dreugh.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background_hd.png
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra.txt
@@ -31,12 +48,17 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_scorpion.png
 - Assets/Game/Mods/Bestiary/Resources/entry_orc.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_centaur.txt
+- Assets/Game/Mods/Bestiary/Resources/entry_daedra_seducer.txt
+- Assets/Game/Mods/Bestiary/Textures/button_rat.png
 - Assets/Game/Mods/Bestiary/Textures/button_vampire.png
 - Assets/Game/Mods/Bestiary/Resources/entry_daedroth.txt
 - Assets/Game/Mods/Bestiary/Textures/button_spriggan.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
+- Assets/Game/Mods/Bestiary/Textures/button_slaughterfish.png
+- Assets/Game/Mods/Bestiary/Resources/page_animals.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_daedroth.png
+- Assets/Game/Mods/Bestiary/Resources/entry_spider.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background.png
 - Assets/Game/Mods/Bestiary/Textures/button_ice_daedra.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
+- Assets/Game/Mods/Bestiary/Resources/entry_grizzly_bear.txt
 Dependencies: []

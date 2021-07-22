@@ -1,0 +1,10 @@
+﻿Classic
+entry_spriggan*button_spriggan
+entry_orc*button_orcs
+entry_centaur*button_centaur
+entry_scorpion*button_scorpion
+entry_ice_daedra*button_ice_daedra
+entry_fire_daedra*button_fire_daedra
+entry_vampire*button_vampire
+entry_dreugh*button_dreugh
+entry_daedroth*button_daedroth
