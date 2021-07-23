@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3202152548
+CRC: 1751379481
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4b058ce497422149670704273d4b2d80
+    Hash: 38a3342adaff5c76552fc76b66b86929
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -28,6 +28,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_centaur.png
 - Assets/Game/Mods/Bestiary/Textures/button_fire_atronach.png
 - Assets/Game/Mods/Bestiary/Textures/button_spider.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_sabertooth_tiger.png
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_sabertooth_tiger.txt
@@ -49,7 +50,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_dreugh.png
 - Assets/Game/Mods/Bestiary.dfmod.json
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_scorpion.png
 - Assets/Game/Mods/Bestiary/Textures/button_flesh_atronach.png
 - Assets/Game/Mods/Bestiary/Resources/entry_orc.txt
@@ -63,7 +63,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_slaughterfish.png
 - Assets/Game/Mods/Bestiary/Textures/button_iron_atronach.png
 - Assets/Game/Mods/Bestiary/Resources/page_animals.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_ice_atronach.png
 - Assets/Game/Mods/Bestiary/Textures/button_daedroth.png
 - Assets/Game/Mods/Bestiary/Resources/entry_spider.txt
