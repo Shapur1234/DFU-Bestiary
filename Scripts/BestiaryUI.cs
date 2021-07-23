@@ -267,7 +267,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[0, 0]) && !String.IsNullOrEmpty(currentEntries[0, 1]))
             {
                 contentButtonTexture1 = DaggerfallUI.GetTextureFromResources(currentEntries[0, 1]);
-                contentButtonTexture1.filterMode = FilterMode.Point;
 
                 contentButton1 = new Button();
                 contentButton1.Position = new Vector2(4, 162);
@@ -279,7 +278,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[1, 0]) && !String.IsNullOrEmpty(currentEntries[1, 1]))
             {
                 contentButtonTexture2 = DaggerfallUI.GetTextureFromResources(currentEntries[1, 1]);
-                contentButtonTexture2.filterMode = FilterMode.Point;
 
                 contentButton2 = new Button();
                 contentButton2.Position = new Vector2(50, 162);
@@ -291,7 +289,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[2, 0]) && !String.IsNullOrEmpty(currentEntries[2, 1]))
             {
                 contentButtonTexture3 = DaggerfallUI.GetTextureFromResources(currentEntries[2, 1]);
-                contentButtonTexture3.filterMode = FilterMode.Point;
 
                 contentButton3 = new Button();
                 contentButton3.Position = new Vector2(96, 162);
@@ -303,7 +300,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[3, 0]) && !String.IsNullOrEmpty(currentEntries[3, 1]))
             {
                 contentButtonTexture4 = DaggerfallUI.GetTextureFromResources(currentEntries[3, 1]);
-                contentButtonTexture4.filterMode = FilterMode.Point;
 
                 contentButton4 = new Button();
                 contentButton4.Position = new Vector2(4, 174);
@@ -315,8 +311,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[4, 0]) && !String.IsNullOrEmpty(currentEntries[4, 1]))
             {
                 contentButtonTexture5 = DaggerfallUI.GetTextureFromResources(currentEntries[4, 1]);
-                contentButtonTexture5.filterMode = FilterMode.Point;
-
                 contentButton5 = new Button();
                 contentButton5.Position = new Vector2(50, 174);
                 contentButton5.Size = entryButtonSize;
@@ -327,8 +321,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[5, 0]) && !String.IsNullOrEmpty(currentEntries[5, 1]))
             {
                 contentButtonTexture6 = DaggerfallUI.GetTextureFromResources(currentEntries[5, 1]);
-                contentButtonTexture6.filterMode = FilterMode.Point;
-
                 contentButton6 = new Button();
                 contentButton6.Position = new Vector2(96, 174);
                 contentButton6.Size = entryButtonSize;
@@ -339,7 +331,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[6, 0]) && !String.IsNullOrEmpty(currentEntries[6, 1]))
             {
                 contentButtonTexture7 = DaggerfallUI.GetTextureFromResources(currentEntries[6, 1]);
-                contentButtonTexture7.filterMode = FilterMode.Point;
 
                 contentButton7 = new Button();
                 contentButton7.Position = new Vector2(4, 186);
@@ -352,7 +343,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[7, 0]) && !String.IsNullOrEmpty(currentEntries[7, 1]))
             {
                 contentButtonTexture8 = DaggerfallUI.GetTextureFromResources(currentEntries[7, 1]);
-                contentButtonTexture8.filterMode = FilterMode.Point;
 
                 contentButton8 = new Button();
                 contentButton8.Position = new Vector2(50, 186);
@@ -364,7 +354,6 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[8, 0]) && !String.IsNullOrEmpty(currentEntries[8, 1]))
             {
                 contentButtonTexture9 = DaggerfallUI.GetTextureFromResources(currentEntries[8, 1]);
-                contentButtonTexture9.filterMode = FilterMode.Point;
 
                 contentButton9 = new Button();
                 contentButton9.Position = new Vector2(96, 186);
