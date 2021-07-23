@@ -14,13 +14,6 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 },
                 {
-                    "Value": false,
-                    "Name": "Font",
-                    "Description": "Check this, if you use the original font.",
-                    "$version": "v1",
-                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
-                },
-                {
                     "Value": true,
                     "Name": "Animations",
                     "Description": "Enable animated pictures?",
