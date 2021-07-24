@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3878550194
+CRC: 4083674333
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7937c9044cb3974bbe8e4889c97cef7a
+    Hash: 325cbb4973fed72fcc65f57a8f10695b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -28,8 +28,8 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_centaur.png
 - Assets/Game/Mods/Bestiary/Textures/button_fire_atronach.png
 - Assets/Game/Mods/Bestiary/Textures/button_spider.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_sabertooth_tiger.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_sabertooth_tiger.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt
@@ -57,13 +57,13 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_seducer.txt
 - Assets/Game/Mods/Bestiary/Textures/button_rat.png
 - Assets/Game/Mods/Bestiary/Textures/button_vampire.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_daedroth.txt
 - Assets/Game/Mods/Bestiary/Textures/button_spriggan.png
 - Assets/Game/Mods/Bestiary/Resources/page_atronachs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_slaughterfish.png
 - Assets/Game/Mods/Bestiary/Textures/button_iron_atronach.png
 - Assets/Game/Mods/Bestiary/Resources/page_animals.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_ice_atronach.png
 - Assets/Game/Mods/Bestiary/Textures/button_daedroth.png
 - Assets/Game/Mods/Bestiary/Resources/entry_spider.txt

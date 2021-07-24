@@ -5,8 +5,8 @@
         "Description": "Default settings.",
         "SettingsVersion": null,
         "Values": {
-            "Settings": {
-                "Animations": "True"
+            "General": {
+                "EnableAnimations": "True"
             }
         },
         "$version": "v1"

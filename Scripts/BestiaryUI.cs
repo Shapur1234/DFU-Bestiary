@@ -27,6 +27,7 @@ namespace BestiaryMod
         int animationUpdateDelay = 45;
         int descriptionLableMaxCharacters;
         int textLabelXOffset;
+        int contentOffset;
 
         public string currentEntry = "";
         public string currentPage = "";
@@ -41,6 +42,7 @@ namespace BestiaryMod
         const string pathToClassicPage = "page_classic";
         
         string defaultEntry;
+        string entryToLoad;
         string[] allPages = {"page_animals", "page_atronachs", "page_daedra"};
         string[,] currentEntries = new string[9, 2];
 
@@ -135,10 +137,10 @@ namespace BestiaryMod
             picturebackgroundSizeVector = new Vector2(102, 102);
             picturebackgroundPosVector = new Vector2(18, 51);
 
-            classicMode = settings.GetBool("Settings", "ClassicMode");
+            classicMode = settings.GetBool("General", "ClassicMode");
             oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
-            animate = settings.GetBool("Settings", "Animations");
-            animationUpdateDelay = settings.GetValue<int>("Settings", "AnimationDelay");
+            animate = settings.GetBool("General", "EnableAnimations");
+            animationUpdateDelay = settings.GetValue<int>("General", "DelayBetweenAnimationFrames");
 
             if (oldFont == false)
             {
@@ -167,7 +169,8 @@ namespace BestiaryMod
 
             loadPage();
 
-            loadContent(currentEntries[0, 0]);
+            entryToLoad = currentEntries[0, 0];
+            loadContent(entryToLoad);
         }
 
         public override void Update()
@@ -364,9 +367,14 @@ namespace BestiaryMod
             }
             resetTextLabels();
         }
-        void loadContent(string assetPath)
+        void loadContent(string assetPath, bool reset = true)
         {
             resetTextLabels();
+            if (reset == true)
+            {
+                contentOffset = 0;
+            }
+            
             if (classicMode == false)
             {
                 pageNameLabel.Text = currentPage;
@@ -377,6 +385,7 @@ namespace BestiaryMod
             TextAsset textAsset = mod.GetAsset<TextAsset>(assetPath);
             entryText = textAsset.text;
             var result = entryText.Split(new[] { '\r', '\n' });
+            string[] textToApply = new string[result.Length - 4];
 
             foreach (var item in result)
             {
@@ -385,15 +394,9 @@ namespace BestiaryMod
 
             result = entryTextTemp.ToArray();
 
-            int current_label = 1;
-
             for (int i = 0; i < result.Length; i++)
             {
-                if (i > 3 && result[i].Length < 2)
-                {
-                    break;
-                }
-                
+
                 switch (i)
                 {
                     case 0:
@@ -409,6 +412,8 @@ namespace BestiaryMod
 
                         reloadTexture = true;
                         break;
+                    case 1:
+                        break;
                     case 2:
                         titleLable.Text = result[2];
                         break;
@@ -416,52 +421,12 @@ namespace BestiaryMod
                         monsterNameLabel.Text = result[3];
                         currentEntry = result[3];
                         break;
-                    case 4:
-                        current_label = applyText(result[4], current_label);
-                        break;
-                    case 5:
-                        current_label = applyText(result[5], current_label);
-                        break;
-                    case 6:
-                        current_label = applyText(result[6], current_label);
-                        break;
-                    case 7:
-                        current_label = applyText(result[7], current_label);
-                        break;
-                    case 8:
-                        current_label = applyText(result[8], current_label);
-                        break;
-                    case 9:
-                        current_label = applyText(result[9], current_label);
-                        break;
-                    case 10:
-                        current_label = applyText(result[10], current_label);
-                        break;
-                    case 11:
-                        current_label = applyText(result[11], current_label);
-                        break;
-                    case 12:
-                        current_label = applyText(result[12], current_label);
-                        break;
-                    case 13:
-                        current_label = applyText(result[13], current_label);
-                        break;
-                    case 14:
-                        current_label = applyText(result[14], current_label);
-                        break;
-                    case 15:
-                        current_label = applyText(result[15], current_label);
-                        break;
-                    case 16:
-                        current_label = applyText(result[16], current_label);
-                        break;
-                    case 17:
-                        current_label = applyText(result[17], current_label);
-                        break;
                     default:
+                        if (i < result.Length && !string.IsNullOrEmpty(result[i - 4])) textToApply[i - 4] = result[i];
                         break;
                 }
             }
+            applyText(textToApply);
         }
 
         void resetTextLabels()
@@ -650,34 +615,82 @@ namespace BestiaryMod
             }
         }
 
-        int applyText(string inputText, int label_number)
+        void applyText(string[] inputText)
         {
-            var temp = new List<string>();
-            var singleline_text = new List<string>();
+            int labelNumber = 1;
+            int displayedEntries = 0;
+            var inputTextCleared = new List<string>();
+            List<List<string>> textTemp = new List<List<string>>();
+            List<string> text = new List<string>();
 
-            var split_result = inputText.Split(new[] { '*' });
-
-            setSingleSubTitleabelText(split_result[0], label_number);
-
-            var multiline_text = SplitLineToMultiline(ReverseWords(split_result[1]), descriptionLableMaxCharacters);
-
-            var singleline_text_temp = multiline_text.Split(new[] { '\r', '\n' });
-
-
-            foreach (var item in singleline_text_temp)
+            foreach (var item in inputText)
             {
-                if (!string.IsNullOrEmpty(item)) temp.Add(item);
+                if(!string.IsNullOrEmpty(item)) inputTextCleared.Add(item);
             }
 
-            singleline_text = temp;
-
-            foreach (string item in singleline_text)
+            foreach (var item in inputTextCleared)
             {
-                setSingleDescriptionLabelText(item, label_number);
-                label_number++;
+                var splitResult = item.Split(new[] { '*' });
+                textTemp.Add(new List<string> {splitResult[0], splitResult[1]});
             }
 
-            return label_number;
+            for (int i = 0; i < textTemp.Count; i++)
+            {
+                bool first = true;
+                var temp = new List<string>();
+                var multiline_text = SplitLineToMultiline(ReverseWords(textTemp[i][1]), descriptionLableMaxCharacters);
+                var singlelineText = new List<string>();
+                var singleline_text_temp = multiline_text.Split(new[] { '\r', '\n' });
+
+                foreach (var item in singleline_text_temp)
+                {
+                    if (!string.IsNullOrEmpty(item)) temp.Add(item);
+                }
+
+                singlelineText = temp;
+
+                foreach (var item in singlelineText)
+                {
+                    if (first == true)
+                    {
+                        text.Add(textTemp[i][0] + "&" + item);
+                        first = false;
+                    }
+                    else
+                    {
+                        text.Add(item);
+                    } 
+                }
+            }
+            if (text.Count < 16)
+            {
+                contentOffset = 0;
+            }
+            else if (text.Count - contentOffset <= 0)
+            {
+                contentOffset = text.Count - 1;
+            }
+            int dispayedEntries = 0;
+            for (int i = contentOffset; i < text.Count; i++)
+            {
+                string[] multiItem = text[i].Split('&');
+
+                if (multiItem.Length > 1)
+                {
+                    setSingleSubTitleabelText(multiItem[0], labelNumber);
+                    setSingleDescriptionLabelText(multiItem[1], labelNumber);
+
+                    displayedEntries++;
+                }
+                else
+                {
+                    setSingleDescriptionLabelText(multiItem[0], labelNumber);
+
+                    displayedEntries++;
+                }
+
+                labelNumber++;
+            }
         }
 
         string[,] getcurrentEntriesFromFile(string path)
@@ -743,7 +756,9 @@ namespace BestiaryMod
             mainPanel.Size = backgroundSizeVector;
             mainPanel.BackgroundTexture = backgroundTexture;
             mainPanel.HorizontalAlignment = HorizontalAlignment.Center;
-            mainPanel.VerticalAlignment = VerticalAlignment.Middle;
+            mainPanel.VerticalAlignment     = VerticalAlignment.Middle;
+            mainPanel.OnMouseScrollDown     += MainPanel_OnMouseScrollDown;
+            mainPanel.OnMouseScrollUp       += MainPanel_OnMouseScrollUp;
 
             imagePanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
             imagePanel.Size = picturebackgroundSizeVector;
@@ -990,7 +1005,9 @@ namespace BestiaryMod
                 currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
                 resetLabelTextures();
                 loadPage();
-                loadContent(currentEntries[0, 0]);
+
+                entryToLoad = currentEntries[0, 0];
+                loadContent(entryToLoad);
             }
             else if (right == true && currentEntryNum <= 0)
             {
@@ -999,7 +1016,8 @@ namespace BestiaryMod
                 currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
                 resetLabelTextures();
                 loadPage();
-                loadContent(currentEntries[0, 0]);
+                entryToLoad = currentEntries[0, 0];
+                loadContent(entryToLoad);
             }
             else if (right == false && currentEntryNum < (allPages.Length - 1))
             {
@@ -1008,7 +1026,8 @@ namespace BestiaryMod
                 currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
                 resetLabelTextures();
                 loadPage();
-                loadContent(currentEntries[0, 0]);
+                entryToLoad = currentEntries[0, 0];
+                loadContent(entryToLoad);
             }
             else
             {
@@ -1017,7 +1036,8 @@ namespace BestiaryMod
                 currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
                 resetLabelTextures();
                 loadPage();
-                loadContent(currentEntries[0, 0]);
+                entryToLoad = currentEntries[0, 0];
+                loadContent(entryToLoad);
             }
         }
         protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
@@ -1031,7 +1051,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[0, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[0, 0]);
+                entryToLoad = currentEntries[0, 0];
+                loadContent(entryToLoad);
             }
         }
 
@@ -1040,7 +1061,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[1, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[1, 0]);
+                entryToLoad = currentEntries[1, 0];
+                loadContent(entryToLoad);
             }
         }
 
@@ -1049,7 +1071,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[2, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[2, 0]);
+                entryToLoad = currentEntries[2, 0];
+                loadContent(entryToLoad);
             }
         }
 
@@ -1058,7 +1081,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[3, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[3, 0]);
+                entryToLoad = currentEntries[3, 0];
+                loadContent(entryToLoad);
             }
         }
 
@@ -1067,7 +1091,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[4, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[4, 0]);
+                entryToLoad = currentEntries[4, 0];
+                loadContent(entryToLoad);
             }
         }
 
@@ -1076,7 +1101,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[5, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[5, 0]);
+                entryToLoad = currentEntries[5, 0];
+                loadContent(entryToLoad);
             }
         }
 
@@ -1085,7 +1111,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[6, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[6, 0]);
+                entryToLoad = currentEntries[6, 0];
+                loadContent(entryToLoad);
             }
         }
 
@@ -1094,7 +1121,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[7, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[7, 0]);
+                entryToLoad = currentEntries[7, 0];
+                loadContent(entryToLoad);
             }
         }
 
@@ -1103,7 +1131,8 @@ namespace BestiaryMod
             if(!String.IsNullOrEmpty(currentEntries[8, 0]))
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                loadContent(currentEntries[8, 0]);
+                entryToLoad = currentEntries[8, 0];
+                loadContent(entryToLoad);
             }
         }
         protected void RightArrowButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
@@ -1115,6 +1144,19 @@ namespace BestiaryMod
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
             changePage(false);
+        }
+        protected void MainPanel_OnMouseScrollDown(BaseScreenComponent sender)
+        {
+            contentOffset += 1;
+            loadContent(entryToLoad, false);
+        }
+        protected void MainPanel_OnMouseScrollUp(BaseScreenComponent sender)
+        {
+            if (contentOffset > 0)
+            {
+                contentOffset -= 1;
+            }
+            loadContent(entryToLoad, false);
         }
     }
 }

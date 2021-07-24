@@ -4,6 +4,7 @@ using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
+using DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings;
 
 
 namespace BestiaryMod
@@ -11,9 +12,10 @@ namespace BestiaryMod
     public class BestiaryMain : MonoBehaviour
     {
         static BestiaryUI bestiaryUIScreen;
-
+        string keybindText = "";
         KeyCode openMenuKeyCode = KeyCode.B;
 
+        
         void Update()
         {
             if (bestiaryUIScreen == null)
@@ -44,14 +46,29 @@ namespace BestiaryMod
             BestiaryMain bestiary = bestiaryGO.AddComponent<BestiaryMain>();
 
             ModManager.Instance.GetMod(initParams.ModTitle).IsReady = true;
+            
         }
 
         void Awake()
         {
+            ModSettings settings = ModManager.Instance.GetMod("Bestiary").GetSettings();
+
+            keybindText = settings.GetValue<string>("Controls", "Keybind");
+            Debug.Log(keybindText);
+
+            SetKeyFromText(keybindText);
         }
         public static void DisplayBestiaryUI()
         {
             DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
+        }
+        private void SetKeyFromText(string text) //"Inspired" by code from Mighty Foot from numidium (https://www.nexusmods.com/daggerfallunity/mods/162)
+        {
+            KeyCode result;
+            if (System.Enum.TryParse(text, out result))
+                openMenuKeyCode = result;
+            else
+                openMenuKeyCode = KeyCode.B;
         }
     }
 }
