@@ -1,6 +1,7 @@
-290*1
+290*0
 button_fire_atronach
 Bestiary
 Fire atronach
-Location: *Forests and pastureland throughout the Bay.
-History: *Blah blah blah
+Description: *Fire Atronachs are golems constructed of flames. 
+Location: *Rats are found everywhere, especially in underground tunnels and near human settlements.
+Fighting Strategies: *Consider attacking from a distance, as not to contract a disease.

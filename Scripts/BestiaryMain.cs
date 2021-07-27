@@ -54,7 +54,6 @@ namespace BestiaryMod
             ModSettings settings = ModManager.Instance.GetMod("Bestiary").GetSettings();
 
             keybindText = settings.GetValue<string>("Controls", "Keybind");
-            Debug.Log(keybindText);
 
             SetKeyFromText(keybindText);
         }

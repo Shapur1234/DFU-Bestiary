@@ -1,4 +1,4 @@
-282*1
+282*0
 button_daedroth
 Bestiary
 Daedroth

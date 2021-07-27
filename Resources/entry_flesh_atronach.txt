@@ -1,4 +1,4 @@
-292*1
+292*0
 button_flesh_atronach
 Bestiary
 Flesh Atronach

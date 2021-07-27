@@ -1,4 +1,4 @@
-293*1
+293*0
 button_ice_atronach
 Bestiary
 Ice atronach

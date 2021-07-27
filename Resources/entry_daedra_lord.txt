@@ -1,6 +1,7 @@
-286*1
+286*0
 button_daedra_lord
 Bestiary
 Daedra Lord
-Location: *Oblivion
-History: *Run
+Description: *Daedra Lords are powerful and dangerous opponents, for they are expert at wielding both magic and blade and can and like all its brethren, see through petty illusions. To even stand a chance at harming them, one needs an arm of mithril or better.
+Location: *Inhabitng one of the accursed realms of Oblivion, they can at times be found in the darkest of depths in the most ancient of underground labyrinths.
+Fighting Strategies: *Attempt to close in quickly, as to prevent him from tearing you apart with magic. Spell reflection, resistance or absorbtion is your only chance for survival. Sometimes, it may be better to attempt to reason with it.

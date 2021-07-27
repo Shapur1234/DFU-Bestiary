@@ -1,7 +1,6 @@
-259*1
+259*0
 button_grizzly_bear
 Bestiary
 Grizzly bear
-Location: *Some forest I dunno.
-History: *Some history here.
-Use: *Making jackets
+Description: *The grizzly bear is a large animal that fights with tooth and claw.
+Location: *Forests

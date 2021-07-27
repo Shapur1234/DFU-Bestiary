@@ -1,4 +1,4 @@
-281*1
+281*0
 button_fire_daedra
 Bestiary
 Fire Daedra
