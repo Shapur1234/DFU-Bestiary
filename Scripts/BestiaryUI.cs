@@ -202,7 +202,8 @@ namespace BestiaryMod
             {
                 if (currentTexture[2] % animationUpdateDelay == 0)
                 {
-                    pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
+                    if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture)) pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
+
                 }
 
                 if (currentTexture[2] < (animationUpdateDelay * 4) - 1)
@@ -216,7 +217,7 @@ namespace BestiaryMod
             }
             else
             {
-                pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1]);
+                if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, 0, out pictureTexture)) pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset);
             }
 
             if (pictureTexture.height > pictureTexture.width)

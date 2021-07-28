@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3943218342
+CRC: 2387786360
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: lootmenu.dfmod
+      Name: bestiary.dfmod
       Dependencies: {}
