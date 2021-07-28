@@ -1,4 +1,4 @@
-280*0
+280*1
 button_ice_daedra
 Bestiary
 Ice Daedra, or Frost Daedra

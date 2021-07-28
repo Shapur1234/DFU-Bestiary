@@ -1,4 +1,4 @@
-286*0
+286*1
 button_daedra_lord
 Bestiary
 Daedra Lord

@@ -1,4 +1,4 @@
-283*0
+283*1
 button_vampire
 Bestiary
 Vampire

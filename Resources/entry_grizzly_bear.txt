@@ -1,4 +1,4 @@
-259*0
+259*1
 button_grizzly_bear
 Bestiary
 Grizzly bear

@@ -224,11 +224,11 @@ namespace BestiaryMod
                 temp = picturebackgroundSizeVector[0] / pictureTexture.height;
                 newWidth = (int)Math.Round(temp * pictureTexture.width);
                 newHeight = (int)Math.Round(temp * pictureTexture.height);
-                if(newHeight > maxTextureHeight)
+                if(newHeight > maxTextureHeight && attackModeOffset == 0)
                 {
-                    temp = picturebackgroundSizeVector[0] / newHeight;
-                    newHeight = (int)Math.Round(newHeight * temp);
-                    newWidth = (int)Math.Round(newWidth * temp);
+                    double temp2 = (double)maxTextureHeight / newHeight;
+                    newWidth = (int)Math.Round(temp2 * newWidth);
+                    newHeight = maxTextureHeight;
                 }
             }
             else
@@ -236,11 +236,11 @@ namespace BestiaryMod
                 temp = picturebackgroundSizeVector[1] / pictureTexture.width;
                 newWidth = (int)Math.Round(temp * pictureTexture.width);
                 newHeight = (int)Math.Round(temp * pictureTexture.height);
-                if(newWidth > maxTextureWidth)
+                if(newWidth > maxTextureWidth && attackModeOffset == 0)
                 {
-                    temp = picturebackgroundSizeVector[1] / newWidth;
-                    newHeight = (int)Math.Round(newHeight * temp);
-                    newWidth = (int)Math.Round(newWidth * temp);
+                    double temp2 = (double)maxTextureWidth / newWidth;
+                    newHeight = (int)Math.Round(temp2 * newHeight);
+                    newWidth = maxTextureWidth;
                 }
             }
             newPosX = (int)picturebackgroundPosVector[0] + (((int)picturebackgroundSizeVector[0] - newWidth) / 2);

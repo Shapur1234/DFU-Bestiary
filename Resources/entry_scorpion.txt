@@ -1,4 +1,4 @@
-275*0
+275*1
 button_scorpion
 Bestiary
 Scorpion

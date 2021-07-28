@@ -1,4 +1,4 @@
-260*0
+260*1
 button_sabertooth_tiger
 Bestiary
 Sabertooth Tiger

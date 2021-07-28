@@ -1,4 +1,4 @@
-257*0
+257*1
 button_spriggan
 Bestiary
 Spriggan
