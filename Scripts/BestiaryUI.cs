@@ -256,6 +256,7 @@ namespace BestiaryMod
                 newPosY = (int)picturebackgroundPosVector[1] + (((int)picturebackgroundSizeVector[1] - newHeight) / 2);
                 imagePanel.Size = new Vector2(newWidth, newHeight);
                 imagePanel.Position = new Vector2(newPosX, newPosY);
+
                 reloadTexture = false;
                 pictureTexture.filterMode = FilterMode.Point;
                 imagePanel.BackgroundTexture = pictureTexture;
@@ -798,6 +799,7 @@ namespace BestiaryMod
             }
             return resultEntries;
         }
+   
 
         void setUpUIElements()
         {
@@ -1072,7 +1074,6 @@ namespace BestiaryMod
             if(oldFont == false)
             {
                 pageNameLabel.Font = DaggerfallUI.LargeFont;
-                pageNameLabel.TextScale = 0.8f;
             }
             else pageNamePosVector[1] = 18;
 

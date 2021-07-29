@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 106173719
+CRC: 3025129198
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 24482265bbe79e13be589ad0f667dfe5
+    Hash: 63ad3cc7d54e1ba3f897c757372a0229
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -21,6 +21,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_giant_bat.png
 - Assets/Game/Mods/Bestiary/Textures/button_daedra_lord.png
 - Assets/Game/Mods/Bestiary/Textures/button_orcs.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Settings/modsettings.json
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_daedra_seducer.png
@@ -35,7 +36,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_giant_bat.txt
 - Assets/Game/Mods/Bestiary/Textures/button_fire_daedra.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_atronach.txt
 - Assets/Game/Mods/Bestiary/Resources/page_daedra.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_rat.txt
@@ -48,6 +48,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_atronach.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_dreugh.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background_hd.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_dreugh.png
 - Assets/Game/Mods/Bestiary/Textures/button_scorpion.png
@@ -70,6 +71,5 @@ Assets:
 - Assets/Game/Mods/Bestiary.dfmod.json
 - Assets/Game/Mods/Bestiary/Textures/base_background.png
 - Assets/Game/Mods/Bestiary/Textures/button_ice_daedra.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_grizzly_bear.txt
 Dependencies: []
