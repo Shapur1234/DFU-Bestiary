@@ -73,6 +73,8 @@ namespace BestiaryMod
         Vector2 picturebackgroundSizeVector;
         Vector2 exitButtonSize;
         Vector2 entryButtonSize;
+        Vector2 pageNamePosVector;
+        Vector2 pageNameSizeVector;
 
         #region UI Controls
         Panel mainPanel;
@@ -147,6 +149,8 @@ namespace BestiaryMod
             backgroundSizeVector = new Vector2(320, 200);
             picturebackgroundSizeVector = new Vector2(102, 102);
             picturebackgroundPosVector = new Vector2(18, 51);
+            pageNamePosVector = new Vector2(71, 14);
+            pageNameSizeVector = new Vector2(52, 10);
 
             classicMode = settings.GetBool("General", "ClassicMode");
             oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
@@ -186,24 +190,27 @@ namespace BestiaryMod
 
         public override void Update()
         {
+            base.Update();
+
+            DaggerfallWorkshop.Utility.TextureReader textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
+
             int newWidth = 0;
             int newHeight = 0;
             int newPosX = 0;
             int newPosY = 0;
             float temp = 0;
 
-            base.Update();
-
+            
             if (Input.GetKeyUp(exitKey))
                 CloseWindow();
 
-            DaggerfallWorkshop.Utility.TextureReader textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
+            
             if (animate == true)
             {
                 if (currentTexture[2] % animationUpdateDelay == 0)
                 {
                     if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture)) pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
-
+                    reloadTexture = true;
                 }
 
                 if (currentTexture[2] < (animationUpdateDelay * 4) - 1)
@@ -219,38 +226,40 @@ namespace BestiaryMod
             {
                 if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, 0, out pictureTexture)) pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset);
             }
-
-            if (pictureTexture.height > pictureTexture.width)
+            if(reloadTexture == true)
             {
-                temp = picturebackgroundSizeVector[0] / pictureTexture.height;
-                newWidth = (int)Math.Round(temp * pictureTexture.width);
-                newHeight = (int)Math.Round(temp * pictureTexture.height);
-                if(newHeight > maxTextureHeight && attackModeOffset == 0)
+                if (pictureTexture.height > pictureTexture.width)
                 {
-                    double temp2 = (double)maxTextureHeight / newHeight;
-                    newWidth = (int)Math.Round(temp2 * newWidth);
-                    newHeight = maxTextureHeight;
+                    temp = picturebackgroundSizeVector[0] / pictureTexture.height;
+                    newWidth = (int)Math.Round(temp * pictureTexture.width);
+                    newHeight = (int)Math.Round(temp * pictureTexture.height);
+                    if(newHeight > maxTextureHeight && attackModeOffset == 0)
+                    {
+                        double temp2 = (double)maxTextureHeight / newHeight;
+                        newWidth = (int)Math.Round(temp2 * newWidth);
+                        newHeight = maxTextureHeight;
+                    }
                 }
-            }
-            else
-            {
-                temp = picturebackgroundSizeVector[1] / pictureTexture.width;
-                newWidth = (int)Math.Round(temp * pictureTexture.width);
-                newHeight = (int)Math.Round(temp * pictureTexture.height);
-                if(newWidth > maxTextureWidth && attackModeOffset == 0)
+                else
                 {
-                    double temp2 = (double)maxTextureWidth / newWidth;
-                    newHeight = (int)Math.Round(temp2 * newHeight);
-                    newWidth = maxTextureWidth;
+                    temp = picturebackgroundSizeVector[1] / pictureTexture.width;
+                    newWidth = (int)Math.Round(temp * pictureTexture.width);
+                    newHeight = (int)Math.Round(temp * pictureTexture.height);
+                    if(newWidth > maxTextureWidth && attackModeOffset == 0)
+                    {
+                        double temp2 = (double)maxTextureWidth / newWidth;
+                        newHeight = (int)Math.Round(temp2 * newHeight);
+                        newWidth = maxTextureWidth;
+                    }
                 }
+                newPosX = (int)picturebackgroundPosVector[0] + (((int)picturebackgroundSizeVector[0] - newWidth) / 2);
+                newPosY = (int)picturebackgroundPosVector[1] + (((int)picturebackgroundSizeVector[1] - newHeight) / 2);
+                imagePanel.Size = new Vector2(newWidth, newHeight);
+                imagePanel.Position = new Vector2(newPosX, newPosY);
+                reloadTexture = false;
+                pictureTexture.filterMode = FilterMode.Point;
+                imagePanel.BackgroundTexture = pictureTexture;
             }
-            newPosX = (int)picturebackgroundPosVector[0] + (((int)picturebackgroundSizeVector[0] - newWidth) / 2);
-            newPosY = (int)picturebackgroundPosVector[1] + (((int)picturebackgroundSizeVector[1] - newHeight) / 2);
-            imagePanel.Size = new Vector2(newWidth, newHeight);
-            imagePanel.Position = new Vector2(newPosX, newPosY);
-            reloadTexture = false;
-            pictureTexture.filterMode = FilterMode.Point;
-            imagePanel.BackgroundTexture = pictureTexture;
         }
 
         public override void OnPush()
@@ -405,6 +414,7 @@ namespace BestiaryMod
             if (classicMode == false)
             {
                 pageNameLabel.Text = currentPage;
+                pageNameLabel.Position = new Vector2(pageNamePosVector[0] + ((pageNameSizeVector[0] - pageNameLabel.TextWidth) / 2), pageNamePosVector[1]);
             }
             string entryText = "";
             var entryTextTemp = new List<string>(); ;
@@ -810,10 +820,14 @@ namespace BestiaryMod
             imagePanel.Position = picturebackgroundPosVector;
 
             titleLable = new TextLabel();
-            titleLable.Position = new Vector2(16, 16);
-            titleLable.Size = new Vector2(80, 16);
+            if(oldFont == false)    titleLable.Position = new Vector2(15, 16); else titleLable.Position = new Vector2(15, 20);
+            
+            titleLable.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
+            titleLable.Size = new Vector2(52, 22);
             titleLable.Name = "title_label";
             titleLable.Font = DaggerfallUI.TitleFont;
+            if(oldFont == true) titleLable.TextScale = 0.75f;
+
             mainPanel.Components.Add(titleLable);
 
             monsterNameLabel = new TextLabel();
@@ -1018,14 +1032,14 @@ namespace BestiaryMod
             rightArrowTexture = DaggerfallUI.GetTextureFromResources("button_arrow_right");
             
             rightArrowButton = new Button();
-            rightArrowButton.Position = new Vector2(112, 26);
+            rightArrowButton.Position = new Vector2(98, 25);
             rightArrowButton.Size = new Vector2(10, 10);
             rightArrowButton.BackgroundTexture = rightArrowTexture;
             rightArrowButton.OnMouseClick += RightArrowButton_OnMouseClick;
             mainPanel.Components.Add(rightArrowButton);
 
             leftArrowButton = new Button();
-            leftArrowButton.Position = new Vector2(80, 26);
+            leftArrowButton.Position = new Vector2(86, 25);
             leftArrowButton.Size = new Vector2(10, 10);
             leftArrowButton.BackgroundTexture = leftArrowTexture;
             leftArrowButton.OnMouseClick += LeftArrowButton_OnMouseClick;
@@ -1053,9 +1067,15 @@ namespace BestiaryMod
             mainPanel.Components.Add(attackButton);
 
             pageNameLabel = new TextLabel();
-            pageNameLabel.Position = new Vector2(80, 14);
-            pageNameLabel.Size = new Vector2(40, 13);
-            pageNameLabel.Font = DaggerfallUI.LargeFont;
+            pageNameLabel.Position = pageNamePosVector;
+            pageNameLabel.Size = pageNameSizeVector;
+            if(oldFont == false)
+            {
+                pageNameLabel.Font = DaggerfallUI.LargeFont;
+                pageNameLabel.TextScale = 0.8f;
+            }
+            else pageNamePosVector[1] = 18;
+
             pageNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
             mainPanel.Components.Add(pageNameLabel);
         }
