@@ -1,11 +1,12 @@
-using UnityEngine;
 using System.Collections;
+
 using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
 using DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings;
 
+using UnityEngine;
 
 namespace BestiaryMod
 {

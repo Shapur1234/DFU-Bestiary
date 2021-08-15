@@ -1,17 +1,19 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
 using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
-using DaggerfallWorkshop.Utility.AssetInjection;
+using DaggerfallWorkshop.Game.Utility;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
 using DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings;
-using DaggerfallWorkshop.Game.Utility;
+using DaggerfallWorkshop.Utility.AssetInjection;
+
+using UnityEngine;
 
 namespace BestiaryMod
 {
@@ -35,20 +37,21 @@ namespace BestiaryMod
         public string currentEntry = "";
         public string currentPage = "";
         string currentPagePath = "";
+        string textureSuffix = "";
         bool reloadTexture = false;
         int[] currentTexture = { 267, 0, 0};
 
         // Texture names
-        const string backgroundTextureName = "base_background.png";
-        const string backgroundHDTextureName = "base_background_hd.png";
+        const string backgroundTextureName = "base_background";
         const string attackTrueTextureName = "button_attack_true";
         const string attackFalseTextureName = "button_attack_false";
         // Path to pages
         const string pathToClassicPage = "page_classic";
+        string[] allPages = {"page_animals", "page_atronachs", "page_daedra"};
         
         string defaultEntry;
         string entryToLoad;
-        string[] allPages = {"page_animals", "page_atronachs", "page_daedra"};
+        
         string[,] currentEntries = new string[9, 2];
 
         Texture2D blankTexture;
@@ -285,12 +288,13 @@ namespace BestiaryMod
             bool dreamMOBSFound = dreamMobs != null;
             if (dreamMOBSFound == true)
             {
-                backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundHDTextureName);
+                textureSuffix = "_hd";
             }
             else
             {
-                backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundTextureName);
+                textureSuffix = "";
             }
+            backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundTextureName + textureSuffix);
             if (!backgroundTexture)
                 throw new Exception("BestiaryUI: Could not load background texture.");
         }
@@ -326,7 +330,7 @@ namespace BestiaryMod
                 contentButtonTexture3 = DaggerfallUI.GetTextureFromResources(currentEntries[2, 1]);
 
                 contentButton3 = new Button();
-                contentButton3.Position = new Vector2(96, 162);
+                contentButton3.Position = new Vector2(95, 162);
                 contentButton3.Size = entryButtonSize;
                 contentButton3.BackgroundTexture = contentButtonTexture3;
                 contentButton3.OnMouseClick += ContentButton3_OnMouseClick;
@@ -357,7 +361,7 @@ namespace BestiaryMod
             {
                 contentButtonTexture6 = DaggerfallUI.GetTextureFromResources(currentEntries[5, 1]);
                 contentButton6 = new Button();
-                contentButton6.Position = new Vector2(96, 174);
+                contentButton6.Position = new Vector2(95, 174);
                 contentButton6.Size = entryButtonSize;
                 contentButton6.BackgroundTexture = contentButtonTexture6;
                 contentButton6.OnMouseClick += ContentButton6_OnMouseClick;
@@ -368,7 +372,7 @@ namespace BestiaryMod
                 contentButtonTexture7 = DaggerfallUI.GetTextureFromResources(currentEntries[6, 1]);
 
                 contentButton7 = new Button();
-                contentButton7.Position = new Vector2(4, 186);
+                contentButton7.Position = new Vector2(4, 187);
                 contentButton7.Size = entryButtonSize;
                 contentButton7.BackgroundTexture = contentButtonTexture7;
                 contentButton7.OnMouseClick += ContentButton7_OnMouseClick;
@@ -380,7 +384,7 @@ namespace BestiaryMod
                 contentButtonTexture8 = DaggerfallUI.GetTextureFromResources(currentEntries[7, 1]);
 
                 contentButton8 = new Button();
-                contentButton8.Position = new Vector2(50, 186);
+                contentButton8.Position = new Vector2(50, 187);
                 contentButton8.Size = entryButtonSize;
                 contentButton8.BackgroundTexture = contentButtonTexture8;
                 contentButton8.OnMouseClick += ContentButton8_OnMouseClick;
@@ -391,7 +395,7 @@ namespace BestiaryMod
                 contentButtonTexture9 = DaggerfallUI.GetTextureFromResources(currentEntries[8, 1]);
 
                 contentButton9 = new Button();
-                contentButton9.Position = new Vector2(96, 186);
+                contentButton9.Position = new Vector2(95, 187);
                 contentButton9.Size = entryButtonSize;
                 contentButton9.BackgroundTexture = contentButtonTexture9;
                 contentButton9.OnMouseClick += ContentButton9_OnMouseClick;

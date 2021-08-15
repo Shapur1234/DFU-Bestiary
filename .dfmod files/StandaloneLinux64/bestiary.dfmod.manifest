@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2884218209
+CRC: 3106263025
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 79c9850dcd3c3d9c95aa9f1cdca06215
+    Hash: b79eff7aca17c5a60ed3ac909033fa5d
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -13,6 +13,7 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 49
   Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_iron_atronach.txt
 - Assets/Game/Mods/Bestiary/Textures/button_grizzly_bear.png
@@ -21,7 +22,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_giant_bat.png
 - Assets/Game/Mods/Bestiary/Textures/button_daedra_lord.png
 - Assets/Game/Mods/Bestiary/Textures/button_orcs.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Settings/modsettings.json
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_daedra_seducer.png
@@ -32,6 +32,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_spider.png
 - Assets/Game/Mods/Bestiary/Textures/button_sabertooth_tiger.png
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_sabertooth_tiger.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_giant_bat.txt
@@ -48,7 +49,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_atronach.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_dreugh.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background_hd.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_dreugh.png
 - Assets/Game/Mods/Bestiary/Textures/button_scorpion.png
@@ -58,6 +58,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_seducer.txt
 - Assets/Game/Mods/Bestiary/Textures/button_rat.png
 - Assets/Game/Mods/Bestiary/Textures/button_vampire.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_daedroth.txt
 - Assets/Game/Mods/Bestiary/Textures/button_attack_false.png
 - Assets/Game/Mods/Bestiary/Textures/button_spriggan.png
