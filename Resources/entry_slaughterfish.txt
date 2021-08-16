@@ -1,4 +1,4 @@
-266*1
+266
 button_slaughterfish
 Bestiary
 Slaughterfish

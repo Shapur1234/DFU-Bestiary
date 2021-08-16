@@ -1,0 +1,3 @@
+﻿Lycanthropes
+entry_wereboar
+entry_werewolf

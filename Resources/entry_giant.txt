@@ -1,0 +1,6 @@
+271
+button_giant
+Bestiary
+Giant
+Location: *Forests and pastureland throughout the Bay.
+History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  

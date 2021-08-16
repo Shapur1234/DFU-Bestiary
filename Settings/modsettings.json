@@ -28,6 +28,17 @@
                     "Description": "Set the time it takes to switch one animation frame to another.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.SliderIntKey"
+                },
+                {
+                    "Options": [
+                        "Front",
+                        "Tilted"
+                    ],
+                    "Value": 0,
+                    "Name": "DefaultMobOrientation",
+                    "Description": "Select the default mob orientation in the menu.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 }
             ],
             "$version": "v1"

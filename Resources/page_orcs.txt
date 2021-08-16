@@ -1,0 +1,5 @@
+﻿Orcs
+entry_orc
+entry_orc_sergeant
+entry_orc_shaman
+entry_orc_warlord

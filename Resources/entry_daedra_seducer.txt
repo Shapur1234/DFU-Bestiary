@@ -1,4 +1,4 @@
-284*1
+284
 button_daedra_seducer
 Bestiary
 Daedra Seducer

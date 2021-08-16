@@ -1,4 +1,4 @@
-261*1
+261
 button_spider
 Bestiary
 Spider

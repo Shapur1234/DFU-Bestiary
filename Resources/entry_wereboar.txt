@@ -1,0 +1,6 @@
+269
+button_wereboar
+Bestiary
+Wereboar
+Location: *Oink
+History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  

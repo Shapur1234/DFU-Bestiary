@@ -1,0 +1,6 @@
+﻿Monsters - 2
+entry_dragonling
+entry_dreugh
+entry_gargoyle
+entry_giant
+entry_harpy

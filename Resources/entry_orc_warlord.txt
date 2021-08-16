@@ -1,0 +1,6 @@
+279
+button_orc_warlord
+Bestiary
+Orc Warlord
+Location: *Everywhere, particularly the southern Wrothgarian mountains near Wayrest. 
+History: *Universally reviled for their belligerence and savagery, orcs are particularly common in the Illiac Bay where they are rummored to be reuilding their ancient capitol.

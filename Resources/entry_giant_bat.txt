@@ -1,4 +1,4 @@
-258*0
+258
 button_giant_bat
 Bestiary
 Giant Bat

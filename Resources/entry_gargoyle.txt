@@ -1,0 +1,6 @@
+277
+button_gargoyle
+Bestiary
+Gargoyle
+Location: *Gargoyle and pastureland throughout the Bay.
+History: *Gargoyle and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  

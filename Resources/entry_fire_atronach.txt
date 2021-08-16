@@ -1,4 +1,4 @@
-290*1
+290
 button_fire_atronach
 Bestiary
 Fire atronach
