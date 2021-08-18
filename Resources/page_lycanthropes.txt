@@ -1,3 +1,4 @@
 ﻿Lycanthropes
+summary_lycanthropes
 entry_wereboar
 entry_werewolf

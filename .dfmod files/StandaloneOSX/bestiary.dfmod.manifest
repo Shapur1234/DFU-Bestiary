@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3363962265
+CRC: 2970887814
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7a95dd1dccba010f11e605aef0f2e8a1
+    Hash: 57055f11ce8df773f5bb187c9d465203
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -19,7 +19,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_zombie.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_iron_atronach.txt
 - Assets/Game/Mods/Bestiary/Textures/button_giant.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_grizzly_bear.png
 - Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt
 - Assets/Game/Mods/Bestiary/Textures/blank.png
@@ -34,6 +33,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire_ancient.txt
 - Assets/Game/Mods/Bestiary/Textures/button_lich.png
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
+- Assets/Game/Mods/Bestiary/Resources/summary_monsters2.txt
 - Assets/Game/Mods/Bestiary/Textures/button_daedra_seducer.png
 - Assets/Game/Mods/Bestiary/Resources/entry_flesh_atronach.txt
 - Assets/Game/Mods/Bestiary/Textures/button_harpy.png
@@ -64,6 +64,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_wraith.png
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord.txt
 - Assets/Game/Mods/Bestiary/Resources/page_classic.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Settings/modpresets.json
 - Assets/Game/Mods/Bestiary/Textures/button_arrow_right.png
 - Assets/Game/Mods/Bestiary/Resources/entry_slaughterfish.txt
@@ -75,11 +76,13 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_skeleton.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background_hd.png
 - Assets/Game/Mods/Bestiary/Resources/entry_imp.txt
+- Assets/Game/Mods/Bestiary/Resources/summary_atronachs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_dreugh.png
 - Assets/Game/Mods/Bestiary/Textures/button_orc_sergeant.png
 - Assets/Game/Mods/Bestiary/Textures/button_scorpion.png
 - Assets/Game/Mods/Bestiary/Textures/button_flesh_atronach.png
+- Assets/Game/Mods/Bestiary/Resources/summary_orcs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_nymph.png
 - Assets/Game/Mods/Bestiary/Resources/entry_orc.txt
 - Assets/Game/Mods/Bestiary/Resources/page_monsters2.txt
@@ -94,7 +97,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_rat.png
 - Assets/Game/Mods/Bestiary/Textures/button_zombie.png
 - Assets/Game/Mods/Bestiary/Textures/button_lamia.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_vampire.png
 - Assets/Game/Mods/Bestiary/Textures/button_werewolf.png
 - Assets/Game/Mods/Bestiary/Resources/entry_daedroth.txt
@@ -107,17 +109,23 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/page_orcs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_ancient_lich.txt
 - Assets/Game/Mods/Bestiary/Resources/page_animals.txt
+- Assets/Game/Mods/Bestiary/Resources/summary_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_ice_atronach.png
 - Assets/Game/Mods/Bestiary/Textures/button_daedroth.png
 - Assets/Game/Mods/Bestiary/Resources/entry_spider.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_ghost.txt
+- Assets/Game/Mods/Bestiary/Resources/summary_lycanthropes.txt
 - Assets/Game/Mods/Bestiary/Resources/page_undead.txt
 - Assets/Game/Mods/Bestiary/Bestiary.dfmod.json
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_ancient_lich.png
 - Assets/Game/Mods/Bestiary.dfmod.json
 - Assets/Game/Mods/Bestiary/Textures/base_background.png
+- Assets/Game/Mods/Bestiary/Resources/summary_undead.txt
 - Assets/Game/Mods/Bestiary/Textures/button_mummy.png
 - Assets/Game/Mods/Bestiary/Textures/button_ice_daedra.png
+- Assets/Game/Mods/Bestiary/Resources/summary_monsters1.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_grizzly_bear.txt
 - Assets/Game/Mods/Bestiary/Textures/button_imp.png
+- Assets/Game/Mods/Bestiary/Resources/summary_animals.txt
 Dependencies: []

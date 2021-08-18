@@ -1,0 +1,12 @@
+255
+Animals
+Bestiary
+Summary - Animals
+Overview:*Animals are mundane creatures, or oversized versions of them. They never carry any treasure, though you may still retrieve arrows from their corpses. Certain animals are carriers of disease. No special materials are required to harm them.
+Killcount:*Rat - 0
+ *Bat - 0
+ *Bear - 0
+ *Tiger - 0
+ *Scorpion - 0
+ *Slaughterfish - 0
+ *Spider - 0

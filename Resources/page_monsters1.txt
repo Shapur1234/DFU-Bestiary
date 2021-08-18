@@ -1,7 +1,8 @@
 ﻿Monsters - 1
+summary_monsters1
+entry_centaur
 entry_harpy
 entry_imp
 entry_lamia
 entry_nymph
 entry_spriggan
-entry_centaur

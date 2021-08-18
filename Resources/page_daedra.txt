@@ -1,4 +1,5 @@
 ﻿Daedra
+summary_daedra
 entry_daedra_lord
 entry_daedra_seducer
 entry_daedroth

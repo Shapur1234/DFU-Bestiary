@@ -1,4 +1,5 @@
 ﻿Undead
+summary_undead
 entry_ghost
 entry_lich
 entry_ancient_lich

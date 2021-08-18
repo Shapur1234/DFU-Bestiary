@@ -1,4 +1,5 @@
 ﻿Monsters - 2
+summary_monsters2
 entry_dragonling
 entry_dreugh
 entry_gargoyle

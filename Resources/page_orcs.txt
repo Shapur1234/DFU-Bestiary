@@ -1,4 +1,5 @@
 ﻿Orcs
+summary_orcs
 entry_orc
 entry_orc_sergeant
 entry_orc_shaman

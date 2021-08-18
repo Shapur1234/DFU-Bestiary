@@ -2,6 +2,14 @@
 button_fire_atronach
 Bestiary
 Fire atronach
-Description: *Fire Atronachs are golems constructed of flames. 
-Location: *Rats are found everywhere, especially in underground tunnels and near human settlements.
-Fighting Strategies: *Consider attacking from a distance, as not to contract a disease.
+Summary:*Fire Atronachs are golems constructed of flames and possess a fire-based damage aura. They can be hit by weapons of any material.
+Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use cold-based spells.
+Abilities:*Damage Aura
+ *Healed by fire-based spells
+ *Immunity to Paralysis, Poison, Fire and Disease
+ *Regenerates Health in Darkness
+ *Adrenaline Rush
+ *Bonus to Hit Humanoids
+ *Low Tolerance to Frost
+ *Takes Damage from Holy Places
+Spells:*None
