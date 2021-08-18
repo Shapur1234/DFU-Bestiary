@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1311396112
+CRC: 3177297398
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e2f2ba71baa2e57324dee01c2da2e04e
+    Hash: 8529058d89905d8da0391a146d098909
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -41,6 +41,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_centaur.png
 - Assets/Game/Mods/Bestiary/Textures/button_attack_true.png
 - Assets/Game/Mods/Bestiary/Textures/button_orc_warlord.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_fire_atronach.png
 - Assets/Game/Mods/Bestiary/Textures/button_spider.png
 - Assets/Game/Mods/Bestiary/Resources/entry_giant.txt
@@ -64,7 +65,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_wraith.png
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord.txt
 - Assets/Game/Mods/Bestiary/Resources/page_classic.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Settings/modpresets.json
 - Assets/Game/Mods/Bestiary/Textures/button_arrow_right.png
 - Assets/Game/Mods/Bestiary/Resources/entry_slaughterfish.txt
@@ -117,7 +118,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/summary_lycanthropes.txt
 - Assets/Game/Mods/Bestiary/Resources/page_undead.txt
 - Assets/Game/Mods/Bestiary/Bestiary.dfmod.json
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_ancient_lich.png
 - Assets/Game/Mods/Bestiary.dfmod.json
 - Assets/Game/Mods/Bestiary/Textures/base_background.png
