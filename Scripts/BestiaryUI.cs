@@ -20,42 +20,45 @@ namespace BestiaryMod
     class BestiaryUI : DaggerfallPopupWindow
     {
         Mod mod = ModManager.Instance.GetMod("Bestiary");
-        Mod dreamMobs = ModManager.Instance.GetMod("DREAM - MOBS");
-        // Settings
-        public bool isShowing = false;
-        public bool animate;
-        public bool oldFont = false;
-        public bool classicMode = false;
-        int animationUpdateDelay = 45;
-        int descriptionLableMaxCharacters;
+
+        public bool isShowing;
+        bool animate;
+        bool oldFont;
+        bool classicMode;
+        int animationUpdateDelay;
+
+        int descriptionLabelMaxCharacters;
         int textLabelXOffset;
         int contentOffset;
-        int maxTextureHeight = 0;
-        int maxTextureWidth = 0;
-        int attackModeOffset = 0;
-        int defaultRotation = 0;
+        int maxTextureHeight;
+        int maxTextureWidth;
+        int attackModeOffset;
+        int defaultRotation;
 
-        public string currentEntry = "";
-        public string currentPage = "";
-        string currentPagePath = "";
-        string textureSuffix = "";
-        bool reloadTexture = false;
+        public string currentEntry;
+        public string currentPage;
+        string currentSummary;
+        string currentPagePath;
+        bool reloadTexture;
         int[] currentTexture = { 267, 0, 0};
 
-        // Texture names
         const string backgroundTextureName = "base_background";
+        const string rightArrowTextureName = "button_arrow_right";
+        const string leftArrowTextureName = "button_arrow_left";
         const string attackTrueTextureName = "button_attack_true";
         const string attackFalseTextureName = "button_attack_false";
-        // Path to pages
+        const string blankTextureName = "blank";
+
         const string pathToClassicPage = "page_classic";
         string[] allPages = {"page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead"};
+        List<Vector2> buttonAllPos = new List<Vector2> {new Vector2(4, 162), new Vector2(50, 162), new Vector2(95, 162), new Vector2(4, 174), new Vector2(50, 174), new Vector2(95, 174), new Vector2(4, 187), new Vector2(50, 187), new Vector2(95, 187)};
         
         string defaultEntry;
         string entryToLoad;
         
         string[,] currentEntries = new string[9, 2];
-        string currentSummary;
 
+        List<Texture2D> contentButtonTextures = new List<Texture2D>();
         Texture2D blankTexture;
         Texture2D leftArrowTexture;
         Texture2D rightArrowTexture;
@@ -63,15 +66,6 @@ namespace BestiaryMod
         Texture2D pictureTexture;
         Texture2D attackTrueTexture;
         Texture2D attackFalseTexture;
-        Texture2D contentButtonTexture1;
-        Texture2D contentButtonTexture2;
-        Texture2D contentButtonTexture3;
-        Texture2D contentButtonTexture4;
-        Texture2D contentButtonTexture5;
-        Texture2D contentButtonTexture6;
-        Texture2D contentButtonTexture7;
-        Texture2D contentButtonTexture8;
-        Texture2D contentButtonTexture9;
 
         Vector2 backgroundSizeVector;
         Vector2 picturebackgroundPosVector;
@@ -81,62 +75,24 @@ namespace BestiaryMod
         Vector2 pageNamePosVector;
         Vector2 pageNameSizeVector;
 
-        #region UI Controls
         Panel mainPanel;
         Panel imagePanel;
-        TextLabel pageNameLabel;
-        TextLabel titleLable;
-        TextLabel monsterNameLabel;
-        TextLabel subTitleLable1;
-        TextLabel subTitleLable2;
-        TextLabel subTitleLable3;
-        TextLabel subTitleLable4;
-        TextLabel subTitleLable5;
-        TextLabel subTitleLable6;
-        TextLabel subTitleLable7;
-        TextLabel subTitleLable8;
-        TextLabel subTitleLable9;
-        TextLabel subTitleLable10;
-        TextLabel subTitleLable11;
-        TextLabel subTitleLable12;
-        TextLabel subTitleLable13;
-        TextLabel subTitleLable14;
-
-        TextLabel descriptionLable1;
-        TextLabel descriptionLable2;
-        TextLabel descriptionLable3;
-        TextLabel descriptionLable4;
-        TextLabel descriptionLable5;
-        TextLabel descriptionLable6;
-        TextLabel descriptionLable7;
-        TextLabel descriptionLable8;
-        TextLabel descriptionLable9;
-        TextLabel descriptionLable10;
-        TextLabel descriptionLable11;
-        TextLabel descriptionLable12;
-        TextLabel descriptionLable13;
-        TextLabel descriptionLable14;
-
         
-        Button rightArrowButton;
-        Button leftArrowButton;
+        List<TextLabel> subtitleLabels = new List<TextLabel>();
+        List<TextLabel> descriptionLabels = new List<TextLabel>();
+        TextLabel pageNameLabel;
+        TextLabel titleLabel;
+        TextLabel monsterNameLabel;
+
+        List<Button> contentButtons = new List<Button>();
+        Button pageRightButton;
+        Button pageLeftButton;
         Button rightRotateButton;
         Button leftRotateButton;
         Button attackButton;
         Button exitButton;
         Button summaryButton;
-        Button contentButton3;
-        Button contentButton1;
-        Button contentButton2;
-        Button contentButton4;
-        Button contentButton5;
-        Button contentButton6;
-        Button contentButton7;
-        Button contentButton8;
-        Button contentButton9;
-        
 
-        #endregion
         public BestiaryUI(IUserInterfaceManager uiManager)
             : base(uiManager)
         {
@@ -167,16 +123,16 @@ namespace BestiaryMod
 
             if (oldFont == false)
             {
-                descriptionLableMaxCharacters = 48;
-                textLabelXOffset = 2;
+                descriptionLabelMaxCharacters = 48;
+                textLabelXOffset = 30;
             }
             else
             {
-                descriptionLableMaxCharacters = 24;
-                textLabelXOffset = 18;
+                descriptionLabelMaxCharacters = 24;
+                textLabelXOffset = 46;
             }
 
-            setUpUIElements();
+            
 
             if (classicMode == true)
             {
@@ -185,10 +141,10 @@ namespace BestiaryMod
             else
             {
                 textPath = "page_animals";
-                LoadArrowsNStuff();
             }
             currentEntries = getcurrentEntriesFromFile(textPath);
 
+            setUpUIElements();
             loadPage();
 
             entryToLoad = currentSummary;
@@ -206,19 +162,17 @@ namespace BestiaryMod
             int newPosX = 0;
             int newPosY = 0;
             float temp = 0;
-
             
             if (Input.GetKeyUp(exitKey))
                 CloseWindow();
 
-            
             if (animate == true)
             {
                 if (currentTexture[0] == 284 && currentTexture[2] > (animationUpdateDelay * 3) - 1) currentTexture[2] = 0;
                 
                 if (currentTexture[2] % animationUpdateDelay == 0)
                 {
-                    if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, TextureMap.Normal, false, out pictureTexture)) pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
+                    if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture)) pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
                     reloadTexture = true;
                 }
 
@@ -311,136 +265,51 @@ namespace BestiaryMod
 
         void LoadTextures()
         {
-            blankTexture = DaggerfallUI.GetTextureFromResources("blank");
-            attackTrueTexture = DaggerfallUI.GetTextureFromResources(attackTrueTextureName);
-            attackFalseTexture = DaggerfallUI.GetTextureFromResources(attackFalseTextureName);
-            
-            bool dreamMOBSFound = dreamMobs != null;
-            if (dreamMOBSFound == true)
-            {
-                textureSuffix = "_hd";
-            }
-            else
-            {
-                textureSuffix = "";
-            }
-            backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundTextureName + textureSuffix);
+            blankTexture = DaggerfallUI.GetTextureFromResources(blankTextureName);
+            backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundTextureName);
+
+            if (!blankTexture)
+                throw new Exception("BestiaryUI: Could not load blankTexture.");
             if (!backgroundTexture)
-                throw new Exception("BestiaryUI: Could not load background texture.");
+                throw new Exception("BestiaryUI: Could not load backgroundTexture.");
+            
+            if(!classicMode)
+            {
+                leftArrowTexture = DaggerfallUI.GetTextureFromResources(leftArrowTextureName);
+                rightArrowTexture = DaggerfallUI.GetTextureFromResources(rightArrowTextureName);
+                attackTrueTexture = DaggerfallUI.GetTextureFromResources(attackTrueTextureName);
+                attackFalseTexture = DaggerfallUI.GetTextureFromResources(attackFalseTextureName);
+
+                if (!leftArrowTexture)
+                    throw new Exception("BestiaryUI: Could not load leftArrowTexture.");
+                if (!rightArrowTexture)
+                    throw new Exception("BestiaryUI: Could not load rightArrowTexture.");
+                if (!attackTrueTexture)
+                    throw new Exception("BestiaryUI: Could not load attackTrueTexture.");
+                if (!attackFalseTexture)
+                    throw new Exception("BestiaryUI: Could not load attackFalseTexture.");
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                contentButtonTextures.Add(DaggerfallUI.GetTextureFromResources(blankTextureName));
+            }
         }
 
         
         void loadPage()
-        {   
+        {  
             defaultEntry = currentSummary;
-            if(!String.IsNullOrEmpty(currentEntries[0, 0]) && !String.IsNullOrEmpty(currentEntries[0, 1]))
+
+            for (int i = 0; i < contentButtonTextures.Count; i++)
             {
-                contentButtonTexture1 = DaggerfallUI.GetTextureFromResources(currentEntries[0, 1] + textureSuffix);
-                if(!contentButtonTexture1)  contentButtonTexture1 = DaggerfallUI.GetTextureFromResources(currentEntries[0, 1]);
+                if (!String.IsNullOrEmpty(currentEntries[i, 1]))
+                {
+                    contentButtonTextures[i] = DaggerfallUI.GetTextureFromResources(currentEntries[i, 1]);
+                    if(!contentButtonTextures[i])
+                        throw new Exception("BestiaryUI: Could not load contentButtonTextures" + (i) + ".");
 
-                contentButton1 = new Button();
-                contentButton1.Position = new Vector2(4, 162);
-                contentButton1.Size = entryButtonSize;
-                contentButton1.BackgroundTexture = contentButtonTexture1;
-                contentButton1.OnMouseClick += ContentButton1_OnMouseClick;
-                mainPanel.Components.Add(contentButton1);
-            }
-            if(!String.IsNullOrEmpty(currentEntries[1, 0]) && !String.IsNullOrEmpty(currentEntries[1, 1]))
-            {
-                contentButtonTexture2 = DaggerfallUI.GetTextureFromResources(currentEntries[1, 1] + textureSuffix);
-                if(!contentButtonTexture2)  contentButtonTexture2 = DaggerfallUI.GetTextureFromResources(currentEntries[1, 1]);
-
-                contentButton2 = new Button();
-                contentButton2.Position = new Vector2(50, 162);
-                contentButton2.Size = entryButtonSize;
-                contentButton2.BackgroundTexture = contentButtonTexture2;
-                contentButton2.OnMouseClick += ContentButton2_OnMouseClick;
-                mainPanel.Components.Add(contentButton2);
-            }
-            if(!String.IsNullOrEmpty(currentEntries[2, 0]) && !String.IsNullOrEmpty(currentEntries[2, 1]))
-            {
-                contentButtonTexture3 = DaggerfallUI.GetTextureFromResources(currentEntries[2, 1] + textureSuffix);
-                if(!contentButtonTexture3)  contentButtonTexture3 = DaggerfallUI.GetTextureFromResources(currentEntries[2, 1]);
-
-                contentButton3 = new Button();
-                contentButton3.Position = new Vector2(95, 162);
-                contentButton3.Size = entryButtonSize;
-                contentButton3.BackgroundTexture = contentButtonTexture3;
-                contentButton3.OnMouseClick += ContentButton3_OnMouseClick;
-                mainPanel.Components.Add(contentButton3);
-            }
-            if(!String.IsNullOrEmpty(currentEntries[3, 0]) && !String.IsNullOrEmpty(currentEntries[3, 1]))
-            {
-                contentButtonTexture4 = DaggerfallUI.GetTextureFromResources(currentEntries[3, 1] + textureSuffix);
-                if(!contentButtonTexture4)  contentButtonTexture4 = DaggerfallUI.GetTextureFromResources(currentEntries[3, 1]);
-
-                contentButton4 = new Button();
-                contentButton4.Position = new Vector2(4, 174);
-                contentButton4.Size = entryButtonSize;
-                contentButton4.BackgroundTexture = contentButtonTexture4;
-                contentButton4.OnMouseClick += ContentButton4_OnMouseClick;
-                mainPanel.Components.Add(contentButton4);
-            }
-            if(!String.IsNullOrEmpty(currentEntries[4, 0]) && !String.IsNullOrEmpty(currentEntries[4, 1]))
-            {
-                contentButtonTexture5 = DaggerfallUI.GetTextureFromResources(currentEntries[4, 1] + textureSuffix);
-                if(!contentButtonTexture5)  contentButtonTexture5 = DaggerfallUI.GetTextureFromResources(currentEntries[4, 1]);
-
-                contentButton5 = new Button();
-                contentButton5.Position = new Vector2(50, 174);
-                contentButton5.Size = entryButtonSize;
-                contentButton5.BackgroundTexture = contentButtonTexture5;
-                contentButton5.OnMouseClick += ContentButton5_OnMouseClick;
-                mainPanel.Components.Add(contentButton5);
-            }
-            if(!String.IsNullOrEmpty(currentEntries[5, 0]) && !String.IsNullOrEmpty(currentEntries[5, 1]))
-            {
-                contentButtonTexture6 = DaggerfallUI.GetTextureFromResources(currentEntries[5, 1] + textureSuffix);
-                if(!contentButtonTexture6)  contentButtonTexture6 = DaggerfallUI.GetTextureFromResources(currentEntries[5, 1]);
-
-                contentButton6 = new Button();
-                contentButton6.Position = new Vector2(95, 174);
-                contentButton6.Size = entryButtonSize;
-                contentButton6.BackgroundTexture = contentButtonTexture6;
-                contentButton6.OnMouseClick += ContentButton6_OnMouseClick;
-                mainPanel.Components.Add(contentButton6);
-            }
-            if(!String.IsNullOrEmpty(currentEntries[6, 0]) && !String.IsNullOrEmpty(currentEntries[6, 1]))
-            {
-                contentButtonTexture7 = DaggerfallUI.GetTextureFromResources(currentEntries[6, 1] + textureSuffix);
-                if(!contentButtonTexture7)  contentButtonTexture7 = DaggerfallUI.GetTextureFromResources(currentEntries[6, 1]);
-
-                contentButton7 = new Button();
-                contentButton7.Position = new Vector2(4, 187);
-                contentButton7.Size = entryButtonSize;
-                contentButton7.BackgroundTexture = contentButtonTexture7;
-                contentButton7.OnMouseClick += ContentButton7_OnMouseClick;
-                mainPanel.Components.Add(contentButton7);
-
-            }
-            if(!String.IsNullOrEmpty(currentEntries[7, 0]) && !String.IsNullOrEmpty(currentEntries[7, 1]))
-            {
-                contentButtonTexture8 = DaggerfallUI.GetTextureFromResources(currentEntries[7, 1] + textureSuffix);
-                if(!contentButtonTexture8)  contentButtonTexture8 = DaggerfallUI.GetTextureFromResources(currentEntries[7, 1]);
-
-                contentButton8 = new Button();
-                contentButton8.Position = new Vector2(50, 187);
-                contentButton8.Size = entryButtonSize;
-                contentButton8.BackgroundTexture = contentButtonTexture8;
-                contentButton8.OnMouseClick += ContentButton8_OnMouseClick;
-                mainPanel.Components.Add(contentButton8);
-            }
-            if(!String.IsNullOrEmpty(currentEntries[8, 0]) && !String.IsNullOrEmpty(currentEntries[8, 1]))
-            {
-                contentButtonTexture9 = DaggerfallUI.GetTextureFromResources(currentEntries[8, 1] + textureSuffix);
-                if(!contentButtonTexture9)  contentButtonTexture9 = DaggerfallUI.GetTextureFromResources(currentEntries[8, 1]);
-
-                contentButton9 = new Button();
-                contentButton9.Position = new Vector2(95, 187);
-                contentButton9.Size = entryButtonSize;
-                contentButton9.BackgroundTexture = contentButtonTexture9;
-                contentButton9.OnMouseClick += ContentButton9_OnMouseClick;
-                mainPanel.Components.Add(contentButton9);
+                    contentButtons[i].BackgroundTexture = contentButtonTextures[i];
+                }
             }
             resetTextLabels();
         }
@@ -516,7 +385,7 @@ namespace BestiaryMod
                     case 1:
                         break;
                     case 2:
-                        titleLable.Text = result[2];
+                        titleLabel.Text = result[2];
                         break;
                     case 3:
                         monsterNameLabel.Text = result[3];
@@ -532,47 +401,18 @@ namespace BestiaryMod
 
         void resetTextLabels()
         {
-            subTitleLable1.Text = "";
-            subTitleLable2.Text = "";
-            subTitleLable3.Text = "";
-            subTitleLable4.Text = "";
-            subTitleLable5.Text = "";
-            subTitleLable6.Text = "";
-            subTitleLable7.Text = "";
-            subTitleLable8.Text = "";
-            subTitleLable9.Text = "";
-            subTitleLable10.Text = "";
-            subTitleLable11.Text = "";
-            subTitleLable12.Text = "";
-            subTitleLable13.Text = "";
-            subTitleLable14.Text = "";
-
-            descriptionLable1.Text = "";
-            descriptionLable2.Text = "";
-            descriptionLable3.Text = "";
-            descriptionLable4.Text = "";
-            descriptionLable5.Text = "";
-            descriptionLable6.Text = "";
-            descriptionLable7.Text = "";
-            descriptionLable8.Text = "";
-            descriptionLable9.Text = "";
-            descriptionLable10.Text = "";
-            descriptionLable11.Text = "";
-            descriptionLable12.Text = "";
-            descriptionLable13.Text = "";
-            descriptionLable14.Text = "";
+            for (int i = 0; i < subtitleLabels.Count; i++)
+            {
+                subtitleLabels[i].Text = "";
+                descriptionLabels[i].Text = "";
+            }  
         }
-        void resetLabelTextures()
+        void resetButtonTextures()
         {
-            if (contentButton1 != null) contentButton1.BackgroundTexture = blankTexture;
-            if (contentButton2 != null) contentButton2.BackgroundTexture = blankTexture;
-            if (contentButton3 != null) contentButton3.BackgroundTexture = blankTexture;
-            if (contentButton4 != null) contentButton4.BackgroundTexture = blankTexture;
-            if (contentButton5 != null) contentButton5.BackgroundTexture = blankTexture;
-            if (contentButton6 != null) contentButton6.BackgroundTexture = blankTexture;
-            if (contentButton7 != null) contentButton7.BackgroundTexture = blankTexture;
-            if (contentButton8 != null) contentButton8.BackgroundTexture = blankTexture;
-            if (contentButton9 != null) contentButton9.BackgroundTexture = blankTexture;
+            for (int i = 0; i < contentButtons.Count; i++)
+            {
+                contentButtons[i].BackgroundTexture = blankTexture;
+            }
         }
         static string SplitLineToMultiline(string input, int rowLength) // taken from here: https://codereview.stackexchange.com/questions/54697/convert-string-to-multiline-text
         {
@@ -613,112 +453,9 @@ namespace BestiaryMod
             return string.Join(" ", words);
         }
 
-
-        void setSingleDescriptionLabelText(string text, int number)
-        {
-            switch (number)
-            {
-                case 1:
-                    descriptionLable1.Text = text;
-                    break;
-                case 2:
-                    descriptionLable2.Text = text;
-                    break;
-                case 3:
-                    descriptionLable3.Text = text;
-                    break;
-                case 4:
-                    descriptionLable4.Text = text;
-                    break;
-                case 5:
-                    descriptionLable5.Text = text;
-                    break;
-                case 6:
-                    descriptionLable6.Text = text;
-                    break;
-                case 7:
-                    descriptionLable7.Text = text;
-                    break;
-                case 8:
-                    descriptionLable8.Text = text;
-                    break;
-                case 9:
-                    descriptionLable9.Text = text;
-                    break;
-                case 10:
-                    descriptionLable10.Text = text;
-                    break;
-                case 11:
-                    descriptionLable11.Text = text;
-                    break;
-                case 12:
-                    descriptionLable12.Text = text;
-                    break;
-                case 13:
-                    descriptionLable13.Text = text;
-                    break;
-                case 14:
-                    descriptionLable14.Text = text;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        void setSingleSubTitleabelText(string text, int number)
-        {
-            switch (number)
-            {
-                case 1:
-                    subTitleLable1.Text = text;
-                    break;
-                case 2:
-                    subTitleLable2.Text = text;
-                    break;
-                case 3:
-                    subTitleLable3.Text = text;
-                    break;
-                case 4:
-                    subTitleLable4.Text = text;
-                    break;
-                case 5:
-                    subTitleLable5.Text = text;
-                    break;
-                case 6:
-                    subTitleLable6.Text = text;
-                    break;
-                case 7:
-                    subTitleLable7.Text = text;
-                    break;
-                case 8:
-                    subTitleLable8.Text = text;
-                    break;
-                case 9:
-                    subTitleLable9.Text = text;
-                    break;
-                case 10:
-                    subTitleLable10.Text = text;
-                    break;
-                case 11:
-                    subTitleLable11.Text = text;
-                    break;
-                case 12:
-                    subTitleLable12.Text = text;
-                    break;
-                case 13:
-                    subTitleLable13.Text = text;
-                    break;
-                case 14:
-                    subTitleLable14.Text = text;
-                    break;
-                default:
-                    break;
-            }
-        }
-
         void applyText(string[] inputText)
         {
-            int labelNumber = 1;
+            int labelNumber = 0;
             int displayedEntries = 0;
             var inputTextCleared = new List<string>();
             List<List<string>> textTemp = new List<List<string>>();
@@ -739,7 +476,7 @@ namespace BestiaryMod
             {
                 bool first = true;
                 var temp = new List<string>();
-                var multiline_text = SplitLineToMultiline(ReverseWords(textTemp[i][1]), descriptionLableMaxCharacters);
+                var multiline_text = SplitLineToMultiline(ReverseWords(textTemp[i][1]), descriptionLabelMaxCharacters);
                 var singlelineText = new List<string>();
                 var singleline_text_temp = multiline_text.Split(new[] { '\r', '\n' });
 
@@ -771,20 +508,20 @@ namespace BestiaryMod
             {
                 contentOffset = text.Count - 1;
             }
-            for (int i = contentOffset; i < text.Count; i++)
+            for (int i = contentOffset; i < text.Count && labelNumber < 14; i++)
             {
                 string[] multiItem = text[i].Split('&');
 
                 if (multiItem.Length > 1)
                 {
-                    setSingleSubTitleabelText(multiItem[0], labelNumber);
-                    setSingleDescriptionLabelText(multiItem[1], labelNumber);
+                    subtitleLabels[labelNumber].Text = multiItem[0];
+                    descriptionLabels[labelNumber].Text = multiItem[1];
 
                     displayedEntries++;
                 }
                 else
                 {
-                    setSingleDescriptionLabelText(multiItem[0], labelNumber);
+                    descriptionLabels[labelNumber].Text = multiItem[0];
 
                     displayedEntries++;
                 }
@@ -845,25 +582,25 @@ namespace BestiaryMod
             }
             return resultEntries;
         }
-        Texture2D FlipTexture(Texture2D original)
-        {
-            Texture2D flipped = new Texture2D(original.width, original.height);
-            flipped.filterMode = FilterMode.Point;
+        // Texture2D FlipTexture(Texture2D original)
+        // {
+        //     Texture2D flipped = new Texture2D(original.width, original.height);
+        //     flipped.filterMode = FilterMode.Point;
 
 
-            int xN = original.width;
-            int yN = original.height;
+        //     int xN = original.width;
+        //     int yN = original.height;
 
-            for(int i = 0; i < xN; i++)
-            {
-                for(int j = 0; j < yN; j++)
-                {
-                    flipped.SetPixel(xN - i - 1, j, original.GetPixel(i, j));
-                }
-            }
-            flipped.Apply();
-            return flipped;
-        }
+        //     for(int i = 0; i < xN; i++)
+        //     {
+        //         for(int j = 0; j < yN; j++)
+        //         {
+        //             flipped.SetPixel(xN - i - 1, j, original.GetPixel(i, j));
+        //         }
+        //     }
+        //     flipped.Apply();
+        //     return flipped;
+        // }
 
         void setUpUIElements()
         {
@@ -885,16 +622,16 @@ namespace BestiaryMod
             imagePanel.BackgroundTexture = pictureTexture;
             imagePanel.Position = picturebackgroundPosVector;
 
-            titleLable = new TextLabel();
-            if(oldFont == false)    titleLable.Position = new Vector2(15, 16); else titleLable.Position = new Vector2(15, 20);
+            titleLabel = new TextLabel();
+            if(oldFont == false)    titleLabel.Position = new Vector2(15, 16); else titleLabel.Position = new Vector2(15, 20);
             
-            titleLable.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
-            titleLable.Size = new Vector2(52, 22);
-            titleLable.Name = "title_label";
-            titleLable.Font = DaggerfallUI.TitleFont;
-            if(oldFont == true) titleLable.TextScale = 0.7f;
+            titleLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
+            titleLabel.Size = new Vector2(52, 22);
+            titleLabel.Name = "title_label";
+            titleLabel.Font = DaggerfallUI.TitleFont;
+            if(oldFont == true) titleLabel.TextScale = 0.7f;
 
-            mainPanel.Components.Add(titleLable);
+            mainPanel.Components.Add(titleLabel);
 
             monsterNameLabel = new TextLabel();
             monsterNameLabel.Position = new Vector2(144, 24);
@@ -903,253 +640,126 @@ namespace BestiaryMod
             monsterNameLabel.Font = DaggerfallUI.LargeFont;
             mainPanel.Components.Add(monsterNameLabel);
 
-            subTitleLable1 = new TextLabel();
-            subTitleLable1.Position = new Vector2(144, 40);
-            subTitleLable1.Size = new Vector2(40, 14);
-            subTitleLable1.Name = "sub_label_1";
-            mainPanel.Components.Add(subTitleLable1);
-
-            subTitleLable2 = new TextLabel();
-            subTitleLable2.Position = new Vector2(144, 50);
-            subTitleLable2.Size = new Vector2(40, 14);
-            subTitleLable2.Name = "sub_label_2";
-            mainPanel.Components.Add(subTitleLable2);
-
-            subTitleLable3 = new TextLabel();
-            subTitleLable3.Position = new Vector2(144, 60);
-            subTitleLable3.Size = new Vector2(40, 14);
-            subTitleLable3.Name = "sub_label_3";
-            mainPanel.Components.Add(subTitleLable3);
-
-            subTitleLable4 = new TextLabel();
-            subTitleLable4.Position = new Vector2(144, 70);
-            subTitleLable4.Size = new Vector2(40, 14);
-            subTitleLable4.Name = "sub_label_4";
-            mainPanel.Components.Add(subTitleLable4);
-
-            subTitleLable5 = new TextLabel();
-            subTitleLable5.Position = new Vector2(144, 80);
-            subTitleLable5.Size = new Vector2(40, 14);
-            subTitleLable5.Name = "sub_label_5";
-            mainPanel.Components.Add(subTitleLable5);
-
-            subTitleLable6 = new TextLabel();
-            subTitleLable6.Position = new Vector2(144, 90);
-            subTitleLable6.Size = new Vector2(40, 14);
-            subTitleLable6.Name = "sub_label_6";
-            mainPanel.Components.Add(subTitleLable6);
-
-            subTitleLable7 = new TextLabel();
-            subTitleLable7.Position = new Vector2(144, 100);
-            subTitleLable7.Size = new Vector2(40, 14);
-            subTitleLable7.Name = "sub_label_7";
-            mainPanel.Components.Add(subTitleLable7);
-
-            subTitleLable8 = new TextLabel();
-            subTitleLable8.Position = new Vector2(144, 110);
-            subTitleLable8.Size = new Vector2(40, 14);
-            subTitleLable8.Name = "sub_label_8";
-            mainPanel.Components.Add(subTitleLable8);
-
-            subTitleLable9 = new TextLabel();
-            subTitleLable9.Position = new Vector2(144, 120);
-            subTitleLable9.Size = new Vector2(40, 14);
-            subTitleLable9.Name = "sub_label_9";
-            mainPanel.Components.Add(subTitleLable9);
-
-            subTitleLable10 = new TextLabel();
-            subTitleLable10.Position = new Vector2(144, 130);
-            subTitleLable10.Size = new Vector2(40, 14);
-            subTitleLable10.Name = "sub_label_10";
-            mainPanel.Components.Add(subTitleLable10);
-
-            subTitleLable11 = new TextLabel();
-            subTitleLable11.Position = new Vector2(144, 140);
-            subTitleLable11.Size = new Vector2(40, 14);
-            subTitleLable11.Name = "sub_label_11";
-            mainPanel.Components.Add(subTitleLable11);
-
-            subTitleLable12 = new TextLabel();
-            subTitleLable12.Position = new Vector2(144, 150);
-            subTitleLable12.Size = new Vector2(40, 14);
-            subTitleLable12.Name = "sub_label_12";
-            mainPanel.Components.Add(subTitleLable12);
-
-            subTitleLable13 = new TextLabel();
-            subTitleLable13.Position = new Vector2(144, 160);
-            subTitleLable13.Size = new Vector2(40, 14);
-            subTitleLable13.Name = "sub_label_13";
-            mainPanel.Components.Add(subTitleLable13);
-
-            subTitleLable14 = new TextLabel();
-            subTitleLable14.Position = new Vector2(144, 170);
-            subTitleLable14.Size = new Vector2(40, 14);
-            subTitleLable14.Name = "sub_label_14";
-            mainPanel.Components.Add(subTitleLable14);
-
-
-            descriptionLable1 = new TextLabel();
-            descriptionLable1.Position = new Vector2(textLabelXOffset + 172, 40);
-            descriptionLable1.Size = new Vector2(124, 10);
-            descriptionLable1.Name = "title_label_1";
-            descriptionLable1.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable1);
-
-            descriptionLable2 = new TextLabel();
-            descriptionLable2.Position = new Vector2(textLabelXOffset + 172, 50);
-            descriptionLable2.Size = new Vector2(120, 10);
-            descriptionLable2.Name = "title_label_2";
-            descriptionLable2.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable2);
-
-            descriptionLable3 = new TextLabel();
-            descriptionLable3.Position = new Vector2(textLabelXOffset + 172, 60);
-            descriptionLable3.Size = new Vector2(120, 10);
-            descriptionLable3.Name = "title_label_3";
-            descriptionLable3.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable3);
-
-            descriptionLable4 = new TextLabel();
-            descriptionLable4.Position = new Vector2(textLabelXOffset + 172, 70);
-            descriptionLable4.Size = new Vector2(120, 10);
-            descriptionLable4.Name = "title_label_4";
-            descriptionLable4.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable4);
-
-            descriptionLable5 = new TextLabel();
-            descriptionLable5.Position = new Vector2(textLabelXOffset + 172, 80);
-            descriptionLable5.Size = new Vector2(120, 10);
-            descriptionLable5.Name = "title_label_5";
-            descriptionLable5.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable5);
-
-            descriptionLable6 = new TextLabel();
-            descriptionLable6.Position = new Vector2(textLabelXOffset + 172, 90);
-            descriptionLable6.Size = new Vector2(120, 10);
-            descriptionLable6.Name = "title_label_6";
-            descriptionLable6.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable6);
-
-            descriptionLable7 = new TextLabel();
-            descriptionLable7.Position = new Vector2(textLabelXOffset + 172, 100);
-            descriptionLable7.Size = new Vector2(120, 10);
-            descriptionLable7.Name = "title_label_7";
-            descriptionLable7.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable7);
-
-            descriptionLable8 = new TextLabel();
-            descriptionLable8.Position = new Vector2(textLabelXOffset + 172, 110);
-            descriptionLable8.Size = new Vector2(120, 10);
-            descriptionLable8.Name = "title_label_8";
-            descriptionLable8.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable8);
-
-            descriptionLable9 = new TextLabel();
-            descriptionLable9.Position = new Vector2(textLabelXOffset + 172, 120);
-            descriptionLable9.Size = new Vector2(120, 10);
-            descriptionLable9.Name = "title_label_9";
-            descriptionLable9.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable9);
-
-            descriptionLable10 = new TextLabel();
-            descriptionLable10.Position = new Vector2(textLabelXOffset + 172, 130);
-            descriptionLable10.Size = new Vector2(120, 10);
-            descriptionLable10.Name = "title_label_10";
-            descriptionLable10.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable10);
-
-            descriptionLable11 = new TextLabel();
-            descriptionLable11.Position = new Vector2(textLabelXOffset + 172, 140);
-            descriptionLable11.Size = new Vector2(120, 10);
-            descriptionLable11.Name = "title_label_11";
-            descriptionLable11.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable11);
-
-            descriptionLable12 = new TextLabel();
-            descriptionLable12.Position = new Vector2(textLabelXOffset + 172, 150);
-            descriptionLable12.Size = new Vector2(120, 10);
-            descriptionLable12.Name = "title_label_12";
-            descriptionLable12.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable12);
-
-            descriptionLable13 = new TextLabel();
-            descriptionLable13.Position = new Vector2(textLabelXOffset + 172, 160);
-            descriptionLable13.Size = new Vector2(120, 10);
-            descriptionLable13.Name = "title_label_13";
-            descriptionLable13.MaxCharacters = 50;
-            mainPanel.Components.Add(descriptionLable13);
-
-            descriptionLable14 = new TextLabel();
-            descriptionLable14.Position = new Vector2(textLabelXOffset + 172, 170);
-            descriptionLable14.Size = new Vector2(120, 10);
-            descriptionLable14.Name = "title_label_14";
-            descriptionLable14.MaxCharacters = descriptionLableMaxCharacters;
-            mainPanel.Components.Add(descriptionLable14);
-
             exitButton = new Button();
             exitButton.Position = new Vector2(216, 187);
             exitButton.Size = entryButtonSize;
             exitButton.OnMouseClick += ExitButton_OnMouseClick;
             mainPanel.Components.Add(exitButton);
-        }
-        void LoadArrowsNStuff()
-        {
-            leftArrowTexture = DaggerfallUI.GetTextureFromResources("button_arrow_left");
-            rightArrowTexture = DaggerfallUI.GetTextureFromResources("button_arrow_right");
-            
-            rightArrowButton = new Button();
-            rightArrowButton.Position = new Vector2(98, 25);
-            rightArrowButton.Size = new Vector2(10, 10);
-            rightArrowButton.BackgroundTexture = rightArrowTexture;
-            rightArrowButton.OnMouseClick += RightArrowButton_OnMouseClick;
-            mainPanel.Components.Add(rightArrowButton);
 
-            leftArrowButton = new Button();
-            leftArrowButton.Position = new Vector2(86, 25);
-            leftArrowButton.Size = new Vector2(10, 10);
-            leftArrowButton.BackgroundTexture = leftArrowTexture;
-            leftArrowButton.OnMouseClick += LeftArrowButton_OnMouseClick;
-            mainPanel.Components.Add(leftArrowButton);
-
-            rightRotateButton = new Button();
-            rightRotateButton.Position = new Vector2(116, 145);
-            rightRotateButton.Size = new Vector2(10, 10);
-            rightRotateButton.BackgroundTexture = rightArrowTexture;
-            rightRotateButton.OnMouseClick += RightRotateButton_OnMouseClick;
-            mainPanel.Components.Add(rightRotateButton);
-
-            leftRotateButton = new Button();
-            leftRotateButton.Position = new Vector2(104, 145);
-            leftRotateButton.Size = new Vector2(10, 10);
-            leftRotateButton.BackgroundTexture = leftArrowTexture;
-            leftRotateButton.OnMouseClick += LeftRotateButton_OnMouseClick;
-            mainPanel.Components.Add(leftRotateButton);
-
-            attackButton = new Button();
-            attackButton.Position = new Vector2(78, 145);
-            attackButton.Size = new Vector2(24, 10);
-            attackButton.BackgroundTexture = attackFalseTexture;
-            attackButton.OnMouseClick += AttackButton_OnMouseClick;
-            mainPanel.Components.Add(attackButton);
-
-            summaryButton = new Button();
-            summaryButton.Position = pageNamePosVector;
-            summaryButton.Size = pageNameSizeVector;
-            summaryButton.OnMouseClick += summaryButton_OnMouseClick;
-            mainPanel.Components.Add(summaryButton);
-
-            pageNameLabel = new TextLabel();
-            pageNameLabel.Position = pageNamePosVector;
-            pageNameLabel.Size = pageNameSizeVector;
-            if(oldFont == false)
+            int yPos = 40;
+            for (int i = 0; i < 14; i++)
             {
-                pageNameLabel.Font = DaggerfallUI.LargeFont;
-            }
-            else pageNamePosVector[1] = 18;
+                subtitleLabels.Add(new TextLabel());
+                subtitleLabels[i].Position = new Vector2(144, yPos);
+                subtitleLabels[i].Size = new Vector2(40, 14);
+                mainPanel.Components.Add(subtitleLabels[i]);
 
-            pageNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
-            mainPanel.Components.Add(pageNameLabel);
+                descriptionLabels.Add(new TextLabel());
+                descriptionLabels[i].Position = new Vector2(144 + textLabelXOffset, yPos);
+                descriptionLabels[i].Size = new Vector2(124, 10);
+                descriptionLabels[i].MaxCharacters = descriptionLabelMaxCharacters;
+                mainPanel.Components.Add(descriptionLabels[i]);
+
+                yPos += 10;
+            }
+            
+            if (!classicMode)
+            {
+                pageRightButton = new Button();
+                pageRightButton.Position = new Vector2(98, 25);
+                pageRightButton.Size = new Vector2(10, 10);
+                pageRightButton.BackgroundTexture = rightArrowTexture;
+                pageRightButton.OnMouseClick += pageRightButton_OnMouseClick;
+                mainPanel.Components.Add(pageRightButton);
+
+                pageLeftButton = new Button();
+                pageLeftButton.Position = new Vector2(86, 25);
+                pageLeftButton.Size = new Vector2(10, 10);
+                pageLeftButton.BackgroundTexture = leftArrowTexture;
+                pageLeftButton.OnMouseClick += pageLeftButton_OnMouseClick;
+                mainPanel.Components.Add(pageLeftButton);
+
+                rightRotateButton = new Button();
+                rightRotateButton.Position = new Vector2(116, 145);
+                rightRotateButton.Size = new Vector2(10, 10);
+                rightRotateButton.BackgroundTexture = rightArrowTexture;
+                rightRotateButton.OnMouseClick += RightRotateButton_OnMouseClick;
+                mainPanel.Components.Add(rightRotateButton);
+
+                leftRotateButton = new Button();
+                leftRotateButton.Position = new Vector2(104, 145);
+                leftRotateButton.Size = new Vector2(10, 10);
+                leftRotateButton.BackgroundTexture = leftArrowTexture;
+                leftRotateButton.OnMouseClick += LeftRotateButton_OnMouseClick;
+                mainPanel.Components.Add(leftRotateButton);
+
+                attackButton = new Button();
+                attackButton.Position = new Vector2(78, 145);
+                attackButton.Size = new Vector2(24, 10);
+                attackButton.BackgroundTexture = attackFalseTexture;
+                attackButton.OnMouseClick += AttackButton_OnMouseClick;
+                mainPanel.Components.Add(attackButton);
+
+                summaryButton = new Button();
+                summaryButton.Position = pageNamePosVector;
+                summaryButton.Size = pageNameSizeVector;
+                summaryButton.OnMouseClick += summaryButton_OnMouseClick;
+                mainPanel.Components.Add(summaryButton);
+
+                pageNameLabel = new TextLabel();
+                pageNameLabel.Position = pageNamePosVector;
+                pageNameLabel.Size = pageNameSizeVector;
+                if(oldFont == false)
+                {
+                    pageNameLabel.Font = DaggerfallUI.LargeFont;
+                }
+                else pageNamePosVector[1] = 18;
+
+                pageNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
+                mainPanel.Components.Add(pageNameLabel);
+
+                for (int i = 0; i < 9; i++)
+                {
+                    contentButtons.Add(new Button());
+                    contentButtons[i].Position = buttonAllPos[i];
+                    contentButtons[i].Size = entryButtonSize;
+
+                    switch (i)
+                    {
+                        case 0:
+                            contentButtons[i].OnMouseClick += ContentButton0_OnMouseClick;
+                            break;
+                        case 1:
+                            contentButtons[i].OnMouseClick += ContentButton1_OnMouseClick;
+                            break;
+                        case 2:
+                            contentButtons[i].OnMouseClick += ContentButton2_OnMouseClick;
+                            break;
+                        case 3:
+                            contentButtons[i].OnMouseClick += ContentButton3_OnMouseClick;
+                            break;
+                        case 4:
+                            contentButtons[i].OnMouseClick += ContentButton4_OnMouseClick;
+                            break;
+                        case 5:
+                            contentButtons[i].OnMouseClick += ContentButton5_OnMouseClick;
+                            break;
+                        case 6:
+                            contentButtons[i].OnMouseClick += ContentButton6_OnMouseClick;
+                            break;
+                        case 7:
+                            contentButtons[i].OnMouseClick += ContentButton7_OnMouseClick;
+                            break;
+                        case 8:
+                            contentButtons[i].OnMouseClick += ContentButton8_OnMouseClick;
+                            break;
+                    }
+                    mainPanel.Components.Add(contentButtons[i]);
+                    
+                }
+            }
         }
+
         void changePage(bool right)
         {   
             int currentEntryNum = Array.IndexOf(allPages, currentPagePath);
@@ -1159,7 +769,7 @@ namespace BestiaryMod
                 currentEntryNum -= 1;
 
                 currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
-                resetLabelTextures();
+                resetButtonTextures();
                 loadPage();
 
                 entryToLoad = currentSummary;
@@ -1170,7 +780,7 @@ namespace BestiaryMod
                 currentEntryNum = allPages.Length - 1;
 
                 currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
-                resetLabelTextures();
+                resetButtonTextures();
                 loadPage();
 
                 entryToLoad = currentSummary;
@@ -1181,7 +791,7 @@ namespace BestiaryMod
                 currentEntryNum += 1;
 
                 currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
-                resetLabelTextures();
+                resetButtonTextures();
                 loadPage();
 
                 entryToLoad = currentSummary;
@@ -1192,7 +802,7 @@ namespace BestiaryMod
                 currentEntryNum = 0;
 
                 currentEntries = getcurrentEntriesFromFile(allPages[currentEntryNum]);
-                resetLabelTextures();
+                resetButtonTextures();
                 loadPage();
 
                 entryToLoad = currentSummary;
@@ -1205,7 +815,7 @@ namespace BestiaryMod
             CloseWindow();
         }
 
-        protected void ContentButton1_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton0_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[0, 0]))
             {
@@ -1215,7 +825,7 @@ namespace BestiaryMod
             }
         }
 
-        protected void ContentButton2_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton1_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[1, 0]))
             {
@@ -1225,7 +835,7 @@ namespace BestiaryMod
             }
         }
 
-        protected void ContentButton3_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton2_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[2, 0]))
             {
@@ -1235,7 +845,7 @@ namespace BestiaryMod
             }
         }
 
-        protected void ContentButton4_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton3_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[3, 0]))
             {
@@ -1245,7 +855,7 @@ namespace BestiaryMod
             }
         }
 
-        protected void ContentButton5_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton4_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[4, 0]))
             {
@@ -1255,7 +865,7 @@ namespace BestiaryMod
             }
         }
 
-        protected void ContentButton6_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton5_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[5, 0]))
             {
@@ -1265,7 +875,7 @@ namespace BestiaryMod
             }
         }
 
-        protected void ContentButton7_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton6_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[6, 0]))
             {
@@ -1275,7 +885,7 @@ namespace BestiaryMod
             }
         }
 
-        protected void ContentButton8_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton7_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[7, 0]))
             {
@@ -1285,7 +895,7 @@ namespace BestiaryMod
             }
         }
 
-        protected void ContentButton9_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void ContentButton8_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             if(!String.IsNullOrEmpty(currentEntries[8, 0]))
             {
@@ -1294,12 +904,12 @@ namespace BestiaryMod
                 loadContent(entryToLoad);
             }
         }
-        protected void RightArrowButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void pageRightButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
             changePage(false);
         }
-        protected void LeftArrowButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        protected void pageLeftButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
             changePage(true);

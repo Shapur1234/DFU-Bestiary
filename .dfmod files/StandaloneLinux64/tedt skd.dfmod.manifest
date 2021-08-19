@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 2519602790
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f72e677f91dcd0eda43481e81c312569
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8568e5201f97321957c300bce0003f95
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Game/Mods/Bestiary/Textures/button_orcs.png
+- Assets/Game/Mods/Bestiary/Textures/button_centaur.png
+- Assets/Game/Mods/sdfasdfasdf.dfmod.json
+- Assets/Game/Mods/Bestiary/Textures/button_rat.png
+Dependencies: []

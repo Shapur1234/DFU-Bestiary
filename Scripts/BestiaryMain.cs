@@ -19,25 +19,16 @@ namespace BestiaryMod
         
         void Update()
         {
-            if (bestiaryUIScreen == null)
-            {
+            if (bestiaryUIScreen == null) 
                 bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
-            }
 
             if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && GameManager.Instance.IsPlayerOnHUD)
-            {
                 DisplayBestiaryUI();
-            }
             else if (bestiaryUIScreen.isShowing && InputManager.Instance.GetKeyDown(openMenuKeyCode))
-            {
                 bestiaryUIScreen.CloseWindow();
-            }
             else if (openMenuKeyCode != KeyCode.None && !InputManager.Instance.IsPaused && InputManager.Instance.GetKeyDown(openMenuKeyCode))
-            {
                 if (bestiaryUIScreen.isShowing)
                     bestiaryUIScreen.CloseWindow();
-            }
-
         }
 
         [Invoke(StateManager.StateTypes.Game, 0)]
