@@ -2,6 +2,8 @@
 button_wraith
 Bestiary
 Wraith
-Description: *The rat is a small animal that attacks by biting. They are known for carrying all kinds of foul pestilence and are immune to poison and disease.
-Location: *Rats are found everywhere, especially in underground tunnels and near human settlements.
-Fighting Strategies: *Consider attacking from a distance, as not to contract a disease.
+Summary:*Like ghosts, wraiths are the spirits of the dead, but are much more powerful than their counterparts - both in melee and with magic. Wraiths can be hit by weapons of silver quality or higher.
+Advice:*Wraiths are able to detect camouflaged or invisible foes. Wraiths can do massive melee damage so the use of ranged attacks is recommended, except at higher levels where they can be easily killed with melee attacks.
+Abilities:*Resistance to Magic
+Spells:*Far Silence
+ *Lightning

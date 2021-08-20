@@ -2,5 +2,8 @@
 button_mummy
 Bestiary
 Mummy
-Location: *Forests and pastureland throughout the Bay.
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Mummies are preserved corpses given new life. They pack a powerful punch, and their nature makes them vectors for disease. Mummies can be hit by weapons of silver quality or higher.
+Advice:*Mummies are best attacked with ranged weapons to avoid the chance of contracting a disease.
+Abilities:*There is a 5% chance per hit of contracting a disease from a mummy
+ *Immunity to Disease
+Spells:*None

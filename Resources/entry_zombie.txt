@@ -2,5 +2,7 @@
 button_zombie
 Bestiary
 Zombie
-Location: *Everywhere, particularly the southern Wrothgarian mountains near Wayrest. 
-History: *Universally reviled for their belligerence and savagery, orcs are particularly common in the Illiac Bay where they are rummored to be reuilding their ancient capitol.
+Summary:*Zombies are animate, rotting corpses. They can deliver a powerful blow, and their decaying flesh harbors festering diseases. Zombies can be hit by weapons of any material.
+Advice:*At lower levels, use ranged weapons to avoid the zombie's attacks and chance of disease. At higher levels, zombies can be easily destroyed with melee attacks.
+Abilities:*There is a 2% chance per hit of contracting a disease from a zombie
+Spells:*None

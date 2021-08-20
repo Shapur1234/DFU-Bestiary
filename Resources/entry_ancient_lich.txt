@@ -2,6 +2,13 @@
 button_ancient_lich
 Bestiary
 Ancient Lich
-Description: *The rat is a small animal that attacks by biting. They are known for carrying all kinds of foul pestilence and are immune to poison and disease.
-Location: *Rats are found everywhere, especially in underground tunnels and near human settlements.
-Fighting Strategies: *Consider attacking from a distance, as not to contract a disease.
+Summary:*Ancient Liches are undead beings of immense power; stronger, smarter, faster, and tougher to destroy than their lesser brethren. They are one of the most dangerous opponents any adventurer will ever face. Ancient Liches can be hit by weapons of mithril quality or higher
+Advice:*Due to the extreme danger of the Ancient Lich's spellcasting abilities, the use of Spell Reflection, Spell Resistance, or Spell Absorption is a definite must when fighting one. Your safest bets are to attack with ranged weapons or have plenty of healing potions and spells on hand. Ancient Liches will sometimes use area affect damage spells at too close a range and harm or even destroy themselves.
+Abilities:*None
+Spells:*Balyna's Antidote
+* Fireball
+* Free Action
+* Lightning
+* Shock
+* Toxic Cloud
+* Wizard Rend

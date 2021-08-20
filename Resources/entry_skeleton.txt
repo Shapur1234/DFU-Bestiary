@@ -1,7 +1,10 @@
 270
 button_skeleton
 Bestiary
-Skeleton
-Description: *The rat is a small animal that attacks by biting. They are known for carrying all kinds of foul pestilence and are immune to poison and disease.
-Location: *Rats are found everywhere, especially in underground tunnels and near human settlements.
-Fighting Strategies: *Consider attacking from a distance, as not to contract a disease.
+Skeletal Warrior
+Summary:*While they may appear fragile, Skeletal Warriors are tough, skilled fighters. Lacking flesh, these creatures take less damage from edged weapons. Skeletons can be hit by weapons of any material.
+Advice:*Skeletal Warriors are not much of a challenge for higher level characters. However, lower level characters should attack with blunt weapons to avoid the creature's damage reduction. They can detect camouflaged or invisible opponents, so these spells will provide no advantage in combat.
+Abilities:*There is a 2% chance of contracting a disease from a skeletal warrior
+ *Takes normal damage from blunt weapons, and half damage from all the others
+ *Tales double damage from silver weapons
+Spells:*None

@@ -2,5 +2,11 @@
 button_vampire
 Bestiary
 Vampire
-Location: *Everywhere
-History: *Cruel, cunning, and immoral predators, vampires hunt the night, sometimes singly sometimes in packs. To what degree they have infiltrated human society, spreading death and the dread disease vampirism, is left unimagined.
+Summary:*Cruel, cunning, and immortal predators, vampires hunt the night, sometimes singly, sometimes in packs. Their powers and strength are certainly the stuff of legends, as is their ability to pass the curse of undeath onto unwitting victims. Vampires can be hit by weapons of silver quality or higher.
+Advice:*These creatures can detect camouflaged or invisible foes, so these spells will not help you. Spell Reflection, Spell Resistance, or Spell Absorption are recommended when fighting a vampire. Use ranged weapons if you want to avoid the chance of contracting a disease or vampirism. It is best to avoid direct melee attacks at lower levels.
+Abilities:*There is a 2% chance per hit of contracting a disease from a vampire
+ *There is a 0.6% chance per hit of being infected with vampirism
+ *Immunity to Poison and Disease
+ *Bonus to Hit Humanoids
+ *Takes Damage from Sunlight and Holy Places
+Spells:*Sleep
