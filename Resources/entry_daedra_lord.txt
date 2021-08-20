@@ -2,6 +2,14 @@
 button_daedra_lord
 Bestiary
 Daedra Lord
-Description: *Daedra Lords are powerful and dangerous opponents, for they are expert at wielding both magic and blade and can and like all its brethren, see through petty illusions. To even stand a chance at harming them, one needs an arm of mithril or better.
-Location: *Inhabitng one of the accursed realms of Oblivion, they can at times be found in the darkest of depths in the most ancient of underground labyrinths.
-Fighting Strategies: *Attempt to close in quickly, as to prevent him from tearing you apart with magic. Spell reflection, resistance or absorbtion is your only chance for survival. Sometimes, it may be better to attempt to reason with it.
+Summary:*With weapons and magic at their disposal, Daedra Lords are powerful and dangerous opponents. They can only be hit by weapons of mithril quality or higher.
+Advice:*One of the most dangerous foes in the game, the Daedra Lord possesses formidable fighting abilities in close combat. When fighting a Daedra Lord, close in quickly to prevent him from using magic too frequently, and backpedal after striking to avoid his attacks. Spell Reflection, Spell Resistance, or Spell Absorption is a must, especially when fighting at distance as he will use his area effect Fireball spell. A Daedra Lord will sometimes use this spell too close, resulting in his own harm or destruction from its blast. The Daedric language skill can sometimes render an enemy non-hostile.
+Abilities:*Can detect camouflaged or invisible foes
+ *Immunity to Paralysis, Poison, and Disease
+ *Regenerates Health (General)
+ *Takes Damage from Holy Places
+Spells:*Balyna's Antidote
+ *Energy Leech
+ *Fireball
+ *Free Action
+ *Shock

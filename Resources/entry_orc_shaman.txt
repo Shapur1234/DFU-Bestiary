@@ -2,5 +2,11 @@
 button_orc_shaman
 Bestiary
 Orc Shaman
-Location: *Forests and pastureland throughout the Bay.
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Orc Shamans are the spellcasters of Orsinium. They attack with powerful destruction spells, and make frequent use of their Invisibility spells in combat. Orc Shamans can be hit by weapons of any material.
+Advice:*Use ranged attacks to avoid the damaging spell effects encountered in melee. The use of Spell Reflection, Spell Resistance, or Spell Absorption is advised. The Orcish language skill can sometimes render an enemy non-hostile.
+Abilities:*None
+Spells:*Fire Storm
+ *Invisibility
+ *Lightning
+ *Spell Shield
+ *Wizard's Fire

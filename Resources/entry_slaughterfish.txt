@@ -2,5 +2,7 @@
 button_slaughterfish
 Bestiary
 Slaughterfish
-Location: *Oblivion
-History: *Little is commonly known about the fire daedra and its brethren. They seem to be most commonly used by their masters, the Daedra Princes of Oblivion, as agents of destruction in itsleast subtle form.
+Summary:*A slaughterfish is a predatory, eel-like fish that dwells in underwater areas and attacks prey with its gaping maw. They can be hit by weapons of any material.
+Advice:*Melee attacks.
+Abilities:*None
+Spells:*None

@@ -2,5 +2,8 @@
 button_werewolf
 Bestiary
 Werewolf
-Location: *Oinks
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Werewolves are half-man, half-wolf lycanthropes, whose attacks have a slight chance of passing their curse onto you. They can be hit by weapons of silver quality or higher.
+Advice:*If you don't wish to become a werewolf yourself, ranged attacks are safer at lower levels. Higher levels can quickly dispatch a werewolf with melee attacks.
+Abilities:*There is a 0.6% chance of contracting lycanthropy from the attack
+ *Adrenaline Rush
+Spells:*None

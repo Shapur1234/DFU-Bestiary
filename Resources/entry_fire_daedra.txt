@@ -2,5 +2,8 @@
 button_fire_daedra
 Bestiary
 Fire Daedra
-Location: *Oblivion
-History: *Little is commonly known about the fire daedra and its brethren. They seem to be most commonly used by their masters, the Daedra Princes of Oblivion, as agents of destruction in itsleast subtle form.
+Summary:*Fire Daedra are flame-clad horrors from Oblivion. In addition to their burning swords, these creatures can cast fire-based spells from afar. They can only be hit by weapons of mithril quality or higher.
+Advice:*Close in quickly and use melee attacks to deny the Fire Daedra an opportunity to cast its ranged spells. You may also wish to protect yourself with Spell Reflection, Spell Resistance, or Spell Absorption, or attack with cold-based offensive spells. The Daedric language skill can sometimes render an enemy non-hostile.
+Abilities:*Can detect camouflaged or invisible foes
+Spells:*Fireball
+ *Fire Storm

@@ -2,6 +2,8 @@
 button_rat
 Bestiary
 Giant Rat
-Description: *The rat is a small animal that attacks by biting. They are known for carrying all kinds of foul pestilence and are immune to poison and disease.
-Location: *Rats are found everywhere, especially in underground tunnels and near human settlements.
-Fighting Strategies: *Consider attacking from a distance, as not to contract a disease.
+Summary:*The rat is a small animal that attacks by biting. Rats can be hit by weapons of any material.
+Advice:*Higher level characters can quickly dispatch rats with a single melee attack, but low level characters may wish to use ranged weapons to avoid disease.
+Abilities:*There is a 5% chance per hit of catching a disease from a rat
+ *Rats are immune to poison and disease
+Spells:*None

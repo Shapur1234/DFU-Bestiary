@@ -2,5 +2,7 @@
 button_grizzly_bear
 Bestiary
 Grizzly bear
-Description: *The grizzly bear is a large animal that fights with tooth and claw.
-Location: *Forests
+Summary:*The grizzly bear is a large animal that fights with tooth and claw. They can be hit by weapons of any material.
+Advice:*Melee attacks.
+Abilities:*None
+Spells:*None
