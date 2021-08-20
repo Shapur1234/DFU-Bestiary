@@ -2,5 +2,7 @@
 button_spriggan
 Bestiary
 Spriggan
-Location: *Woodlands and rural areas of the Imperial Province of High Rock.
-History: *These reclusive creatures are considered by some scholars to be in the genus Ilyandi or part of the Sylphim or Faerie chain. They are all but immune to physical attack, in fact capable of gaining power from such offense.
+Summary:*Spriggans are plant-like monsters. They can be hit by weapons of any material.
+Advice:*Melee attacks work best.
+Abilities:*Due to their nature, spriggans are almost impossible to hit with arrows.
+Spells:*None

@@ -2,5 +2,13 @@
 button_dragonling
 Bestiary
 Dragonling
-Location: *Forests and pastureland throughout the Bay.
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Dragonlings are winged reptiles that resemble dragons and attack by breathing fire. They can be hit by weapons of any material.
+Advice:*Melee attacks are best. Beware its fiery breath, for it is not a spell. Dragonlings are heavily armored and can take a lot of hits. The Dragonish language skill can sometimes render an enemy non-hostile.
+Abilities:*Resistance to Magic
+ *Immunity to Paralysis, Poison, and Disease
+ *Regenerates Health in Darkness
+ *Adrenaline Rush
+ *Bonus to Hit Humanoids
+ *Low Tolerance to Frost
+ *Takes Damage from Holy Places
+Spells:*None

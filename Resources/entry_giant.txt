@@ -2,5 +2,7 @@
 button_giant
 Bestiary
 Giant
-Location: *Forests and pastureland throughout the Bay.
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Giants are huge, territorial brutes that like to smash (and eat) their enemies. They can be hit by weapons of any material.
+Advice:*Melee attacks are the quickest. The Giantish language skill can sometimes render an enemy non-hostile.
+Abilities:*None
+Spells:*None

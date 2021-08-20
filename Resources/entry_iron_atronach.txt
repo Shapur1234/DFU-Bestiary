@@ -2,7 +2,7 @@
 button_iron_atronach
 Bestiary
 Iron Atronach
-Summary:*Iron Atronachs are powerful metal golems that possess an electricity-based damage aura. Iron Atronachs can be hit by weapons of any material.
+Summary:*Iron Atronachs are powerful metal golems that possess an electricity-based damage aura. They can be hit by weapons of any material.
 Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use poison-based spells.
 Abilities:*Damage Aura
  *Healed by electricity-based spells

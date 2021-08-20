@@ -2,5 +2,7 @@
 button_harpy
 Bestiary
 Harpy
-Location: *Forests and pastureland throughout the Bay.
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Harpies are humanoid-bird creatures with taloned feet. They can be hit by weapons of dwarven quality or higher.
+Advice:*Melee attacks are recommended . The Harpy language skill can sometimes render an enemy non-hostile.
+Abilities:*None
+Spells:*None

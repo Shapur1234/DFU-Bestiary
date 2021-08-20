@@ -2,5 +2,14 @@
 button_lamia
 Bestiary
 Lamia
-Location: *Forests and pastureland throughout the Bay.
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Lamias are monsters with the upper body of a human and a snakelike lower section. They are only encountered underwater, and can be hit by weapons of any material.
+Advice:*Use ranged weapons to avoid the lamia's fatigue drain.
+Abilities:*Lamias drain 2 points of fatigue for every 1 point of health damage
+ *Resistance to Magic
+ *Immunity to Paralysis, Poison, and Disease
+ *Regenerates Health in Darkness and in Water
+ *Adrenaline Rush
+ *Bonus to Hit Humanoids
+ *Low Tolerance to Frost
+ *Takes Damage from Holy Places
+Spells:*None

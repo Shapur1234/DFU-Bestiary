@@ -388,7 +388,13 @@ namespace BestiaryMod
                         titleLabel.Text = result[2];
                         break;
                     case 3:
-                        monsterNameLabel.Text = result[3];
+                        if (oldFont)
+                        {
+                            monsterNameLabel.Text = result[3].Replace(" - ", " ");
+                            monsterNameLabel.TextScale = 0.85f;
+                        }
+                        else
+                            monsterNameLabel.Text = result[3];
                         currentEntry = result[3];
                         break;
                     default:

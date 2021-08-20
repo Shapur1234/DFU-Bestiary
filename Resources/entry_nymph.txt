@@ -2,5 +2,8 @@
 button_nymph
 Bestiary
 Nymph
-Location: *Forests and pastureland throughout the Bay.
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Nymphs are fae creatures of unearthly beauty that attack with mystical energy. They can be hit by weapons of elven quality or higher.
+Advice:*Nymphs can be easily dispatched with a melee attack. The Nymph language skill can sometimes render an enemy non-hostile.
+Abilities:*Nymphs drain 2 points of fatigue for every 1 point of health damage
+ *Resistance to Paralysis and Poison
+Spells:*None

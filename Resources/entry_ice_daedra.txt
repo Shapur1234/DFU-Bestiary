@@ -1,6 +1,6 @@
 280
 button_ice_daedra
 Bestiary
-Ice Daedra, or Frost Daedra
+Ice or Frost Daedra
 Location: *Oblivion
 History: *Little is commonly known about the ice or frost daedra and its brethren. They are emissaries and assassins of the Daedra Princes of Oblivion and are as cold in their murders as the infernal mist that surrounds them.

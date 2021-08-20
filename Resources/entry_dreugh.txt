@@ -2,5 +2,13 @@
 button_dreugh
 Bestiary
 Dreugh
-Location: *The Abecean Sea, the Illiac Bay, lakes and rivers.
-History: *The grotesque Dreugh is primarily an aquatic scavenger, though it does seem to have amphibian capacities. According to legend, the Dreugh are the cursed remnants of a once proud civilization.
+Summary:*Dreughs are abominations resembling a human-octopus hybrid with powerful crab claws. They are only found underwater, and can be hit by weapons of any material.
+Advice:*Melee attacks.
+Abilities:*Resistance to Magic
+ *Immunity to Paralysis, Poison, and Disease
+ *Regenerates Health in Darkness and in Water
+ *Adrenaline Rush
+ *Bonus to Hit Humanoids
+ *Low Tolerance to Frost
+ *Takes Damage from Holy Places
+Spells:*None

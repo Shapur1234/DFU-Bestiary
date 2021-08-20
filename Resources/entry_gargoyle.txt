@@ -2,5 +2,7 @@
 button_gargoyle
 Bestiary
 Gargoyle
-Location: *Gargoyle and pastureland throughout the Bay.
-History: *Gargoyle and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Gargoyles are creatures of living stone. They can be hit by weapons of mithril quality or higher.
+Advice:*Melee attacks.
+Abilities:*Resistance to Magic
+Spells:*None

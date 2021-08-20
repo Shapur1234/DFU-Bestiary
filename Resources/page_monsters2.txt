@@ -1,7 +1,7 @@
 ﻿Monsters - 2
 summary_monsters2
-entry_dragonling
-entry_dreugh
-entry_gargoyle
-entry_giant
 entry_harpy
+entry_imp
+entry_lamia
+entry_nymph
+entry_spriggan

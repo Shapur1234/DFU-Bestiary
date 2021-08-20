@@ -2,5 +2,7 @@
 button_centaur
 Bestiary
 Centaur
-Location: *Forests and pastureland throughout the Bay.
-History: *Ancient and mysterious creatures, alternately worshipped and despised, centaurs are said to be followers of the Old Ways of Tamriel.  
+Summary:*Centaurs are half-man, half-horse monsters wielding spears or other weapons. They can be hit by weapons of any material.
+Advice:*As centaurs are resistant to magic, melee attacks work best. The Centaurian language skill can sometimes render an enemy non-hostile.
+Abilities:*Resistance to Magic
+Spells:*None
