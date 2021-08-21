@@ -165,8 +165,17 @@ namespace BestiaryMod
                 
                 if (currentTexture[2] % animationUpdateDelay == 0)
                 {
-                    if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture))
-                        pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
+                    if (currentTexture[1] < 4)
+                    {
+                        if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, TextureMap.Albedo, true, out pictureTexture))
+                            pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
+                    }
+                    else
+                    {
+                        if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay, TextureMap.Albedo, true, out pictureTexture))
+                            pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay);
+                    }
+                    
                     reloadTexture = true;
                 }
 
@@ -194,8 +203,17 @@ namespace BestiaryMod
             }
             else
             {
-                if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, 0, out pictureTexture)) 
-                    pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset);
+                if (currentTexture[1] < 4)
+                {
+                    if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset - 4, 0, out pictureTexture)) 
+                        pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset - 4);
+                }
+                else
+                {
+                    if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, 0, out pictureTexture)) 
+                        pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset);
+                }
+                
             }
             if(reloadTexture == true)
             {
@@ -230,7 +248,11 @@ namespace BestiaryMod
 
                 reloadTexture = false;
                 pictureTexture.filterMode = FilterMode.Point;
-                imagePanel.BackgroundTexture = pictureTexture;
+
+                if (currentTexture[1] < 4)
+                    imagePanel.BackgroundTexture = pictureTexture;
+                else
+                    imagePanel.BackgroundTexture = FlipTexture(pictureTexture);
             }
         }
 
@@ -713,7 +735,7 @@ namespace BestiaryMod
             }
         }
 
-        Texture2D FlipTexture(Texture2D original)
+        Texture2D FlipTexture(Texture2D original) //https://girlscancode.wordpress.com/2015/03/02/unity3d-flipping-a-texture/
         {
             Texture2D flipped = new Texture2D(original.width, original.height);
             flipped.filterMode = FilterMode.Point;
@@ -732,6 +754,27 @@ namespace BestiaryMod
             flipped.Apply();
             return flipped;
         }
+        
+        Texture2D DuplicateTexture(Texture2D source) //From here: https://stackoverflow.com/questions/44733841/how-to-make-texture2d-readable-via-script
+        {
+            RenderTexture renderTex = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+
+            Graphics.Blit(source, renderTex);
+
+            RenderTexture previous = RenderTexture.active;
+            RenderTexture.active = renderTex;
+
+            Texture2D readableText = new Texture2D(source.width, source.height);
+
+            readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
+            readableText.Apply();
+
+            RenderTexture.active = previous;
+            RenderTexture.ReleaseTemporary(renderTex);
+
+            return readableText;
+        }
+
 
         void changePage(bool right)
         {   
@@ -896,7 +939,7 @@ namespace BestiaryMod
             currentTexture[1]--;
 
             if(currentTexture[1] < 0) 
-                currentTexture[1] = 4;
+                currentTexture[1] = 7;
         }
         protected void LeftRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
@@ -904,7 +947,7 @@ namespace BestiaryMod
             reloadTexture = true;
             currentTexture[1]++;
 
-            if(currentTexture[1] > 4) 
+            if(currentTexture[1] > 7) 
                 currentTexture[1] = 0;
         }
         protected void AttackButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
