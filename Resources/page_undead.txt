@@ -4,7 +4,7 @@ entry_ghost
 entry_lich
 entry_ancient_lich
 entry_mummy
-entry_skeleton
+entry_skeletal_warrior
 entry_vampire
 entry_vampire_ancient
 entry_wraith
