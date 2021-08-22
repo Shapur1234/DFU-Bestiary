@@ -26,6 +26,7 @@ namespace BestiaryMod
         bool oldFont;
         bool classicMode;
         bool animate;
+        bool rotate8;
 
         int[] currentTexture = { 267, 0, 0};
         int textLabelXOffset;
@@ -114,12 +115,14 @@ namespace BestiaryMod
             backgroundSizeVector = new Vector2(320, 200);
 
             animate = settings.GetBool("General", "EnableAnimations");
-            animationUpdateDelay = settings.GetValue<int>("General", "DelayBetweenAnimationFrames");
             classicMode = settings.GetBool("General", "ClassicMode");
+            rotate8 = settings.GetBool("General", "EnableEightDirectionRotation");
+            animationUpdateDelay = settings.GetValue<int>("General", "DelayBetweenAnimationFrames");
             defaultRotation = settings.GetValue<int>("General", "DefaultMobOrientation");
+
             oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
 
-            if (oldFont == false)
+            if (!oldFont)
             {
                 descriptionLabelMaxCharacters = 48;
                 textLabelXOffset = 30;
@@ -130,10 +133,10 @@ namespace BestiaryMod
                 textLabelXOffset = 46;
             }
 
-            if (classicMode == true)
+            if (classicMode)
                 textPath = pathToClassicPage;
             else
-                textPath = "page_animals";
+                textPath = allPages[0];
             currentEntries = getcurrentEntriesFromFile(textPath);
 
             setUpUIElements();
@@ -167,12 +170,12 @@ namespace BestiaryMod
                 {
                     if (currentTexture[1] < 4)
                     {
-                        if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, TextureMap.Albedo, true, out pictureTexture))
+                        if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture))
                             pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
                     }
                     else
                     {
-                        if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay, TextureMap.Albedo, true, out pictureTexture))
+                        if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture))
                             pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay);
                     }
                     
@@ -204,15 +207,15 @@ namespace BestiaryMod
             else
             {
                 if (currentTexture[1] < 4)
-                {
-                    if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset - 4, 0, out pictureTexture)) 
-                        pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset - 4);
-                }
-                else
-                {
-                    if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, 0, out pictureTexture)) 
-                        pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset);
-                }
+                    {
+                        if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, 0, out pictureTexture))
+                            pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, 0);
+                    }
+                    else
+                    {
+                        if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, 0, out pictureTexture))
+                            pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, 0);
+                    }
                 
             }
             if(reloadTexture == true)
@@ -249,10 +252,17 @@ namespace BestiaryMod
                 reloadTexture = false;
                 pictureTexture.filterMode = FilterMode.Point;
 
-                if (currentTexture[1] < 4)
+                if (!rotate8)
+                {
                     imagePanel.BackgroundTexture = pictureTexture;
+                }
                 else
-                    imagePanel.BackgroundTexture = FlipTexture(pictureTexture);
+                {
+                    if (currentTexture[1] < 4)
+                        imagePanel.BackgroundTexture = pictureTexture;
+                    else
+                        imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(pictureTexture));
+                }
             }
         }
 
@@ -316,25 +326,27 @@ namespace BestiaryMod
             }
             resetTextLabels();
         }
-        void loadContent(string assetPath, bool summary = false, bool reset = true)
+        void loadContent(string assetPath, bool reset = true)
         {
             Texture2D tempTexture;
             
             resetTextLabels();
-            attackModeOffset = 0;
-            attackButton.BackgroundTexture = attackFalseTexture;
-
-            if (reset == true)
+            
+            if (reset)
                 contentOffset = 0;
             
-            if (classicMode == false)
+            if (!classicMode)
             {
+                attackModeOffset = 0;
+                attackButton.BackgroundTexture = attackFalseTexture;
+                
                 pageNameLabel.Text = currentPage;
                 pageNameLabel.Position = new Vector2(pageNamePosVector[0] + ((pageNameSizeVector[0] - pageNameLabel.TextWidth) / 2), pageNamePosVector[1]);
 
                 summaryButton.Position = pageNameLabel.Position;
                 summaryButton.Size = new Vector2(pageNameLabel.TextWidth, pageNameSizeVector[1]);
             }
+
             string entryText = "";
             var entryTextTemp = new List<string>(); ;
 
@@ -414,11 +426,13 @@ namespace BestiaryMod
                 descriptionLabels[i].Text = "";
             }  
         }
+
         void resetButtonTextures()
         {
             for (int i = 0; i < contentButtons.Count; i++)
                 contentButtons[i].BackgroundTexture = blankTexture;
         }
+
         static string SplitLineToMultiline(string input, int rowLength) // taken from here: https://codereview.stackexchange.com/questions/54697/convert-string-to-multiline-text
         {
             StringBuilder line = new StringBuilder();
@@ -591,7 +605,6 @@ namespace BestiaryMod
 
             imagePanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
             imagePanel.Size = picturebackgroundSizeVector;
-            imagePanel.BackgroundTexture = pictureTexture;
             imagePanel.Position = picturebackgroundPosVector;
 
             titleLabel = new TextLabel();
@@ -637,6 +650,44 @@ namespace BestiaryMod
                 mainPanel.Components.Add(descriptionLabels[i]);
 
                 yPos += 10;
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                contentButtons.Add(new Button());
+                contentButtons[i].Position = buttonAllPos[i];
+                contentButtons[i].Size = entryButtonSize;
+                switch (i)
+                {
+                    case 0:
+                        contentButtons[i].OnMouseClick += ContentButton0_OnMouseClick;
+                        break;
+                    case 1:
+                        contentButtons[i].OnMouseClick += ContentButton1_OnMouseClick;
+                        break;
+                    case 2:
+                        contentButtons[i].OnMouseClick += ContentButton2_OnMouseClick;
+                        break;
+                    case 3:
+                        contentButtons[i].OnMouseClick += ContentButton3_OnMouseClick;
+                        break;
+                    case 4:
+                        contentButtons[i].OnMouseClick += ContentButton4_OnMouseClick;
+                        break;
+                    case 5:
+                        contentButtons[i].OnMouseClick += ContentButton5_OnMouseClick;
+                        break;
+                    case 6:
+                        contentButtons[i].OnMouseClick += ContentButton6_OnMouseClick;
+                        break;
+                    case 7:
+                        contentButtons[i].OnMouseClick += ContentButton7_OnMouseClick;
+                        break;
+                    case 8:
+                        contentButtons[i].OnMouseClick += ContentButton8_OnMouseClick;
+                        break;
+                }
+                mainPanel.Components.Add(contentButtons[i]);
             }
             
             if (!classicMode)
@@ -693,45 +744,6 @@ namespace BestiaryMod
 
                 pageNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
                 mainPanel.Components.Add(pageNameLabel);
-
-                for (int i = 0; i < 9; i++)
-                {
-                    contentButtons.Add(new Button());
-                    contentButtons[i].Position = buttonAllPos[i];
-                    contentButtons[i].Size = entryButtonSize;
-
-                    switch (i)
-                    {
-                        case 0:
-                            contentButtons[i].OnMouseClick += ContentButton0_OnMouseClick;
-                            break;
-                        case 1:
-                            contentButtons[i].OnMouseClick += ContentButton1_OnMouseClick;
-                            break;
-                        case 2:
-                            contentButtons[i].OnMouseClick += ContentButton2_OnMouseClick;
-                            break;
-                        case 3:
-                            contentButtons[i].OnMouseClick += ContentButton3_OnMouseClick;
-                            break;
-                        case 4:
-                            contentButtons[i].OnMouseClick += ContentButton4_OnMouseClick;
-                            break;
-                        case 5:
-                            contentButtons[i].OnMouseClick += ContentButton5_OnMouseClick;
-                            break;
-                        case 6:
-                            contentButtons[i].OnMouseClick += ContentButton6_OnMouseClick;
-                            break;
-                        case 7:
-                            contentButtons[i].OnMouseClick += ContentButton7_OnMouseClick;
-                            break;
-                        case 8:
-                            contentButtons[i].OnMouseClick += ContentButton8_OnMouseClick;
-                            break;
-                    }
-                    mainPanel.Components.Add(contentButtons[i]);
-                }
             }
         }
 
@@ -789,7 +801,7 @@ namespace BestiaryMod
                 loadPage();
 
                 entryToLoad = currentSummary;
-                loadContent(entryToLoad, true, true);
+                loadContent(entryToLoad, true);
             }
             else if (right == true && currentEntryNum <= 0)
             {
@@ -800,7 +812,7 @@ namespace BestiaryMod
                 loadPage();
 
                 entryToLoad = currentSummary;
-                loadContent(entryToLoad, true, true);
+                loadContent(entryToLoad, true);
             }
             else if (right == false && currentEntryNum < (allPages.Length - 1))
             {
@@ -811,7 +823,7 @@ namespace BestiaryMod
                 loadPage();
 
                 entryToLoad = currentSummary;
-                loadContent(entryToLoad, true, true);
+                loadContent(entryToLoad, true);
             }
             else
             {
@@ -822,7 +834,7 @@ namespace BestiaryMod
                 loadPage();
 
                 entryToLoad = currentSummary;
-                loadContent(entryToLoad, true, true);
+                loadContent(entryToLoad, true);
             }
         }
         protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
@@ -920,11 +932,13 @@ namespace BestiaryMod
                 loadContent(entryToLoad);
             }
         }
+
         protected void pageRightButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
             changePage(false);
         }
+
         protected void pageLeftButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
@@ -938,18 +952,35 @@ namespace BestiaryMod
             
             currentTexture[1]--;
 
-            if(currentTexture[1] < 0) 
-                currentTexture[1] = 7;
+            if (rotate8)
+            {
+                if(currentTexture[1] < 0) 
+                    currentTexture[1] = 7;
+            }
+            else
+            {
+                if(currentTexture[1] < 0) 
+                    currentTexture[1] = 4;
+            }
         }
+
         protected void LeftRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
             reloadTexture = true;
             currentTexture[1]++;
-
-            if(currentTexture[1] > 7) 
-                currentTexture[1] = 0;
+            if (rotate8)
+            {
+                if(currentTexture[1] > 7) 
+                    currentTexture[1] = 0;
+            }
+            else
+            {
+                if(currentTexture[1] > 4) 
+                    currentTexture[1] = 0;
+            }
         }
+
         protected void AttackButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
@@ -964,16 +995,17 @@ namespace BestiaryMod
                 attackButton.BackgroundTexture = attackFalseTexture;
             }
         }
+
         protected void MainPanel_OnMouseScrollDown(BaseScreenComponent sender)
         {
             contentOffset += 1;
-            loadContent(entryToLoad, false, false);
+            loadContent(entryToLoad, false);
         }
         protected void MainPanel_OnMouseScrollUp(BaseScreenComponent sender)
         {
             if (contentOffset > 0)
                 contentOffset -= 1;
-            loadContent(entryToLoad, false, false);
+            loadContent(entryToLoad, false);
         }
 
         protected void summaryButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)

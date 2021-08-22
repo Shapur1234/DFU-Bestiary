@@ -23,7 +23,7 @@ namespace BestiaryMod
                 bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
 
             if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && GameManager.Instance.IsPlayerOnHUD)
-                DisplayBestiaryUI();
+                DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
             else if (bestiaryUIScreen.isShowing && InputManager.Instance.GetKeyDown(openMenuKeyCode))
                 bestiaryUIScreen.CloseWindow();
             else if (openMenuKeyCode != KeyCode.None && !InputManager.Instance.IsPaused && InputManager.Instance.GetKeyDown(openMenuKeyCode))
@@ -48,10 +48,6 @@ namespace BestiaryMod
             keybindText = settings.GetValue<string>("Controls", "Keybind");
 
             SetKeyFromText(keybindText);
-        }
-        public static void DisplayBestiaryUI()
-        {
-            DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
         }
         private void SetKeyFromText(string text) //"Inspired" by code from Mighty Foot from numidium (https://www.nexusmods.com/daggerfallunity/mods/162)
         {

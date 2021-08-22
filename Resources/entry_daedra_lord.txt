@@ -8,8 +8,7 @@ Abilities:*Can detect camouflaged or invisible foes
  *Immunity to Paralysis, Poison, and Disease
  *Regenerates Health (General)
  *Takes Damage from Holy Places
-Spells:*Balyna's Antidote
+Spells:*Daedroth Lightning
  *Energy Leech
- *Fireball
+ *Fireball 
  *Free Action
- *Shock

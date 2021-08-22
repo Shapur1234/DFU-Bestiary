@@ -21,6 +21,27 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 },
                 {
+                    "Options": [
+                        "Front",
+                        "Front - Left",
+                        "Left",
+                        "Back - Left",
+                        "Back"
+                    ],
+                    "Value": 0,
+                    "Name": "DefaultMobOrientation",
+                    "Description": "Select the default mob orientation in the menu.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
+                },
+                {
+                    "Value": false,
+                    "Name": "EnableEightDirectionRotation",
+                    "Description": "This will add the 3 missing MOB rotations. Not reccomended with dream. If the monster images are laggy, try disabeling this.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
+                },
+                {
                     "Min": 1,
                     "Max": 120,
                     "Value": 10,
@@ -28,17 +49,6 @@
                     "Description": "Set the time it takes to switch one animation frame to another.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.SliderIntKey"
-                },
-                {
-                    "Options": [
-                        "Front",
-                        "Tilted"
-                    ],
-                    "Value": 0,
-                    "Name": "DefaultMobOrientation",
-                    "Description": "Select the default mob orientation in the menu.",
-                    "$version": "v1",
-                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 }
             ],
             "$version": "v1"

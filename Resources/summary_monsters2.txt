@@ -3,8 +3,3 @@ Monsters - 2
 Bestiary
 Summary - Monsters
 Overview:*Monsters are fantastical creatures, often possessing various magical abilities. These can range from magical attacks to various magical resistances, and many monsters can only be harmed by weapons made of special materials. Some monsters have an associated language skill. Also, unlike animals, you can find some treasure on the corpses of most monsters.
-Killcount:*Dragonling - 0
- *Dreugh - 0
- *Gargoyle - 0
- *Giant - 0
- *Harpy - 0
