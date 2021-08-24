@@ -4,8 +4,7 @@ Bestiary
 Flesh Atronach
 Summary:*Flesh Atronachs are golems made of stitched-together cadavers and possess a poison-based damage aura. They can be hit by weapons of any material.
 Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use electricity-based spells.
-Abilities:*Damage Aura
- *Healed by poison-based spells
+Abilities:*Healed by poison-based spells
  *Immunity to Paralysis, Poison and Disease
  *Regenerates Health in Darkness
  *Adrenaline Rush

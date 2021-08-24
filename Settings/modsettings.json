@@ -21,6 +21,13 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 },
                 {
+                    "Value": false,
+                    "Name": "EnableEightDirectionRotation",
+                    "Description": "This will add the 3 missing MOB rotations. Not reccomended with dream. If the monster images are laggy, try disabeling this.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
+                },
+                {
                     "Options": [
                         "Front",
                         "Front - Left",
@@ -33,13 +40,6 @@
                     "Description": "Select the default mob orientation in the menu.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
-                },
-                {
-                    "Value": false,
-                    "Name": "EnableEightDirectionRotation",
-                    "Description": "This will add the 3 missing MOB rotations. Not reccomended with dream. If the monster images are laggy, try disabeling this.",
-                    "$version": "v1",
-                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 },
                 {
                     "Min": 1,

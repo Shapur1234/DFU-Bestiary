@@ -19,30 +19,33 @@ namespace BestiaryMod
 {
     class BestiaryUI : DaggerfallPopupWindow
     {
-        Mod mod = ModManager.Instance.GetMod("Bestiary");
+        Mod bestiaryMod = ModManager.Instance.GetMod("Bestiary");
+        Mod kabsUnleveledSpellsMod = ModManager.Instance.GetMod("Unleveled Spells");
 
+        public static bool animate;
+        public static bool classicMode;
+        public static bool rotate8;
         public bool isShowing;
-        bool reloadTexture;
+        bool kabsUnleveledSpellsModFound;
         bool oldFont;
-        bool classicMode;
-        bool animate;
-        bool rotate8;
+        bool reloadTexture;
 
         int[] currentTexture = { 267, 0, 0};
-        int textLabelXOffset;
-        int maxTextureWidth;
-        int maxTextureHeight;
-        int descriptionLabelMaxCharacters;
-        int defaultRotation;
-        int contentOffset;
+        public static int animationUpdateDelay;
+        public static int defaultRotation;
         int attackModeOffset;
-        int animationUpdateDelay;
+        int contentOffset;
+        int descriptionLabelMaxCharacters;
+        int maxTextureHeight;
+        int maxTextureWidth;
+        int textLabelXOffset;
         
         public string currentEntry;
         public string currentPage;
         string currentPagePath;
         string currentSummary;
         string defaultEntry;
+        string entrySuffix;
         string entryToLoad;
 
         const string rightArrowTextureName = "button_arrow_right";
@@ -105,7 +108,7 @@ namespace BestiaryMod
             base.Setup();
             LoadTextures();
             
-            ModSettings settings = mod.GetSettings();
+            kabsUnleveledSpellsModFound = kabsUnleveledSpellsMod != null;
             
             string textPath = "";
             picturebackgroundSizeVector = new Vector2(102, 102);
@@ -113,12 +116,6 @@ namespace BestiaryMod
             pageNameSizeVector = new Vector2(52, 10);
             pageNamePosVector = new Vector2(71, 14);
             backgroundSizeVector = new Vector2(320, 200);
-
-            animate = settings.GetBool("General", "EnableAnimations");
-            classicMode = settings.GetBool("General", "ClassicMode");
-            rotate8 = settings.GetBool("General", "EnableEightDirectionRotation");
-            animationUpdateDelay = settings.GetValue<int>("General", "DelayBetweenAnimationFrames");
-            defaultRotation = settings.GetValue<int>("General", "DefaultMobOrientation");
 
             oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
 
@@ -137,6 +134,12 @@ namespace BestiaryMod
                 textPath = pathToClassicPage;
             else
                 textPath = allPages[0];
+
+            if(kabsUnleveledSpellsModFound)
+                entrySuffix = "-kabs_unleveled_spells";
+            else
+                entrySuffix = "";
+
             currentEntries = getcurrentEntriesFromFile(textPath);
 
             setUpUIElements();
@@ -149,26 +152,24 @@ namespace BestiaryMod
         public override void Update()
         {
             base.Update();
-
-            DaggerfallWorkshop.Utility.TextureReader textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
-
-            int newWidth = 0;
-            int newPosY = 0;
-            int newPosX = 0;
-            int newHeight = 0;
-            float temp = 0;
-            
             if (Input.GetKeyUp(exitKey))
                 CloseWindow();
 
-            if (animate == true)
+            DaggerfallWorkshop.Utility.TextureReader textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
+
+            if(currentTexture[1] > 4 && !rotate8)
+            {
+                currentTexture[1] = 0;
+            }
+
+            if (animate)
             {
                 if (currentTexture[0] == 284 && currentTexture[2] > (animationUpdateDelay * 3) - 1) 
                     currentTexture[2] = 0;
                 
                 if (currentTexture[2] % animationUpdateDelay == 0)
                 {
-                    if (currentTexture[1] < 4)
+                    if (currentTexture[1] < 5)
                     {
                         if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture))
                             pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
@@ -178,7 +179,6 @@ namespace BestiaryMod
                         if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture))
                             pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay);
                     }
-                    
                     reloadTexture = true;
                 }
 
@@ -206,7 +206,7 @@ namespace BestiaryMod
             }
             else
             {
-                if (currentTexture[1] < 4)
+                if (currentTexture[1] < 5)
                     {
                         if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, 0, out pictureTexture))
                             pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, 0);
@@ -216,53 +216,34 @@ namespace BestiaryMod
                         if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, 0, out pictureTexture))
                             pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, 0);
                     }
-                
+                    reloadTexture = true;
             }
-            if(reloadTexture == true)
+            if(reloadTexture)
             {
-                if (pictureTexture.height > pictureTexture.width)
+                UpdateImagePanel(pictureTexture);
+                pictureTexture.filterMode = FilterMode.Point;
+                
+                if (rotate8)
                 {
-                    temp = picturebackgroundSizeVector[0] / pictureTexture.height;
-                    newWidth = (int)Math.Round(temp * pictureTexture.width);
-                    newHeight = (int)Math.Round(temp * pictureTexture.height);
-                    if(newHeight > maxTextureHeight && attackModeOffset == 0)
+                    if (currentTexture[0] == 275 || currentTexture[0] == 278)
                     {
-                        float temp2 = (float)maxTextureHeight / newHeight;
-                        newWidth = (int)Math.Round(temp2 * newWidth);
-                        newHeight = maxTextureHeight;
+                        if (currentTexture[1] < 4)  
+                            imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(pictureTexture));
+                        else 
+                            imagePanel.BackgroundTexture = pictureTexture;
+                    }
+                    else
+                    {
+                        if (currentTexture[1] < 4)  
+                            imagePanel.BackgroundTexture = pictureTexture;
+                        else 
+                            imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(pictureTexture));
                     }
                 }
                 else
-                {
-                    temp = picturebackgroundSizeVector[1] / pictureTexture.width;
-                    newWidth = (int)Math.Round(temp * pictureTexture.width);
-                    newHeight = (int)Math.Round(temp * pictureTexture.height);
-                    if(newWidth > maxTextureWidth && attackModeOffset == 0)
-                    {
-                        float temp2 = (float)maxTextureWidth / newWidth;
-                        newHeight = (int)Math.Round(temp2 * newHeight);
-                        newWidth = maxTextureWidth;
-                    }
-                }
-                newPosX = (int)picturebackgroundPosVector[0] + (((int)picturebackgroundSizeVector[0] - newWidth) / 2);
-                newPosY = (int)picturebackgroundPosVector[1] + (((int)picturebackgroundSizeVector[1] - newHeight) / 2);
-                imagePanel.Size = new Vector2(newWidth, newHeight);
-                imagePanel.Position = new Vector2(newPosX, newPosY);
+                    imagePanel.BackgroundTexture = pictureTexture;
 
                 reloadTexture = false;
-                pictureTexture.filterMode = FilterMode.Point;
-
-                if (!rotate8)
-                {
-                    imagePanel.BackgroundTexture = pictureTexture;
-                }
-                else
-                {
-                    if (currentTexture[1] < 4)
-                        imagePanel.BackgroundTexture = pictureTexture;
-                    else
-                        imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(pictureTexture));
-                }
             }
         }
 
@@ -328,6 +309,7 @@ namespace BestiaryMod
         }
         void loadContent(string assetPath, bool reset = true)
         {
+            TextAsset textAsset;
             Texture2D tempTexture;
             
             resetTextLabels();
@@ -350,8 +332,13 @@ namespace BestiaryMod
             string entryText = "";
             var entryTextTemp = new List<string>(); ;
 
-            TextAsset textAsset = mod.GetAsset<TextAsset>(assetPath);
+            if(bestiaryMod.HasAsset(assetPath + entrySuffix))
+                textAsset = bestiaryMod.GetAsset<TextAsset>(assetPath + entrySuffix); 
+            else
+                textAsset = bestiaryMod.GetAsset<TextAsset>(assetPath);
+            
             entryText = textAsset.text;
+
             var result = entryText.Split(new[] { '\r', '\n' });
             string[] textToApply = new string[result.Length - 4];
 
@@ -550,7 +537,7 @@ namespace BestiaryMod
             var pageTextTemp = new List<string>(); ;
             string[,] resultEntries = new string[9, 2];
 
-            textAssetPage = mod.GetAsset<TextAsset>(path);
+            textAssetPage = bestiaryMod.GetAsset<TextAsset>(path);
             var resultAssetPage = textAssetPage.text.Split(new[] { '\r', '\n' });
 
             currentSummary = resultAssetPage[2];
@@ -573,7 +560,7 @@ namespace BestiaryMod
                         {
                             resultEntries[i - 1, 0] = resultAssetPage[i];
                             
-                            textAssetEntry = mod.GetAsset<TextAsset>(resultEntries[i - 1, 0]);
+                            textAssetEntry = bestiaryMod.GetAsset<TextAsset>(resultEntries[i - 1, 0]);
                             var resultAssetEntry = textAssetEntry.text.Split(new[] { '\r', '\n' });
                             resultEntries[i - 1, 1] = resultAssetEntry[2];
                         }
@@ -745,6 +732,44 @@ namespace BestiaryMod
                 pageNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
                 mainPanel.Components.Add(pageNameLabel);
             }
+        }
+
+        void UpdateImagePanel(Texture2D inputTexture)
+        {
+            Vector2 newPos = new Vector2();
+            Vector2 newSize = new Vector2();
+
+            float temp = 0;
+            
+            if (inputTexture.height > inputTexture.width)
+                {
+                    temp = picturebackgroundSizeVector[0] / inputTexture.height;
+                    newSize[0] = (int)Math.Round(temp * inputTexture.width);
+                    newSize[1] = (int)Math.Round(temp * inputTexture.height);
+                    if(newSize[1] > maxTextureHeight && attackModeOffset == 0)
+                    {
+                        float temp2 = (float)maxTextureHeight / newSize[1];
+                        newSize[0] = (int)Math.Round(temp2 * newSize[0]);
+                        newSize[1] = maxTextureHeight;
+                    }
+                }
+                else
+                {
+                    temp = picturebackgroundSizeVector[1] / inputTexture.width;
+                    newSize[0] = (int)Math.Round(temp * inputTexture.width);
+                    newSize[1] = (int)Math.Round(temp * inputTexture.height);
+                    if(newSize[0] > maxTextureWidth && attackModeOffset == 0)
+                    {
+                        float temp2 = (float)maxTextureWidth / newSize[0];
+                        newSize[1] = (int)Math.Round(temp2 * newSize[1]);
+                        newSize[0] = maxTextureWidth;
+                    }
+                }
+                newPos[0] = (int)picturebackgroundPosVector[0] + (((int)picturebackgroundSizeVector[0] - newSize[0]) / 2);
+                newPos[1] = (int)picturebackgroundPosVector[1] + (((int)picturebackgroundSizeVector[1] - newSize[1]) / 2);
+                
+                imagePanel.Position = newPos;
+                imagePanel.Size = newSize;
         }
 
         Texture2D FlipTexture(Texture2D original) //https://girlscancode.wordpress.com/2015/03/02/unity3d-flipping-a-texture/
@@ -948,10 +973,8 @@ namespace BestiaryMod
         protected void RightRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            reloadTexture = true;
             
             currentTexture[1]--;
-
             if (rotate8)
             {
                 if(currentTexture[1] < 0) 
@@ -967,7 +990,7 @@ namespace BestiaryMod
         protected void LeftRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            reloadTexture = true;
+
             currentTexture[1]++;
             if (rotate8)
             {

@@ -1,10 +1,10 @@
 {
     "ModTitle": "Bestiary",
-    "ModVersion": "1.0",
+    "ModVersion": "1.1",
     "ModAuthor": "Shapur",
     "ContactInfo": "Shapur on the DFU Forums",
-    "DFUnity_Version": "0.12.1",
-    "ModDescription": "A mod that reintroduces the Bestiary from one of Daggerfalls demos.",
+    "DFUnity_Version": "0.12.2",
+    "ModDescription": "A mod that reintroduces the Bestiary from one of Daggerfalls demos and furhter build upon it.",
     "GUID": "59f5432c-88cb-4f04-b019-895aeea0d3f3",
     "Files": [
         "Assets/Game/Mods/Bestiary/Textures/button_iron_atronach.png",
@@ -115,6 +115,15 @@
         "Assets/Game/Mods/Bestiary/Resources/entry_fire_atronach.txt",
         "Assets/Game/Mods/Bestiary/Resources/entry_wraith.txt",
         "Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt",
-        "Assets/Game/Mods/Bestiary/Resources/entry_centaur.txt"
+        "Assets/Game/Mods/Bestiary/Resources/entry_centaur.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_lich-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_ancient_lich-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_vampire_ancient-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_orc_shaman-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_vampire-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_daedroth-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_wraith-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord-kabs_unleveled_spells.txt"
     ]
 }

@@ -4,8 +4,7 @@ Bestiary
 Fire Atronach
 Summary:*Fire Atronachs are golems constructed of flames and possess a fire-based damage aura. They can be hit by weapons of any material.
 Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use cold-based spells.
-Abilities:*Damage Aura
- *Healed by fire-based spells
+Abilities:*Healed by fire-based spells
  *Immunity to Paralysis, Poison, Fire and Disease
  *Regenerates Health in Darkness
  *Adrenaline Rush

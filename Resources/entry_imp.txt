@@ -6,5 +6,6 @@ Summary:*Imps are flying creatures that cast spells at their foes. They can be h
 Advice:*Kill imps as quickly as possible, especially at low levels. Spell Reflection, Spell Resistance, or Spell Absorption are helpful. The Impish language skill can sometimes render an enemy non-hostile.
 Abilities:*Can detect camouflaged or invisible foes
 Spells:*Chameleon
- *Wizard's Fire
+ *Free Action
  *Toxic Cloud
+ *Wizard's Fire

@@ -5,4 +5,4 @@ Ghost
 Summary:*Ghosts are the angry spirits of the dead. Ghosts can be hit by weapons of silver quality or higher.
 Advice:*At lower levels, ghosts are best attacked from a distance, or in melee while protected by Spell Reflection, Spell Resistance, or Spell Absorption. Higher level characters can easily destroy a ghost with melee attacks.
 Abilities:*None
-Spells:*None
+Spells:*Wizard Rend

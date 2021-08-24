@@ -1,0 +1,10 @@
+278
+button_wraith
+Bestiary
+Wraith
+Summary:*Like ghosts, wraiths are the spirits of the dead, but are much more powerful than their counterparts - both in melee and with magic. Wraiths can be hit by weapons of silver quality or higher.
+Advice:*Wraiths can do massive melee damage so the use of ranged attacks is recommended, except at higher levels where they can be easily killed with melee attacks.
+Abilities:*Can detect camouflaged or invisible foes
+ *Resistance to Magic
+Spells:*Far Silence
+ *Wraith Screech

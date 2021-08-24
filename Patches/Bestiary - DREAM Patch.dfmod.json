@@ -1,8 +1,8 @@
 {
     "ModTitle": "Bestiary - DREAM Patch",
-    "ModVersion": "1.0",
+    "ModVersion": "1.1",
     "ModAuthor": "KoW",
-    "DFUnity_Version": "0.12.1",
+    "DFUnity_Version": "0.12.2",
     "ModDescription": "Temporary patch for Bestiary and DREAM compactibility",
     "GUID": "cb2d8f4a-d6cc-46fe-9ea7-f51cdb290db3",
     "Files": [
@@ -53,5 +53,12 @@
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SKELETAL_WARRIOR.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ANCIENT_LICH.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch.dfmod.json"
+    ],
+    "Dependencies": [
+        {
+            "Name": "bestiary",
+            "IsOptional": false,
+            "IsPeer": false
+        }
     ]
 }
