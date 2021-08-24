@@ -225,7 +225,7 @@ namespace BestiaryMod
                 
                 if (rotate8)
                 {
-                    if (currentTexture[0] == 275 || currentTexture[0] == 278)
+                    if (currentTexture[0] == 275)
                     {
                         if (currentTexture[1] < 4)  
                             imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(pictureTexture));

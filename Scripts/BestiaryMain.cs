@@ -21,11 +21,6 @@ namespace BestiaryMod
 
         void Update()
         {
-            if (bestiaryUIScreen == null) 
-            {
-                bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
-                mod.LoadSettings();
-            }
             if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && GameManager.Instance.IsPlayerOnHUD)
                 DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
             else if (bestiaryUIScreen.isShowing && InputManager.Instance.GetKeyDown(openMenuKeyCode))
@@ -52,6 +47,7 @@ namespace BestiaryMod
         {
             Debug.Log("Begin mod init: Bestiary");
 
+            bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
             mod.LoadSettings();
 
             Debug.Log("Finished mod init: Bestiary");
@@ -88,7 +84,6 @@ namespace BestiaryMod
                 {
                     BestiaryUI.animate = modSettings.GetBool("General", "EnableAnimations");
                     BestiaryUI.animationUpdateDelay = modSettings.GetValue<int>("General", "DelayBetweenAnimationFrames");
-                    BestiaryUI.classicMode = modSettings.GetBool("General", "ClassicMode");
                     BestiaryUI.defaultRotation = modSettings.GetValue<int>("General", "DefaultMobOrientation");
                     BestiaryUI.rotate8 = modSettings.GetBool("General", "EnableEightDirectionRotation");
                 }
