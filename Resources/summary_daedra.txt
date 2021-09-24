@@ -3,8 +3,8 @@ Daedra
 Bestiary
 Summary - Daedra
 Overview:*"Daedra" is a term for any of the numerous varieties of otherworldly beings from the plane of Oblivion. They are fairly challenging adversaries, and can only be harmed by weapons of mithril quality or greater. All daedra can detect invisible foes.
-Killcount:*Daedra Lord - 0
- *Dadra Seducer - 0
- *Daedroth - 0
- *Fire Daedra - 0
- *Ice Daedra - 0
+Killcount:*Daedra Lord - 
+ *Dadra Seducer - 
+ *Daedroth - 
+ *Fire Daedra - 
+ *Ice Daedra - 

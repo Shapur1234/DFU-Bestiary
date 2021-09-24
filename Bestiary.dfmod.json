@@ -1,9 +1,9 @@
 {
     "ModTitle": "Bestiary",
-    "ModVersion": "1.1",
+    "ModVersion": "1.2",
     "ModAuthor": "Shapur",
     "ContactInfo": "Shapur on the DFU Forums",
-    "DFUnity_Version": "0.12.2",
+    "DFUnity_Version": "0.12.3",
     "ModDescription": "A mod that reintroduces the Bestiary from one of Daggerfalls demos and furhter build upon it.",
     "GUID": "59f5432c-88cb-4f04-b019-895aeea0d3f3",
     "Files": [
