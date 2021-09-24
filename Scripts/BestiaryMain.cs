@@ -144,142 +144,95 @@ namespace BestiaryMod
 
         public static string MonsterCareerIndexToString(int index)
         {
-            string output;
-
             switch (index)
             {
                 case (int)MonsterCareers.AncientLich:
-                    output = "entry_ancient_lich";
-                    break;
+                    return "entry_ancient_lich";
                 case (int)MonsterCareers.Centaur:
-                    output = "entry_centaur";
-                    break;
+                    return "entry_centaur";
                 case (int)MonsterCareers.DaedraLord:
-                    output = "entry_daedra_lord";
-                    break;
+                    return "entry_daedra_lord";
                 case (int)MonsterCareers.DaedraSeducer:
-                    output = "entry_daedra_seducer";
-                    break;
+                    return "entry_daedra_seducer";
                 case (int)MonsterCareers.Daedroth:
-                    output = "entry_daedroth";
-                    break;
+                    return "entry_daedroth";
                 case (int)MonsterCareers.Dragonling:
-                    output = "entry_dragonling";
-                    break;
+                    return "entry_dragonling";
                 case (int)MonsterCareers.Dragonling_Alternate:
-                    output = "entry_dragonling";
-                    break;
+                    return "entry_dragonling";
                 case (int)MonsterCareers.Dreugh:
-                    output = "entry_dreugh";
-                    break;
+                    return "entry_dreugh";
                 case (int)MonsterCareers.FireAtronach:
-                    output = "entry_fire_atronach";
-                    break;
+                    return "entry_fire_atronach";
                 case (int)MonsterCareers.FireDaedra:
-                    output = "entry_fire_daedra";
-                    break;
+                    return "entry_fire_daedra";
                 case (int)MonsterCareers.FleshAtronach:
-                    output = "entry_flesh_atronach";
-                    break;
+                    return "entry_flesh_atronach";
                 case (int)MonsterCareers.FrostDaedra:
-                    output = "entry_ice_daedra";
-                    break;
+                    return "entry_ice_daedra";
                 case (int)MonsterCareers.Gargoyle:
-                    output = "entry_gargoyle";
-                    break;
+                    return "entry_gargoyle";
                 case (int)MonsterCareers.Ghost:
-                    output = "entry_ghost";
-                    break;
+                    return "entry_ghost";
                 case (int)MonsterCareers.Giant:
-                    output = "entry_giant";
-                    break;
+                    return "entry_giant";
                 case (int)MonsterCareers.GiantBat:
-                    output = "entry_giant_bat";
-                    break;
+                    return "entry_giant_bat";
                 case (int)MonsterCareers.GiantScorpion:
-                    output = "entry_scorpion";
-                    break;
+                    return "entry_scorpion";
                 case (int)MonsterCareers.GrizzlyBear:
-                    output = "entry_grizzly_bear";
-                    break;
+                    return "entry_grizzly_bear";
                 case (int)MonsterCareers.Harpy:
-                    output = "entry_harpy";
-                    break;
+                    return "entry_harpy";
                 case (int)MonsterCareers.IceAtronach:
-                    output = "entry_ice_atronach";
-                    break;
+                    return "entry_ice_atronach";
                 case (int)MonsterCareers.Imp:
-                    output = "entry_imp";
-                    break;
+                    return "entry_imp";
                 case (int)MonsterCareers.IronAtronach:
-                    output = "entry_iron_atronach";
-                    break;
+                    return "entry_iron_atronach";
                 case (int)MonsterCareers.Lamia:
-                    output = "entry_lamia";
-                    break;
+                    return "entry_lamia";
                 case (int)MonsterCareers.Lich:
-                    output = "entry_lich";
-                    break;
+                    return "entry_lich";
                 case (int)MonsterCareers.Mummy:
-                    output = "entry_mummy";
-                    break;
+                    return "entry_mummy";
                 case (int)MonsterCareers.Nymph:
-                    output = "entry_nymph";
-                    break;
+                    return "entry_nymph";
                 case (int)MonsterCareers.Orc:
-                    output = "entry_orc";
-                    break;
+                    return "entry_orc";
                 case (int)MonsterCareers.OrcSergeant:
-                    output = "entry_orc_sergeant";
-                    break;
+                    return "entry_orc_sergeant";
                 case (int)MonsterCareers.OrcShaman:
-                    output = "entry_orc_shaman";
-                    break;
+                    return "entry_orc_shaman";
                 case (int)MonsterCareers.OrcWarlord:
-                    output = "entry_orc_warlord";
-                    break;
+                    return "entry_orc_warlord";
                 case (int)MonsterCareers.Rat:
-                    output = "entry_rat";
-                    break;
+                    return "entry_rat";
                 case (int)MonsterCareers.SabertoothTiger:
-                    output = "entry_sabertooth_tiger";
-                    break;
+                    return "entry_sabertooth_tiger";
                 case (int)MonsterCareers.SkeletalWarrior:
-                    output = "entry_skeletal_warrior";
-                    break;
+                    return "entry_skeletal_warrior";
                 case (int)MonsterCareers.Slaughterfish:
-                    output = "entry_slaughterfish";
-                    break;
+                    return "entry_slaughterfish";
                 case (int)MonsterCareers.Spider:
-                    output = "entry_spider";
-                    break;
+                    return "entry_spider";
                 case (int)MonsterCareers.Spriggan:
-                    output = "entry_spriggan";
-                    break;
+                    return "entry_spriggan";
                 case (int)MonsterCareers.Vampire:
-                    output = "entry_vampire";
-                    break;
+                    return "entry_vampire";
                 case (int)MonsterCareers.VampireAncient:
-                    output = "entry_vampire_ancient";
-                    break;
+                    return "entry_vampire_ancient";
                 case (int)MonsterCareers.Wereboar:
-                    output = "entry_wereboar";
-                    break;
+                    return "entry_wereboar";
                 case (int)MonsterCareers.Werewolf:
-                    output = "entry_werewolf";
-                    break;
+                    return "entry_werewolf";
                 case (int)MonsterCareers.Wraith:
-                    output = "entry_wraith";
-                    break;
+                    return "entry_wraith";
                 case (int)MonsterCareers.Zombie:
-                    output = "entry_zombie";
-                    break;
+                    return "entry_zombie";
                 default:
-                    output = "false";
-                    break;
+                    return "false";
             }
-
-            return output;
         }
 
         public object NewSaveData()

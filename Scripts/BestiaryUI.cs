@@ -665,6 +665,14 @@ namespace BestiaryMod
             titleLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
             titleLabel.Size = new Vector2(52, 22);
             titleLabel.Font = DaggerfallUI.TitleFont;
+
+            if(oldFont)
+            {
+                titleLabel.Position = new Vector2(15, 20);
+                titleLabel.TextScale = 0.7f;
+            }
+            else 
+                titleLabel.Position = new Vector2(15, 16);
             
             mainPanel.Components.Add(titleLabel);
 
@@ -672,16 +680,11 @@ namespace BestiaryMod
             monsterNameLabel.Position = new Vector2(144, 24);
             monsterNameLabel.Size = new Vector2(40, 14);
             monsterNameLabel.Font = DaggerfallUI.LargeFont;
-            mainPanel.Components.Add(monsterNameLabel);
 
             if(oldFont)
-            {
-                titleLabel.Position = new Vector2(15, 20);
-                titleLabel.TextScale = 0.7f;
                 monsterNameLabel.TextScale = 0.85f;
-            }
-            else 
-                titleLabel.Position = new Vector2(15, 16);
+            
+            mainPanel.Components.Add(monsterNameLabel);
 
             exitButton = new Button();
             exitButton.Position = new Vector2(216, 187);

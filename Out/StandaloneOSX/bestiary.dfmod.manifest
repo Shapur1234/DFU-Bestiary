@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1503255131
+CRC: 1318925758
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f5f9520cf06c0494b046830200e17597
+    Hash: 1fb0c43a04e3d1fcf6bcc31a6b539ee4
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -36,9 +36,9 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/page_animals.txt
 - Assets/Game/Mods/Bestiary/Textures/button_mummy.png
 - Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord-kabs_unleveled_spells.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_iron_atronach.png
 - Assets/Game/Mods/Bestiary/Textures/button_giant.png
 - Assets/Game/Mods/Bestiary/Textures/button_attack_true.png
@@ -67,11 +67,11 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_nymph.png
 - Assets/Game/Mods/Bestiary/Textures/button_fire_daedra.png
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/summary_animals.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_orc.txt
 - Assets/Game/Mods/Bestiary/Resources/page_undead.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_zombie.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_lich.png
 - Assets/Game/Mods/Bestiary/Resources/entry_giant_bat.txt
 - Assets/Game/Mods/Bestiary/Resources/page_classic.txt
