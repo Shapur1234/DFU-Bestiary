@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 820235
+CRC: 1195549439
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ab45baf5b2d4bebe066bd9264d7433ef
+    Hash: 75084956c59ae2ef457e6a81072e7995
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -15,51 +15,51 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_FIRE_ATRONACH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_HARPY.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ANCIENT_LICH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SKELETAL_WARRIOR.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GHOST.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_arrow_left.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GRIZZLY_BEAR.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_VAMPIRE.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_LAMIA.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ZOMBIE.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDRA_LORD.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_attack_true.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDRA_SEDUCER.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GIANT.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DRAGONLING.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_VAMPIRE_ANCIENT.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_arrow_right.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_IRON_ATRONACH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GIANT_BAT.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDROTH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SABERTOOTH_TIGER.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch.dfmod.json
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_attack_false.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SCORPION.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ORC_SHAMAN.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_FIRE_DAEDRA.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_WEREBOAR.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_MUMMY.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DREUGH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ORC_SERGEANT.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GARGOYLE.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ORC.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_RAT.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_IMP.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_WRAITH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_LICH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ICE_DAEDRA.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ORC_WARLORD.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_FLESH_ATRONACH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/base_background.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_NYMPH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SPRIGGAN.png
 - Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_CENTAUR.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SLAUGHTERFISH.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_WEREWOLF.png
-- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ICE_ATRONACH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_VAMPIRE.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_FIRE_DAEDRA.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GARGOYLE.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_FIRE_ATRONACH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GIANT_BAT.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ORC_WARLORD.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ANCIENT_LICH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DRAGONLING.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_arrow_right.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_LICH.png
 - Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SPIDER.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDRA_LORD.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GRIZZLY_BEAR.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_NYMPH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_arrow_left.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDROTH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SPRIGGAN.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ZOMBIE.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/base_background.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SABERTOOTH_TIGER.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GHOST.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ICE_ATRONACH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_WEREBOAR.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_WRAITH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_FLESH_ATRONACH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_MUMMY.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDRA_SEDUCER.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SLAUGHTERFISH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch.dfmod.json
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_LAMIA.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ORC_SHAMAN.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_WEREWOLF.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ORC.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_HARPY.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_VAMPIRE_ANCIENT.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SKELETAL_WARRIOR.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_IRON_ATRONACH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_RAT.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ICE_DAEDRA.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SCORPION.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GIANT.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_attack_false.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DREUGH.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_IMP.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_attack_true.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ORC_SERGEANT.png
 Dependencies: []

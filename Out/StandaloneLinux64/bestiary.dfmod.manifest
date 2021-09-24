@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 206405729
+CRC: 1762396117
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1c051e4354c9ec5bcd68fb9d14079d81
+    Hash: c3cfc562a4e8c8489a28c282b4cedbe8
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -36,6 +36,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/page_animals.txt
 - Assets/Game/Mods/Bestiary/Textures/button_mummy.png
 - Assets/Game/Mods/Bestiary/Resources/entry_spriggan.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord-kabs_unleveled_spells.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt
 - Assets/Game/Mods/Bestiary/Textures/button_iron_atronach.png
@@ -54,7 +55,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_harpy.png
 - Assets/Game/Mods/Bestiary/Textures/button_orc.png
 - Assets/Game/Mods/Bestiary/Resources/entry_skeletal_warrior.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_daedroth.png
 - Assets/Game/Mods/Bestiary/Resources/entry_nymph.txt
 - Assets/Game/Mods/Bestiary/Textures/blank.png
@@ -67,6 +67,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_nymph.png
 - Assets/Game/Mods/Bestiary/Textures/button_fire_daedra.png
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/summary_animals.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_orc.txt
 - Assets/Game/Mods/Bestiary/Resources/page_undead.txt
@@ -101,7 +102,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_mummy.txt
 - Assets/Game/Mods/Bestiary/Textures/button_grizzly_bear.png
 - Assets/Game/Mods/Bestiary/Resources/summary_orcs.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_scorpion.png
 - Assets/Game/Mods/Bestiary/Textures/button_ice_daedra.png
 - Assets/Game/Mods/Bestiary/Textures/button_imp.png

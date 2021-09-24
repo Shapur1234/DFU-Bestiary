@@ -124,6 +124,7 @@
         "Assets/Game/Mods/Bestiary/Resources/entry_daedroth-kabs_unleveled_spells.txt",
         "Assets/Game/Mods/Bestiary/Resources/entry_wraith-kabs_unleveled_spells.txt",
         "Assets/Game/Mods/Bestiary/Resources/entry_ice_daedra-kabs_unleveled_spells.txt",
-        "Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord-kabs_unleveled_spells.txt"
+        "Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord-kabs_unleveled_spells.txt",
+        "Assets/Game/Mods/Bestiary/Bestiary.dfmod.json"
     ]
 }
