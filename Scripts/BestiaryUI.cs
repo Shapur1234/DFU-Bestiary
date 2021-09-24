@@ -245,6 +245,11 @@ namespace BestiaryMod
 
                 reloadTexture = false;
             }
+            // Debug.Log("dICT");
+            // foreach (var item in BestiaryMain.killCounts)
+            // {
+            //     Debug.Log(item);
+            // }
         }
 
         public override void OnPush()
@@ -294,9 +299,11 @@ namespace BestiaryMod
         {  
             defaultEntry = currentSummary;
 
+            
+
             for (int i = 0; i < contentButtonTextures.Count; i++)
             {
-                if (!String.IsNullOrEmpty(currentEntries[i, 1]))
+                if (!String.IsNullOrEmpty(currentEntries[i, 1]) && currentEntries[i, 1] != "Bestiary")
                 {
                     contentButtonTextures[i] = DaggerfallUI.GetTextureFromResources(currentEntries[i, 1]);
                     if(!contentButtonTextures[i])
@@ -311,6 +318,10 @@ namespace BestiaryMod
         {
             TextAsset textAsset;
             Texture2D tempTexture;
+
+            bool isSummary = false;
+            if(assetPath[0] == 's')
+                isSummary = true;
             
             resetTextLabels();
             
@@ -562,7 +573,7 @@ namespace BestiaryMod
                             
                             textAssetEntry = bestiaryMod.GetAsset<TextAsset>(resultEntries[i - 1, 0]);
                             var resultAssetEntry = textAssetEntry.text.Split(new[] { '\r', '\n' });
-                            resultEntries[i - 1, 1] = resultAssetEntry[2];
+                            resultEntries[i - 1, 1] = resultAssetEntry[1];
                         }
                         else
                         {
