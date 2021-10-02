@@ -7,6 +7,18 @@
             "IsAdvanced": false,
             "Keys": [
                 {
+                    "Options": [
+                        "Always unlocked",
+                        "Book item (Find a book that will unlock the Bestiary)",
+                        "Kill to unlock (Makes an entry viewable, only after you kill the monster (like Witcher 3))"
+                    ],
+                    "Value": 1,
+                    "Name": "MenuUnlock",
+                    "Description": "What do you need to do to unlock the Bestiary screen / entries.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
+                },
+                {
                     "Value": false,
                     "Name": "ClassicMode",
                     "Description": "Check this, if you want the original version, as seen in the demo.",

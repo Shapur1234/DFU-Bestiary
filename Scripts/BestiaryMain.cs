@@ -7,6 +7,8 @@ using DaggerfallConnect;
 using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.Entity;
+using DaggerfallWorkshop.Game.Items;
+using DaggerfallWorkshop.Game.Serialization;
 using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
@@ -22,6 +24,7 @@ namespace BestiaryMod
         public class MyModSaveData
         {
             public Dictionary<string, uint> KillCounts;
+            public bool UnlockedBestiary;
         }
         
         public Type SaveDataType { get { return typeof(MyModSaveData); } }
@@ -32,7 +35,9 @@ namespace BestiaryMod
         static KeyCode openMenuKeyCode;
 
         static bool firstSetting = true;
-        public static Dictionary<string, uint> killCounts;
+
+        public static bool unlockedBestiary;
+        public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
 
         [Invoke(StateManager.StateTypes.Start, 0)]
         public static void Init(InitParams initParams)
@@ -44,6 +49,8 @@ namespace BestiaryMod
 
             mod.SaveDataInterface = instance;
             mod.LoadSettingsCallback = LoadSettings;
+
+            DaggerfallUnity.Instance.ItemHelper.RegisterCustomItem(BestiaryItem.templateIndex, ItemGroups.Books, typeof(BestiaryItem));
 
             EnemyDeath.OnEnemyDeath += EnemyDeath_OnEnemyDeath;
 
@@ -84,6 +91,9 @@ namespace BestiaryMod
 
         static void LoadSettings(ModSettings modSettings, ModSettingsChange change)
         {
+            DaggerfallUnityItem skillBook = ItemBuilder.CreateItem(ItemGroups.Books, BestiaryItem.templateIndex);
+            GameManager.Instance.PlayerEntity.Items.AddItem(skillBook);
+            
             if(firstSetting)
             {
                 string keybindText;
@@ -239,7 +249,8 @@ namespace BestiaryMod
         {
             return new MyModSaveData
             {
-                KillCounts = new Dictionary<string, uint>()
+                KillCounts = new Dictionary<string, uint>(),
+                UnlockedBestiary = false
             };
         }
 
@@ -247,14 +258,17 @@ namespace BestiaryMod
         {
             return new MyModSaveData
             {
-                KillCounts = killCounts
+                KillCounts = killCounts,
+                UnlockedBestiary = unlockedBestiary
             };
         }
 
         public void RestoreSaveData(object saveData)
         {
             var myModSaveData = (MyModSaveData)saveData;
+
             killCounts = myModSaveData.KillCounts;
+            unlockedBestiary = myModSaveData.UnlockedBestiary;
         }
     }
 }

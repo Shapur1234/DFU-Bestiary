@@ -291,8 +291,7 @@ namespace BestiaryMod
         void LoadPage()
         {  
             defaultEntry = currentSummary;
-
-            for (int i = 0; i < contentButtonTextures.Count; i++)
+            for (int i = 0; i < currentEntries.Length && i < contentButtonTextures.Count; i++)
             {
                 if (!String.IsNullOrEmpty(currentEntries[i, 1]))
                 {
@@ -302,6 +301,8 @@ namespace BestiaryMod
 
                     contentButtons[i].BackgroundTexture = contentButtonTextures[i];
                 }
+                else
+                    break;
             }
             ResetTextLabels();
         }
@@ -413,6 +414,7 @@ namespace BestiaryMod
                                     textToApply[i - 3] += BestiaryMain.killCounts[currentEntries[i - 5, 0]];
                                 else
                                     textToApply[i - 3] += 0;
+                                
                             }
                             break;
                     }
