@@ -19,6 +19,8 @@ namespace BestiaryMod
 {
     class BestiaryUI : DaggerfallPopupWindow
     {
+        #region VARS
+        
         Mod bestiaryMod = ModManager.Instance.GetMod("Bestiary");
         Mod kabsUnleveledSpellsMod = ModManager.Instance.GetMod("Unleveled Spells");
 
@@ -56,10 +58,10 @@ namespace BestiaryMod
         const string attackFalseTextureName = "button_attack_false";
 
         const string pathToClassicPage = "page_classic";
-        string[] allPages = {"page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead"};
+        string[] allPagesArchive = {"page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead"};
+        string[] allPages;
         string[,] currentEntries = new string[9, 2];
 
-        
         List<Texture2D> contentButtonTextures = new List<Texture2D>();
         Texture2D attackFalseTexture;
         Texture2D attackTrueTexture;
@@ -95,6 +97,8 @@ namespace BestiaryMod
         Button leftRotateButton;
         Button exitButton;
         Button attackButton;
+
+        #endregion
 
         public BestiaryUI(IUserInterfaceManager uiManager)
             : base(uiManager)
@@ -249,6 +253,11 @@ namespace BestiaryMod
         {
             base.OnPush();
             isShowing = true;
+
+            if (BestiaryMain.menuUnlock == 2)
+                allPages = GetAvailablePages();
+            else
+                allPages = allPagesArchive;
         }
 
         public override void OnPop()
@@ -287,6 +296,25 @@ namespace BestiaryMod
                 contentButtonTextures.Add(DaggerfallUI.GetTextureFromResources(blankTextureName));
         }
 
+        string[] GetAvailablePages()
+        {
+            List<string> availablePages = new List<string>();
+
+            foreach (var item in allPagesArchive)
+            {
+                var tempEntries = GetcurrentEntriesFromFile(item);
+
+                for (int i = 0; i < tempEntries.Length / 2; i++)
+                {
+                    if (!String.IsNullOrEmpty(tempEntries[i, 0]) && BestiaryMain.killCounts.ContainsKey(tempEntries[i, 0]))
+                    {
+                        availablePages.Add(item);
+                        break;
+                    }
+                }
+            }
+            return availablePages.ToArray();
+        }
         
         void LoadPage()
         {  
@@ -884,7 +912,6 @@ namespace BestiaryMod
             return readableText;
         }
 
-
         void ChangePage(bool right)
         {   
             int currentEntryNum = Array.IndexOf(allPages, currentPagePath);
@@ -1032,14 +1059,20 @@ namespace BestiaryMod
 
         protected void pageRightButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            ChangePage(false);
+            if (allPages.Length > 1)
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                ChangePage(false);
+            }
         }
 
         protected void pageLeftButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            ChangePage(true);
+            if (allPages.Length > 1)
+            {
+                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+                ChangePage(true);
+            }
         }
         
         protected void RightRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)

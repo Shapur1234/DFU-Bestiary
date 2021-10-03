@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 
 using DaggerfallWorkshop;
@@ -34,8 +34,23 @@ namespace BestiaryMod
         {
             book = this;
             
-            Debug.Log("Item used");
-
+            if(BestiaryMain.menuUnlock == 1)
+            {
+                if (!BestiaryMain.unlockedBestiary)
+                {
+                    BestiaryMain.unlockedBestiary = true;
+                    BestiaryMain.DisplayMessage("You study the contents of the book closely. You have unlocked the Bestiary.");
+                }
+                else
+                {
+                    BestiaryMain.DisplayMessage("You already know all this book has to offer.");
+                }
+            }
+            else
+            {
+                BestiaryMain.unlockedBestiary = true;
+            }
+            
             return true;
         }
     }
