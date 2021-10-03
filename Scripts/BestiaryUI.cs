@@ -27,9 +27,10 @@ namespace BestiaryMod
         public static bool animate;
         public static bool classicMode;
         public static bool rotate8;
+
         public bool isShowing;
-        bool kabsUnleveledSpellsModFound;
-        bool oldFont;
+        public bool kabsUnleveledSpellsModFound;
+        public bool oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
         bool reloadTexture;
 
         int[] currentTexture = { 267, 0, 0};
@@ -37,6 +38,7 @@ namespace BestiaryMod
         public static int defaultRotation;
         int attackModeOffset;
         int contentOffset;
+
         int descriptionLabelMaxCharacters;
         int maxTextureHeight;
         int maxTextureWidth;
@@ -46,7 +48,6 @@ namespace BestiaryMod
         public string currentPage;
         string currentPagePath;
         string currentSummary;
-        string defaultEntry;
         string entrySuffix;
         string entryToLoad;
 
@@ -71,7 +72,7 @@ namespace BestiaryMod
         Texture2D pictureTexture;
         Texture2D rightArrowTexture;
 
-        List<Vector2> buttonAllPos = new List<Vector2> {new Vector2(4, 162), new Vector2(50, 162), new Vector2(95, 162), new Vector2(4, 174), new Vector2(50, 174), new Vector2(95, 174), new Vector2(4, 187), new Vector2(50, 187), new Vector2(95, 187)};
+        readonly List<Vector2> buttonAllPos = new List<Vector2> {new Vector2(4, 162), new Vector2(50, 162), new Vector2(95, 162), new Vector2(4, 174), new Vector2(50, 174), new Vector2(95, 174), new Vector2(4, 187), new Vector2(50, 187), new Vector2(95, 187)};
         Vector2 backgroundSizeVector;
         Vector2 entryButtonSize;
         Vector2 exitButtonSize;
@@ -120,8 +121,6 @@ namespace BestiaryMod
             pageNameSizeVector = new Vector2(52, 10);
             pageNamePosVector = new Vector2(71, 14);
             backgroundSizeVector = new Vector2(320, 200);
-
-            oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
 
             if (!oldFont)
             {
@@ -318,7 +317,6 @@ namespace BestiaryMod
         
         void LoadPage()
         {  
-            defaultEntry = currentSummary;
             for (int i = 0; i < currentEntries.Length && i < contentButtonTextures.Count; i++)
             {
                 if (!String.IsNullOrEmpty(currentEntries[i, 1]))
@@ -653,7 +651,7 @@ namespace BestiaryMod
                         currentPage = resultAssetPage[0];
                         break;
                     default:
-                        if (!string.IsNullOrEmpty(resultAssetPage[i]))
+                        if (!string.IsNullOrEmpty(resultAssetPage[i]) && BestiaryMain.killCounts.ContainsKey(resultAssetPage[i]))
                         {
                             resultEntries[i - 1, 0] = resultAssetPage[i];
                             
