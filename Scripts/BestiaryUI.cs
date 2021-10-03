@@ -33,7 +33,7 @@ namespace BestiaryMod
         public bool oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
         bool reloadTexture;
 
-        int[] currentTexture = { 267, 0, 0};
+        int[] currentTexture = { 267, 0, 0 };
         public static int animationUpdateDelay;
         public static int defaultRotation;
         int attackModeOffset;
@@ -43,6 +43,10 @@ namespace BestiaryMod
         int maxTextureHeight;
         int maxTextureWidth;
         int textLabelXOffset;
+
+        readonly List<string> allPagesArchive = new List<string> {"page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead"};
+        List<string> allPages = new List<string>();
+        string[,] currentEntries = new string[9, 2];
         
         public string currentEntry;
         public string currentPage;
@@ -51,17 +55,14 @@ namespace BestiaryMod
         string entrySuffix;
         string entryToLoad;
 
+        const string pathToClassicPage = "page_classic";
+
         const string rightArrowTextureName = "button_arrow_right";
         const string leftArrowTextureName = "button_arrow_left";
         const string blankTextureName = "blank";
         const string backgroundTextureName = "base_background";
         const string attackTrueTextureName = "button_attack_true";
         const string attackFalseTextureName = "button_attack_false";
-
-        const string pathToClassicPage = "page_classic";
-        string[] allPagesArchive = {"page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead"};
-        string[] allPages;
-        string[,] currentEntries = new string[9, 2];
 
         List<Texture2D> contentButtonTextures = new List<Texture2D>();
         Texture2D attackFalseTexture;
@@ -295,9 +296,9 @@ namespace BestiaryMod
                 contentButtonTextures.Add(DaggerfallUI.GetTextureFromResources(blankTextureName));
         }
 
-        string[] GetAvailablePages()
+        List<string> GetAvailablePages()
         {
-            List<string> availablePages = new List<string>();
+            List<string> output = new List<string>();
 
             foreach (var item in allPagesArchive)
             {
@@ -307,12 +308,12 @@ namespace BestiaryMod
                 {
                     if (!String.IsNullOrEmpty(tempEntries[i, 0]) && BestiaryMain.killCounts.ContainsKey(tempEntries[i, 0]))
                     {
-                        availablePages.Add(item);
+                        output.Add(item);
                         break;
                     }
                 }
             }
-            return availablePages.ToArray();
+            return output;
         }
         
         void LoadPage()
@@ -651,7 +652,7 @@ namespace BestiaryMod
                         currentPage = resultAssetPage[0];
                         break;
                     default:
-                        if (!string.IsNullOrEmpty(resultAssetPage[i]) && BestiaryMain.killCounts.ContainsKey(resultAssetPage[i]))
+                        if (!string.IsNullOrEmpty(resultAssetPage[i]) && (BestiaryMain.menuUnlock != 2 || BestiaryMain.killCounts.ContainsKey(resultAssetPage[i])))
                         {
                             resultEntries[i - 1, 0] = resultAssetPage[i];
                             
@@ -912,7 +913,7 @@ namespace BestiaryMod
 
         void ChangePage(bool right)
         {   
-            int currentEntryNum = Array.IndexOf(allPages, currentPagePath);
+            int currentEntryNum = allPages.IndexOf(currentPagePath);
             
             if (right == true && currentEntryNum > 0)
             {
@@ -927,7 +928,7 @@ namespace BestiaryMod
             }
             else if (right == true && currentEntryNum <= 0)
             {
-                currentEntryNum = allPages.Length - 1;
+                currentEntryNum = allPages.Count - 1;
 
                 currentEntries = GetcurrentEntriesFromFile(allPages[currentEntryNum]);
                 ResetButtonTextures();
@@ -936,7 +937,7 @@ namespace BestiaryMod
                 entryToLoad = currentSummary;
                 LoadContent(entryToLoad, true);
             }
-            else if (right == false && currentEntryNum < (allPages.Length - 1))
+            else if (right == false && currentEntryNum < (allPages.Count - 1))
             {
                 currentEntryNum += 1;
 
@@ -1057,7 +1058,7 @@ namespace BestiaryMod
 
         protected void pageRightButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (allPages.Length > 1)
+            if (allPages.Count > 1)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
                 ChangePage(false);
@@ -1066,7 +1067,7 @@ namespace BestiaryMod
 
         protected void pageLeftButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (allPages.Length > 1)
+            if (allPages.Count > 1)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
                 ChangePage(true);

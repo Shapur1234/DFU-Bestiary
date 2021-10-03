@@ -35,7 +35,6 @@ namespace BestiaryMod
         static PlayerEntity playerEntity = GameManager.Instance.PlayerEntity;
         static KeyCode openMenuKeyCode;
 
-        static bool firstSetting = true;
         public static int menuUnlock;
 
         public static bool unlockedBestiary;
@@ -116,12 +115,7 @@ namespace BestiaryMod
             DaggerfallUnityItem skillBook = ItemBuilder.CreateItem(ItemGroups.Books, BestiaryItem.templateIndex);
             GameManager.Instance.PlayerEntity.Items.AddItem(skillBook);
             
-            if(firstSetting)
-            {
-                BestiaryUI.classicMode = modSettings.GetBool("General", "ClassicMode");
-                firstSetting = false;
-            }
-
+            BestiaryUI.classicMode = modSettings.GetBool("General", "ClassicMode");
             menuUnlock = modSettings.GetValue<int>("General", "MenuUnlock");
             BestiaryUI.animate = modSettings.GetBool("General", "EnableAnimations");
             BestiaryUI.animationUpdateDelay = modSettings.GetValue<int>("General", "DelayBetweenAnimationFrames");
@@ -130,6 +124,7 @@ namespace BestiaryMod
             
             openMenuKeyCode = SetKeyFromText(modSettings.GetValue<string>("Controls", "Keybind"));
             
+            bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
         }
 
         static bool HumanoidCheck(int enemyID) //https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs
