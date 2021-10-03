@@ -57,6 +57,7 @@ namespace BestiaryMod
         int textLabelXOffset;
 
         readonly List<string> allPagesArchive = new List<string> {"page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead"};
+        List<EntryInfo> allEntries;
         List<string> allPages = new List<string>();
         List<EntryInfo> currentEntries = new List<EntryInfo>();
         
@@ -166,6 +167,8 @@ namespace BestiaryMod
             SetUpUIElements();
 
             currentEntries = GetcurrentEntriesFromFile(textPath);
+            allEntries = GetcurrentEntriesFromFile(textPath, true);
+            
             ResetButtonTextures();
             LoadPage();
 
@@ -321,7 +324,7 @@ namespace BestiaryMod
                 
                 for (int i = 0; i < tempEntries.Count / 2; i++)
                 {
-                    if (BestiaryMain.killCounts.ContainsKey(tempEntries[i].Entry))
+                    if (BestiaryMain.killCounts.ContainsKey(tempEntries[i * 2].Entry))
                     {
                         output.Add(item);
                         break;
@@ -450,12 +453,12 @@ namespace BestiaryMod
                     default:
                         if (isSummary)
                         {
-                            if (i - 5 < currentEntries.Count && !string.IsNullOrEmpty(result[i - 3])) 
+                            if (i - 5 < allEntries.Count && !string.IsNullOrEmpty(result[i - 3])) 
                             {
                                 string suffix;
 
-                                if(BestiaryMain.killCounts.ContainsKey(currentEntries[i - 5].Entry))
-                                    suffix = BestiaryMain.killCounts[currentEntries[i - 5].Entry].ToString();
+                                if(BestiaryMain.killCounts.ContainsKey(allEntries[i - 5].Entry))
+                                    suffix = BestiaryMain.killCounts[allEntries[i - 5].Entry].ToString();
                                 else
                                     suffix = "0";
 
@@ -924,6 +927,8 @@ namespace BestiaryMod
                 entryToLoad = currentSummary;
                 LoadContent(entryToLoad, true);
             }
+
+            allEntries = GetcurrentEntriesFromFile(allPages[currentEntryNum], true);
         }
         protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
