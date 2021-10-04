@@ -10,7 +10,7 @@
                     "Options": [
                         "Always unlocked",
                         "Book item (Find a book that will unlock the Bestiary)",
-                        "Kill to unlock (Makes an entry viewable, only after you kill the monster (like Witcher 3))"
+                        "Kill to unlock (Makes an entry viewable, only after you kill the corresponding monster (like Witcher 3))"
                     ],
                     "Value": 1,
                     "Name": "MenuUnlock",

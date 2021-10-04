@@ -61,9 +61,7 @@ namespace BestiaryMod
         List<string> allPages = new List<string>();
         List<EntryInfo> currentEntries = new List<EntryInfo>();
         
-        public string currentEntry;
-        public string currentPage;
-        string currentPagePath;
+        string currentPage;
         string currentSummary;
         string entrySuffix;
         string entryToLoad;
@@ -338,59 +336,43 @@ namespace BestiaryMod
         {  
             for (int i = 0; i < currentEntries.Count && i < contentButtonTextures.Count; i++)
             {
-                if (!String.IsNullOrEmpty(currentEntries[i].Button))
-                {
-                    contentButtonTextures[i] = DaggerfallUI.GetTextureFromResources(currentEntries[i].Button);
-                    if(!contentButtonTextures[i])
-                        throw new Exception("BestiaryUI: Could not load contentButtonTextures" + (i) + ".");
+                contentButtonTextures[i] = DaggerfallUI.GetTextureFromResources(currentEntries[i].Button);
+                if(!contentButtonTextures[i])
+                    throw new Exception("BestiaryUI: Could not load contentButtonTextures" + (i) + ".");
 
-                    contentButtons[i].BackgroundTexture = contentButtonTextures[i];
-                }
-                else
-                    break;
+                contentButtons[i].BackgroundTexture = contentButtonTextures[i];
             }
-            ResetTextLabels();
         }
         void LoadContent(string assetPath, bool reset = true)
         {
-            TextAsset textAsset;
+            List<string> textToApply = new List<string>();
+            List<string> result;
+            
             Texture2D tempTexture;
 
+            string assetPathTemp;
             bool isSummary = false;
-            if(assetPath[0] == 's')
-                isSummary = true;
-            
+
             ResetTextLabels();
             
             if (reset)
                 contentOffset = 0;
             
+            if(assetPath[0] == 's')
+                isSummary = true;
+
             if (!classicMode)
             {
                 attackModeOffset = 0;
                 attackButton.BackgroundTexture = attackFalseTexture;
             }
-
-            string entryText = "";
-            List<string> entryTextTemp = new List<string>();
-
-            if(bestiaryMod.HasAsset(assetPath + entrySuffix))
-                textAsset = bestiaryMod.GetAsset<TextAsset>(assetPath + entrySuffix); 
-            else
-                textAsset = bestiaryMod.GetAsset<TextAsset>(assetPath);
             
-            entryText = textAsset.text;
+            if(bestiaryMod.HasAsset(assetPath + entrySuffix))
+                assetPathTemp = assetPath + entrySuffix; 
+            else
+                assetPathTemp = assetPath;
 
-            List<string> result = new List<string>(entryText.Split(new[] { '\r', '\n' }));
-            List<string> textToApply = new List<string>();
-
-            foreach (var item in result)
-            {
-                if (!string.IsNullOrEmpty(item)) 
-                    entryTextTemp.Add(item);
-            }
-
-            result = entryTextTemp;
+            result = new List<string>(bestiaryMod.GetAsset<TextAsset>(assetPathTemp).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
 
             if (isSummary)
             {
@@ -406,10 +388,12 @@ namespace BestiaryMod
                 switch (i)
                 {
                     case 0:
-                        if (result[3] == currentEntry)
+                        int currentTextureOld = currentTexture[0];
+                        currentTexture[0] = int.Parse(result[0]);
+                        
+                        if (currentTextureOld == currentTexture[0])
                             break;
 
-                        currentTexture[0] = int.Parse(result[0]);
                         currentTexture[1] = defaultRotation;
                         currentTexture[2] = 0;
 
@@ -442,8 +426,6 @@ namespace BestiaryMod
                             monsterNameLabel.Text = result[3].Replace(" - ", " ");
                         else
                             monsterNameLabel.Text = result[3];
-
-                        currentEntry = result[3];
                         break;
                     case 4:
                         textToApply.Add(result[i]);
@@ -453,7 +435,7 @@ namespace BestiaryMod
                     default:
                         if (isSummary)
                         {
-                            if (i - 5 < allEntries.Count && !string.IsNullOrEmpty(result[i - 3])) 
+                            if (i - 5 < allEntries.Count) 
                             {
                                 string suffix;
 
@@ -467,7 +449,7 @@ namespace BestiaryMod
                         }
                         else
                         {
-                            if (i < result.Count && !string.IsNullOrEmpty(result[i])) 
+                            if (i < result.Count) 
                                 textToApply.Add(result[i]);
                         }
                         break;
@@ -532,52 +514,36 @@ namespace BestiaryMod
         {
             List<List<string>> textTemp = new List<List<string>>();
             List<string> text = new List<string>();
-            int displayedEntries = 0;
-            int labelNumber = 0;
-            var inputTextCleared = new List<string>();
 
             foreach (var item in inputText)
-                if(!string.IsNullOrEmpty(item)) 
-                    inputTextCleared.Add(item);
-
-            foreach (var item in inputTextCleared)
             {
                 var splitResult = item.Split(new[] { '*' });
-                textTemp.Add(new List<string> {splitResult[0], splitResult[1]});
+                textTemp.Add((new List<string> {splitResult[0], splitResult[1]}));
             }
 
             for (int i = 0; i < textTemp.Count; i++)
             {
                 bool first = true;
-                var temp = new List<string>();
-                var multiline_text = SplitLineToMultiline(ReverseWords(textTemp[i][1]), descriptionLabelMaxCharacters);
-                var singlelineText = new List<string>();
-                var singleline_text_temp = multiline_text.Split(new[] { '\r', '\n' });
-
-                foreach (var item in singleline_text_temp)
-                    if (!string.IsNullOrEmpty(item)) 
-                        temp.Add(item);
-
-                singlelineText = temp;
+                var singlelineText = SplitLineToMultiline(ReverseWords(textTemp[i][1]), descriptionLabelMaxCharacters).Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var item in singlelineText)
                 {
-                    if (first == true)
+                    if (first)
                     {
                         text.Add(textTemp[i][0] + "&" + item);
                         first = false;
                     }
                     else
-                    {
                         text.Add(item);
-                    } 
                 }
             }
+
             if (text.Count < 15)
                 contentOffset = 0;
             else if (text.Count - contentOffset <= 0)
                 contentOffset = text.Count - 1;
-            
+        
+            int labelNumber = 0;
             for (int i = contentOffset; i < text.Count && labelNumber < 14; i++)
             {
                 string[] multiItem = text[i].Split('&');
@@ -586,14 +552,10 @@ namespace BestiaryMod
                 {
                     subtitleLabels[labelNumber].Text = multiItem[0];
                     descriptionLabels[labelNumber].Text = multiItem[1];
-
-                    displayedEntries++;
                 }
                 else
                 {
                     descriptionLabels[labelNumber].Text = multiItem[0];
-
-                    displayedEntries++;
                 }
                 labelNumber++;
             }
@@ -603,7 +565,7 @@ namespace BestiaryMod
         {
             List<EntryInfo> output = new List<EntryInfo>();
             
-            currentPagePath = path;
+            currentPage = path;
             TextAsset textAssetPage;
             TextAsset textAssetEntry;
             
@@ -623,10 +585,10 @@ namespace BestiaryMod
                 switch (i)
                 {
                     case 0:
-                        currentPage = resultAssetPage[0];
                         break;
                     default:
-                        if (!string.IsNullOrEmpty(resultAssetPage[i]) && ((BestiaryMain.menuUnlock != 2 || BestiaryMain.killCounts.ContainsKey(resultAssetPage[i])) || firstLoad))
+                        if (!string.IsNullOrEmpty(resultAssetPage[i]) 
+                            && ((BestiaryMain.menuUnlock != 2 || BestiaryMain.killCounts.ContainsKey(resultAssetPage[i])) || firstLoad))
                         {
                             textAssetEntry = bestiaryMod.GetAsset<TextAsset>(resultAssetPage[i]);
                             var resultAssetEntry = textAssetEntry.text.Split(new[] { '\r', '\n' });
@@ -881,7 +843,7 @@ namespace BestiaryMod
 
         void ChangePage(bool right)
         {   
-            int currentEntryNum = allPages.IndexOf(currentPagePath);
+            int currentEntryNum = allPages.IndexOf(currentPage);
             
             if (right == true && currentEntryNum > 0)
             {
@@ -1096,6 +1058,7 @@ namespace BestiaryMod
         protected void MainPanel_OnMouseScrollDown(BaseScreenComponent sender)
         {
             contentOffset += 1;
+
             LoadContent(entryToLoad, false);
         }
         protected void MainPanel_OnMouseScrollUp(BaseScreenComponent sender)
