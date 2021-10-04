@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 390487540
+CRC: 111979992
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 441e0b935faf6e7f75efdd22cf63eca9
+    Hash: 70a0b8a3745120f848df28b470724dbb
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -29,6 +29,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_SPIDER.png
 - Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDRA_LORD.png
 - Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_GRIZZLY_BEAR.png
+- Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/900_0-0.png
 - Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_NYMPH.png
 - Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_arrow_left.png
 - Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDROTH.png
