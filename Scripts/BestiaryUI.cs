@@ -638,8 +638,7 @@ namespace BestiaryMod
             monsterNameLabel.Size = new Vector2(40, 14);
             monsterNameLabel.Font = DaggerfallUI.LargeFont;
 
-            if(oldFont)
-                monsterNameLabel.TextScale = 0.85f;
+            if(oldFont) monsterNameLabel.TextScale = 0.85f;
             
             mainPanel.Components.Add(monsterNameLabel);
 
