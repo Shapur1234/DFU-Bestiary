@@ -146,9 +146,7 @@ namespace BestiaryMod
             }
 
             if (BestiaryMain.menuUnlock == 2)
-            {
                 allPages = GetAvailablePages();
-            }
             else
                 allPages = allPagesArchive;
 
@@ -753,7 +751,7 @@ namespace BestiaryMod
                 pageNameLabel.Position = pageNamePosVector;
                 pageNameLabel.Size = pageNameSizeVector;
 
-                if(oldFont == false)
+                if(!oldFont)
                     pageNameLabel.Font = DaggerfallUI.LargeFont;
                 else 
                     pageNamePosVector[1] = 18;
@@ -845,7 +843,7 @@ namespace BestiaryMod
         {   
             int currentEntryNum = allPages.IndexOf(currentPage);
             
-            if (right == true && currentEntryNum > 0)
+            if (right && currentEntryNum > 0)
             {
                 currentEntryNum -= 1;
 
@@ -856,7 +854,7 @@ namespace BestiaryMod
                 entryToLoad = currentSummary;
                 LoadContent(entryToLoad, true);
             }
-            else if (right == true && currentEntryNum <= 0)
+            else if (right && currentEntryNum <= 0)
             {
                 currentEntryNum = allPages.Count - 1;
 
@@ -867,7 +865,7 @@ namespace BestiaryMod
                 entryToLoad = currentSummary;
                 LoadContent(entryToLoad, true);
             }
-            else if (right == false && currentEntryNum < (allPages.Count - 1))
+            else if (!right && currentEntryNum < (allPages.Count - 1))
             {
                 currentEntryNum += 1;
 
