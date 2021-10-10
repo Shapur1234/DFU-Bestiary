@@ -625,9 +625,8 @@ namespace BestiaryMod
                     descriptionLabels[labelNumber].Text = multiItem[1];
                 }
                 else
-                {
                     descriptionLabels[labelNumber].Text = multiItem[0];
-                }
+                
                 labelNumber++;
             }
         }
@@ -933,8 +932,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 0)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[0].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[0].Entry)
+                {
+                    entryToLoad = currentEntries[0].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
@@ -943,8 +945,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 1)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[1].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[1].Entry)
+                {
+                    entryToLoad = currentEntries[1].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
@@ -953,8 +958,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 2)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[2].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[2].Entry)
+                {
+                    entryToLoad = currentEntries[2].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
@@ -963,8 +971,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 3)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[3].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[3].Entry)
+                {
+                    entryToLoad = currentEntries[3].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
@@ -973,8 +984,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 4)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[4].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[4].Entry)
+                {
+                    entryToLoad = currentEntries[4].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
@@ -983,8 +997,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 5)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[5].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[5].Entry)
+                {
+                    entryToLoad = currentEntries[5].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
@@ -993,8 +1010,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 6)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[6].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[6].Entry)
+                {
+                    entryToLoad = currentEntries[6].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
@@ -1003,8 +1023,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 7)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[7].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[7].Entry)
+                {
+                    entryToLoad = currentEntries[7].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
@@ -1013,8 +1036,11 @@ namespace BestiaryMod
             if(currentEntries.Count > 8)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                entryToLoad = currentEntries[8].Entry;
-                LoadContent(entryToLoad);
+                if (entryToLoad != currentEntries[8].Entry)
+                {
+                    entryToLoad = currentEntries[8].Entry;
+                    LoadContent(entryToLoad);
+                }
             }
         }
 
