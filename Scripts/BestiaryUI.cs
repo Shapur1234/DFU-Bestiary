@@ -17,22 +17,140 @@ using UnityEngine;
 
 namespace BestiaryMod
 {
-    struct EntryInfo
-    {
-        public EntryInfo(string entry, string button)
-        {
-            Entry = entry;
-            Button = button;
-        }
-        
-        public string Entry;
-        public string Button;
-    }
-    
     class BestiaryUI : DaggerfallPopupWindow
     {
-        #region VARS
-        
+        struct EntryInfo
+        {
+            public EntryInfo(string entry, string button)
+            {
+                Entry = entry;
+                Button = button;
+            }
+
+            public string Entry;
+            public string Button;
+        }
+
+        class TextureInfo
+        {
+            public TextureInfo(int archive)
+            {
+                Archive = archive;
+                Record = defaultRotation;
+                Frame = 0;
+
+                switch (Archive)
+                {
+                    case 255:
+                        NumOfFrames = 8;
+                        break;
+                    case 284:
+                        NumOfFrames = 3;
+                        break;
+                    default:
+                        NumOfFrames = 4;
+                        break;
+                }
+                if (Archive == 275)
+                    Flip = true;
+                else
+                    Flip = false;
+                
+                Texture2D tempTexture;
+
+                if(!TextureReplacement.TryImportTexture(Archive, 1, 0, out tempTexture))
+                    tempTexture = textureReader.GetTexture2D(Archive, 1, 0);
+                
+                if (tempTexture.height > tempTexture.width)
+                    maxTextureSize = new Vector2((float)(imagePanelMaxSize[0] / tempTexture.height) * tempTexture.height, (float)(imagePanelMaxSize[0] / tempTexture.height) * tempTexture.width);
+                else
+                    maxTextureSize = new Vector2((float)(imagePanelMaxSize[1] / tempTexture.width) * tempTexture.height, (float)(imagePanelMaxSize[1] / tempTexture.width) * tempTexture.width);
+                
+                UpdateTextures(this);
+            }
+
+            public void IterateAnimationFrame()
+            {
+                Frame += 1;
+                if (Frame >= NumOfFrames)
+                    Frame = 0;
+
+                UpdateTextures(this);
+            }
+
+            public void IncreaseRecord()
+            {
+                if (rotate8)
+                {
+                    if (!Flip)
+                    {
+                        Record++;
+                        if (Record >= 5)
+                        {
+                            Record = 3;
+                            Flip = !Flip;
+                        }
+                    }
+                    else
+                    {
+                        Record--;
+                        if (Record < 0)
+                        {
+                            Record = 1;
+                            Flip = !Flip;
+                        } 
+                    }
+                }
+                else
+                {
+                    Record++;
+                    if (Record > 4)
+                        Record = 0;
+                }
+                UpdateTextures(this);
+            }
+
+            public void DecreaseRecord()
+            {
+                if (rotate8)
+                {
+                    if (!Flip)
+                    {
+                        Record--;
+                        if (Record < 0)
+                        {
+                            Record = 1;
+                            Flip = !Flip;
+                        }
+                    }
+                    else
+                    {
+                        Record++;
+                        if (Record >= 5)
+                        {
+                            Record = 3;
+                            Flip = !Flip;
+                        }
+                    }
+                }
+                else
+                {
+                    Record--;
+                    if (Record < 0)
+                        Record = 4;
+                }
+                UpdateTextures(this);
+            }
+
+            public int Archive;
+            public int Record;
+            public int Frame;
+            public int NumOfFrames;
+
+            public bool Flip;
+        }
+
+        static DaggerfallWorkshop.Utility.TextureReader textureReader;
         Mod bestiaryMod = ModManager.Instance.GetMod("Bestiary");
         Mod kabsUnleveledSpellsMod = ModManager.Instance.GetMod("Unleveled Spells");
 
@@ -43,23 +161,22 @@ namespace BestiaryMod
         public bool isShowing;
         public bool kabsUnleveledSpellsModFound;
         public bool oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
-        bool reloadTexture;
 
-        int[] currentTexture = { 267, 0, 0 };
+        TextureInfo currentTexture;
         public static int animationUpdateDelay;
         public static int defaultRotation;
-        int attackModeOffset;
+        public static int attackModeOffset;
         int contentOffset;
 
         int descriptionLabelMaxCharacters;
-        int maxTextureHeight;
-        int maxTextureWidth;
         int textLabelXOffset;
 
+        int animationDelay = 0;
+
         readonly List<string> allPagesArchive = new List<string> {"page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead"};
-        List<EntryInfo> allEntries;
         List<string> allPages = new List<string>();
-        List<EntryInfo> currentEntries = new List<EntryInfo>();
+        List<EntryInfo> allEntries;
+        List<EntryInfo> currentEntries;
         
         string currentPage;
         string currentSummary;
@@ -68,12 +185,12 @@ namespace BestiaryMod
 
         const string pathToClassicPage = "page_classic";
 
-        const string rightArrowTextureName = "button_arrow_right";
-        const string leftArrowTextureName = "button_arrow_left";
-        const string blankTextureName = "blank";
-        const string backgroundTextureName = "base_background";
-        const string attackTrueTextureName = "button_attack_true";
         const string attackFalseTextureName = "button_attack_false";
+        const string attackTrueTextureName = "button_attack_true";
+        const string backgroundTextureName = "base_background";
+        const string blankTextureName = "blank";
+        const string leftArrowTextureName = "button_arrow_left";
+        const string rightArrowTextureName = "button_arrow_right";
 
         List<Texture2D> contentButtonTextures = new List<Texture2D>();
         Texture2D attackFalseTexture;
@@ -81,19 +198,17 @@ namespace BestiaryMod
         Texture2D backgroundTexture;
         Texture2D blankTexture;
         Texture2D leftArrowTexture;
-        Texture2D pictureTexture;
         Texture2D rightArrowTexture;
 
         readonly List<Vector2> buttonAllPos = new List<Vector2> {new Vector2(4, 162), new Vector2(50, 162), new Vector2(95, 162), new Vector2(4, 174), new Vector2(50, 174), new Vector2(95, 174), new Vector2(4, 187), new Vector2(50, 187), new Vector2(95, 187)};
-        Vector2 backgroundSizeVector;
-        Vector2 entryButtonSize;
-        Vector2 exitButtonSize;
-        Vector2 pageNamePosVector;
-        Vector2 pageNameSizeVector;
-        Vector2 picturebackgroundPosVector;
-        Vector2 picturebackgroundSizeVector;
+        Vector2 entryButtonSize = new Vector2(40, 9);
+        Vector2 pageNamePos = new Vector2(71, 14);
+        Vector2 pageNameSize = new Vector2(52, 10);
+        static Vector2 imagePanelBasePos = new Vector2(18, 51);
+        static Vector2 imagePanelMaxSize = new Vector2(102, 102);
+        static Vector2 maxTextureSize;
 
-        Panel imagePanel;
+        static Panel imagePanel;
         Panel mainPanel;
         
         List<TextLabel> descriptionLabels = new List<TextLabel>();
@@ -111,8 +226,6 @@ namespace BestiaryMod
         Button exitButton;
         Button attackButton;
 
-        #endregion
-
         public BestiaryUI(IUserInterfaceManager uiManager)
             : base(uiManager)
         {
@@ -123,16 +236,13 @@ namespace BestiaryMod
         protected override void Setup()
         {
             base.Setup();
+
+            string textPath;
+
             LoadTextures();
             
+            textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
             kabsUnleveledSpellsModFound = kabsUnleveledSpellsMod != null;
-            
-            string textPath = "";
-            picturebackgroundSizeVector = new Vector2(102, 102);
-            picturebackgroundPosVector = new Vector2(18, 51);
-            pageNameSizeVector = new Vector2(52, 10);
-            pageNamePosVector = new Vector2(71, 14);
-            backgroundSizeVector = new Vector2(320, 200);
 
             if (!oldFont)
             {
@@ -161,6 +271,8 @@ namespace BestiaryMod
                 entrySuffix = "";
             
             SetUpUIElements();
+            currentTexture = new TextureInfo(267);
+            UpdateTextures(currentTexture);
 
             currentEntries = GetcurrentEntriesFromFile(textPath);
             allEntries = GetcurrentEntriesFromFile(textPath, true);
@@ -177,95 +289,67 @@ namespace BestiaryMod
             base.Update();
             if (Input.GetKeyUp(exitKey))
                 CloseWindow();
-
-            DaggerfallWorkshop.Utility.TextureReader textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
-
-            if(currentTexture[1] > 4 && !rotate8)
-                currentTexture[1] = 0;
-
             if (animate)
             {
-                if (currentTexture[0] == 284 && currentTexture[2] > (animationUpdateDelay * 3) - 1) 
-                    currentTexture[2] = 0;
-                
-                if (currentTexture[2] % animationUpdateDelay == 0)
+                animationDelay += 1;
+                if (animationDelay >= animationUpdateDelay)
                 {
-                    if (currentTexture[1] < 5)
-                    {
-                        if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture))
-                            pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, currentTexture[2] / animationUpdateDelay);
-                    }
-                    else
-                    {
-                        if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay, out pictureTexture))
-                            pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, currentTexture[2] / animationUpdateDelay);
-                    }
-                    reloadTexture = true;
+                    animationDelay = 0;
+                    currentTexture.IterateAnimationFrame();
                 }
+            }
+        }
 
-                if(currentTexture[0] == 255 && attackModeOffset == 0)
+        private static void UpdateTextures(TextureInfo inputTextureInfo)
+        {
+            Texture2D pictureTexture;
+
+            if(!TextureReplacement.TryImportTexture(inputTextureInfo.Archive, inputTextureInfo.Record + attackModeOffset, inputTextureInfo.Frame, out pictureTexture))
+            {
+                if (inputTextureInfo.Archive == 255 & attackModeOffset == 5 && inputTextureInfo.Frame > 5)
                 {
-                    if (currentTexture[2] < (animationUpdateDelay * 8) - 1)
-                        currentTexture[2]++;
-                    else
-                        currentTexture[2] = 0;
-                }
-                else if(currentTexture[0] == 255 && attackModeOffset == 5)
-                {
-                    if (currentTexture[2] < (animationUpdateDelay * 6) - 1)
-                        currentTexture[2]++;
-                    else
-                        currentTexture[2] = 0;
+                    inputTextureInfo.Frame = 5;
+                    pictureTexture = textureReader.GetTexture2D(inputTextureInfo.Archive, inputTextureInfo.Record + attackModeOffset, inputTextureInfo.Frame);
+                    inputTextureInfo.Frame = 100;
                 }
                 else
-                {
-                    if (currentTexture[2] < (animationUpdateDelay * 4) - 1)
-                        currentTexture[2]++;
-                    else
-                        currentTexture[2] = 0;
-                }
+                    pictureTexture = textureReader.GetTexture2D(inputTextureInfo.Archive, inputTextureInfo.Record + attackModeOffset, inputTextureInfo.Frame);
+            }
+            pictureTexture.filterMode = FilterMode.Point;
+
+            UpdateImagePanel(pictureTexture);
+            ApplyTexture(pictureTexture, inputTextureInfo);
+        }
+
+        private static void UpdateImagePanel(Texture2D inputTexture)
+        {
+            imagePanel.Size = imagePanelMaxSize;
+
+            if (inputTexture.width > inputTexture.height)
+            {
+                if (inputTexture.height > maxTextureSize[1])
+                    imagePanel.Size = new Vector2((inputTexture.width / imagePanelMaxSize[0]) * maxTextureSize[0], imagePanelMaxSize[1]);
             }
             else
             {
-                if (currentTexture[1] < 5)
-                    {
-                        if(!TextureReplacement.TryImportTexture(currentTexture[0], currentTexture[1] + attackModeOffset, 0, out pictureTexture))
-                            pictureTexture = textureReader.GetTexture2D(currentTexture[0], currentTexture[1] + attackModeOffset, 0);
-                    }
-                    else
-                    {
-                        if(!TextureReplacement.TryImportTexture(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, 0, out pictureTexture))
-                            pictureTexture = textureReader.GetTexture2D(currentTexture[0], 4 - (currentTexture[1] - 4) + attackModeOffset, 0);
-                    }
-                    reloadTexture = true;
+                if (inputTexture.width > maxTextureSize[0])
+                    imagePanel.Size = new Vector2(imagePanelMaxSize[0], (inputTexture.height / imagePanelMaxSize[1]) * maxTextureSize[1]);
             }
-            if(reloadTexture)
-            {
-                UpdateImagePanel(pictureTexture);
-                pictureTexture.filterMode = FilterMode.Point;
-                
-                if (rotate8)
-                {
-                    if (currentTexture[0] == 275)
-                    {
-                        if (currentTexture[1] < 4)  
-                            imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(pictureTexture));
-                        else 
-                            imagePanel.BackgroundTexture = pictureTexture;
-                    }
-                    else
-                    {
-                        if (currentTexture[1] < 4)  
-                            imagePanel.BackgroundTexture = pictureTexture;
-                        else 
-                            imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(pictureTexture));
-                    }
-                }
-                else
-                    imagePanel.BackgroundTexture = pictureTexture;
 
-                reloadTexture = false;
+            imagePanel.Position = new Vector2(imagePanelBasePos[0] + ((imagePanelMaxSize[0] - imagePanel.Size[0]) / 2), imagePanelBasePos[1] + ((imagePanelMaxSize[0] - imagePanel.Size[1]) / 2));
+        }
+
+        private static void ApplyTexture(Texture2D texture, TextureInfo inputTextureInfo)
+        {
+            if (rotate8)
+            {
+                if (inputTextureInfo.Flip)  
+                    imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(texture));
+                else 
+                    imagePanel.BackgroundTexture = texture;
             }
+            else
+                imagePanel.BackgroundTexture = texture;
         }
 
         public override void OnPush()
@@ -341,15 +425,15 @@ namespace BestiaryMod
                 contentButtons[i].BackgroundTexture = contentButtonTextures[i];
             }
         }
+
         void LoadContent(string assetPath, bool reset = true)
         {
             List<string> textToApply = new List<string>();
             List<string> result;
-            
-            Texture2D tempTexture;
 
             string assetPathTemp;
             bool isSummary = false;
+            bool summary2ndTime = false;
 
             ResetTextLabels();
             
@@ -375,10 +459,13 @@ namespace BestiaryMod
             if (isSummary)
             {
                 pageNameLabel.Text = result[1];
-                pageNameLabel.Position = new Vector2(pageNamePosVector[0] + ((pageNameSizeVector[0] - pageNameLabel.TextWidth) / 2), pageNamePosVector[1]);
+                pageNameLabel.Position = new Vector2(pageNamePos[0] + ((pageNameSize[0] - pageNameLabel.TextWidth) / 2), pageNamePos[1]);
 
+                if (summaryButton.Position == pageNameLabel.Position)
+                    summary2ndTime = true;
+                    
                 summaryButton.Position = pageNameLabel.Position;
-                summaryButton.Size = new Vector2(pageNameLabel.TextWidth, pageNameSizeVector[1]);
+                summaryButton.Size = new Vector2(pageNameLabel.TextWidth, pageNameSize[1]);
             }
 
             for (int i = 0; i < result.Count; i++)
@@ -386,33 +473,19 @@ namespace BestiaryMod
                 switch (i)
                 {
                     case 0:
-                        int currentTextureOld = currentTexture[0];
-                        currentTexture[0] = int.Parse(result[0]);
-                        
-                        if (currentTextureOld == currentTexture[0])
-                            break;
-
-                        currentTexture[1] = defaultRotation;
-                        currentTexture[2] = 0;
-
-                        DaggerfallWorkshop.Utility.TextureReader textureReader = new DaggerfallWorkshop.Utility.TextureReader(DaggerfallUnity.Arena2Path);
-                        tempTexture = textureReader.GetTexture2D(currentTexture[0], 1);
-
-                        float temp = 0;
-
-                        if (tempTexture.height > tempTexture.width)
+                        if (isSummary)
                         {
-                            temp = picturebackgroundSizeVector[0] / tempTexture.height;
-                            maxTextureHeight = (int)Math.Round(temp * tempTexture.height);
-                            maxTextureWidth = (int)Math.Round(temp * tempTexture.width);
+                            int newTextureRecord = int.Parse(new List<string>(bestiaryMod.GetAsset<TextAsset>(currentEntries[0].Entry).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))[0]);
+
+                            if (!summary2ndTime && currentTexture.Frame != newTextureRecord)
+                                currentTexture = new TextureInfo(newTextureRecord);
                         }
                         else
                         {
-                            temp = picturebackgroundSizeVector[1] / tempTexture.width;
-                            maxTextureHeight = (int)Math.Round(temp * tempTexture.height);
-                            maxTextureWidth = (int)Math.Round(temp * tempTexture.width);
+                            if (currentTexture.Frame != int.Parse(result[0]))
+                                currentTexture = new TextureInfo(int.Parse(result[0]));
                         }
-                        reloadTexture = true;
+                        
                         break;
                     case 1:
                         break;
@@ -601,13 +674,10 @@ namespace BestiaryMod
 
         void SetUpUIElements()
         {
-            exitButtonSize = new Vector2(30, 9);
-            entryButtonSize = new Vector2(40, 9);
-
             ParentPanel.BackgroundColor = ScreenDimColor;
 
             mainPanel = DaggerfallUI.AddPanel(NativePanel, AutoSizeModes.None);
-            mainPanel.Size = backgroundSizeVector;
+            mainPanel.Size = new Vector2(320, 200);
             mainPanel.BackgroundTexture = backgroundTexture;
             mainPanel.HorizontalAlignment = HorizontalAlignment.Center;
             mainPanel.VerticalAlignment = VerticalAlignment.Middle;
@@ -615,8 +685,9 @@ namespace BestiaryMod
             mainPanel.OnMouseScrollUp += MainPanel_OnMouseScrollUp;
 
             imagePanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
-            imagePanel.Size = picturebackgroundSizeVector;
-            imagePanel.Position = picturebackgroundPosVector;
+            imagePanel.Size = imagePanelMaxSize;
+            imagePanel.Position = imagePanelBasePos;
+            imagePanel.BackgroundTextureLayout = BackgroundLayout.ScaleToFit;
 
             titleLabel = new TextLabel();
             titleLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
@@ -741,64 +812,26 @@ namespace BestiaryMod
                 mainPanel.Components.Add(attackButton);
 
                 summaryButton = new Button();
-                summaryButton.Position = pageNamePosVector;
-                summaryButton.Size = pageNameSizeVector;
+                summaryButton.Position = pageNamePos;
+                summaryButton.Size = pageNameSize;
                 summaryButton.OnMouseClick += summaryButton_OnMouseClick;
                 mainPanel.Components.Add(summaryButton);
 
                 pageNameLabel = new TextLabel();
-                pageNameLabel.Position = pageNamePosVector;
-                pageNameLabel.Size = pageNameSizeVector;
+                pageNameLabel.Position = pageNamePos;
+                pageNameLabel.Size = pageNameSize;
 
                 if(!oldFont)
                     pageNameLabel.Font = DaggerfallUI.LargeFont;
                 else 
-                    pageNamePosVector[1] = 18;
+                    pageNamePos[1] = 18;
 
                 pageNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
                 mainPanel.Components.Add(pageNameLabel);
             }
         }
 
-        void UpdateImagePanel(Texture2D inputTexture)
-        {
-            Vector2 newPos = new Vector2();
-            Vector2 newSize = new Vector2();
-
-            float temp = 0;
-            
-            if (inputTexture.height > inputTexture.width)
-                {
-                    temp = picturebackgroundSizeVector[0] / inputTexture.height;
-                    newSize[0] = (int)Math.Round(temp * inputTexture.width);
-                    newSize[1] = (int)Math.Round(temp * inputTexture.height);
-                    if(newSize[1] > maxTextureHeight && attackModeOffset == 0)
-                    {
-                        float temp2 = (float)maxTextureHeight / newSize[1];
-                        newSize[0] = (int)Math.Round(temp2 * newSize[0]);
-                        newSize[1] = maxTextureHeight;
-                    }
-                }
-                else
-                {
-                    temp = picturebackgroundSizeVector[1] / inputTexture.width;
-                    newSize[0] = (int)Math.Round(temp * inputTexture.width);
-                    newSize[1] = (int)Math.Round(temp * inputTexture.height);
-                    if(newSize[0] > maxTextureWidth && attackModeOffset == 0)
-                    {
-                        float temp2 = (float)maxTextureWidth / newSize[0];
-                        newSize[1] = (int)Math.Round(temp2 * newSize[1]);
-                        newSize[0] = maxTextureWidth;
-                    }
-                }
-                newPos[0] = (int)picturebackgroundPosVector[0] + (((int)picturebackgroundSizeVector[0] - newSize[0]) / 2);
-                newPos[1] = (int)picturebackgroundPosVector[1] + (((int)picturebackgroundSizeVector[1] - newSize[1]) / 2);
-                
-                imagePanel.Position = newPos;
-                imagePanel.Size = newSize;
-        }
-
-        Texture2D FlipTexture(Texture2D original) //https://girlscancode.wordpress.com/2015/03/02/unity3d-flipping-a-texture/
+        static Texture2D FlipTexture(Texture2D original) //https://girlscancode.wordpress.com/2015/03/02/unity3d-flipping-a-texture/
         {
             Texture2D flipped = new Texture2D(original.width, original.height);
             flipped.filterMode = FilterMode.Point;
@@ -818,7 +851,7 @@ namespace BestiaryMod
             return flipped;
         }
         
-        Texture2D DuplicateTexture(Texture2D source) //From here: https://stackoverflow.com/questions/44733841/how-to-make-texture2d-readable-via-script
+        static Texture2D DuplicateTexture(Texture2D source) //From here: https://stackoverflow.com/questions/44733841/how-to-make-texture2d-readable-via-script
         {
             RenderTexture renderTex = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
 
@@ -1006,35 +1039,13 @@ namespace BestiaryMod
         protected void RightRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-            
-            currentTexture[1]--;
-            if (rotate8)
-            {
-                if(currentTexture[1] < 0) 
-                    currentTexture[1] = 7;
-            }
-            else
-            {
-                if(currentTexture[1] < 0) 
-                    currentTexture[1] = 4;
-            }
+            currentTexture.DecreaseRecord();
         }
 
         protected void LeftRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-
-            currentTexture[1]++;
-            if (rotate8)
-            {
-                if(currentTexture[1] > 7) 
-                    currentTexture[1] = 0;
-            }
-            else
-            {
-                if(currentTexture[1] > 4) 
-                    currentTexture[1] = 0;
-            }
+            currentTexture.IncreaseRecord();
         }
 
         protected void AttackButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
@@ -1044,11 +1055,13 @@ namespace BestiaryMod
             {
                 attackModeOffset = 5;
                 attackButton.BackgroundTexture = attackTrueTexture;
+                UpdateTextures(currentTexture);
             }
             else
             {
                 attackModeOffset = 0;
                 attackButton.BackgroundTexture = attackFalseTexture;
+                UpdateTextures(currentTexture);
             }
         }
 

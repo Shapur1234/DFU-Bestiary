@@ -157,10 +157,17 @@ namespace BestiaryMod
                         {
                             string monsterName = MonsterCareerIndexToString(enemyEntity.CareerIndex);
 
-                            if(!killCounts.ContainsKey(monsterName))
-                                killCounts.Add(monsterName, 1);
-                            else
+                            if(killCounts.ContainsKey(monsterName))
                                 killCounts[monsterName] += 1;
+                            else
+                            {
+                                killCounts.Add(monsterName, 1);
+                                if (menuUnlock == 2)
+                                {
+                                    DaggerfallUI.AddHUDText(String.Format("{0} has been added to the Bestiary.", new List<string>(mod.GetAsset<TextAsset>(monsterName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))[3]));
+                                    bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
+                                }
+                            }
                         }
                     }
                 }
