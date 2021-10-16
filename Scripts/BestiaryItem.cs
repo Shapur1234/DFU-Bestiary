@@ -1,4 +1,4 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 using DaggerfallWorkshop;
@@ -16,10 +16,10 @@ namespace BestiaryMod
     {
         public const int templateIndex = 900;
         internal const string NAME = "Bestiary";
-        
+
         static DaggerfallUnityItem book = null;
 
-        public BestiaryItem() 
+        public BestiaryItem()
             : base(ItemGroups.UselessItems2, templateIndex)
         {
             shortName = "Bestiary";
@@ -33,8 +33,8 @@ namespace BestiaryMod
         public override bool UseItem(ItemCollection collection)
         {
             book = this;
-            
-            if(BestiaryMain.menuUnlock == 1)
+
+            if (BestiaryMain.menuUnlock == 1)
             {
                 if (!BestiaryMain.unlockedBestiary)
                 {
@@ -42,15 +42,12 @@ namespace BestiaryMod
                     BestiaryMain.DisplayMessage("You study the contents of the book closely. You have unlocked the Bestiary.");
                 }
                 else
-                {
                     BestiaryMain.DisplayMessage("You already know all this book has to offer.");
-                }
             }
             else
-            {
                 BestiaryMain.unlockedBestiary = true;
-            }
-            
+
+
             return true;
         }
     }

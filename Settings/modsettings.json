@@ -33,7 +33,7 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 },
                 {
-                    "Value": false,
+                    "Value": true,
                     "Name": "EnableEightDirectionRotation",
                     "Description": "This will add the 3 missing MOB rotations. Not reccomended with dream. If the monster images are laggy, try disabeling this.",
                     "$version": "v1",

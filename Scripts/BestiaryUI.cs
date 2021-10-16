@@ -13,7 +13,6 @@ using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
 using DaggerfallWorkshop.Game.Utility;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
-using DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings;
 using DaggerfallWorkshop.Utility.AssetInjection;
 
 using UnityEngine;
@@ -41,19 +40,14 @@ namespace BestiaryMod
                 Archive = archive;
                 Record = defaultRotation;
                 Frame = 0;
-                Flip = false;
+                Flip = true;
 
-                if (Archive == 275)
-                    Flip = true;
+                Texture2D tempTexture = textureReader.GetTexture2D(Archive, 1, 0);
 
-                Texture2D tempTexture;
-                if (!TextureReplacement.TryImportTexture(Archive, 1, 0, out tempTexture))
-                    tempTexture = textureReader.GetTexture2D(Archive, 1, 0);
-
-                if (tempTexture.height > tempTexture.width)
-                    maxTextureSize = new Vector2((float)(imagePanelMaxSize[0] / tempTexture.height) * tempTexture.height, (float)(imagePanelMaxSize[0] / tempTexture.height) * tempTexture.width);
+                if (tempTexture.width > tempTexture.height)
+                    maxTextureSize = new Vector2(imagePanelMaxSize[0], tempTexture.height);
                 else
-                    maxTextureSize = new Vector2((float)(imagePanelMaxSize[1] / tempTexture.width) * tempTexture.height, (float)(imagePanelMaxSize[1] / tempTexture.width) * tempTexture.width);
+                    maxTextureSize = new Vector2(tempTexture.width, imagePanelMaxSize[1]);
 
                 UpdateTextures();
             }
@@ -69,7 +63,7 @@ namespace BestiaryMod
                     pictureTexture = textureReader.GetTexture2D(Archive, Record + attackModeOffset, Frame);
                 pictureTexture.filterMode = FilterMode.Point;
 
-                UpdateImagePanel(pictureTexture);
+                UpdateImagePanel(pictureTexture, this);
                 ApplyTexture(pictureTexture, this);
             }
 
@@ -146,8 +140,8 @@ namespace BestiaryMod
             public int Archive;
             public int Record;
             public int Frame;
-
             public bool Flip;
+            public Vector2 maxTextureSize;
         }
 
         static DaggerfallWorkshop.Utility.TextureReader textureReader;
@@ -168,7 +162,6 @@ namespace BestiaryMod
         public static int attackModeOffset;
         static string arena2Path;
         int contentOffset;
-
         int descriptionLabelMaxCharacters;
         int textLabelXOffset;
 
@@ -207,8 +200,6 @@ namespace BestiaryMod
         Vector2 pageNameSize = new Vector2(52, 10);
         static Vector2 imagePanelBasePos = new Vector2(18, 51);
         static Vector2 imagePanelMaxSize = new Vector2(102, 102);
-        static Vector2 maxTextureSize;
-
         static Panel imagePanel;
         Panel mainPanel;
 
@@ -302,20 +293,9 @@ namespace BestiaryMod
             }
         }
 
-        private static void UpdateImagePanel(Texture2D inputTexture)
+        private static void UpdateImagePanel(Texture2D inputTexture, TextureInfo inputTextureInfo)
         {
-            imagePanel.Size = imagePanelMaxSize;
-
-            if (inputTexture.width > inputTexture.height)
-            {
-                if (inputTexture.height > maxTextureSize[1])
-                    imagePanel.Size = new Vector2((inputTexture.width / imagePanelMaxSize[0]) * maxTextureSize[0], imagePanelMaxSize[1]);
-            }
-            else
-            {
-                if (inputTexture.width > maxTextureSize[0])
-                    imagePanel.Size = new Vector2(imagePanelMaxSize[0], (inputTexture.height / imagePanelMaxSize[1]) * maxTextureSize[1]);
-            }
+            imagePanel.Size = inputTextureInfo.maxTextureSize;
 
             imagePanel.Position = new Vector2(imagePanelBasePos[0] + ((imagePanelMaxSize[0] - imagePanel.Size[0]) / 2), imagePanelBasePos[1] + ((imagePanelMaxSize[0] - imagePanel.Size[1]) / 2));
         }
@@ -324,7 +304,7 @@ namespace BestiaryMod
         {
             if (rotate8)
             {
-                if (inputTextureInfo.Flip)
+                if (inputTextureInfo.Flip && inputTextureInfo.Record != 0)
                     imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(texture));
                 else
                     imagePanel.BackgroundTexture = texture;
@@ -345,7 +325,7 @@ namespace BestiaryMod
             isShowing = false;
         }
 
-        void LoadTextures()
+        private void LoadTextures()
         {
             backgroundTexture = DaggerfallUI.GetTextureFromResources(backgroundTextureName);
             blankTexture = DaggerfallUI.GetTextureFromResources(blankTextureName);
@@ -375,17 +355,21 @@ namespace BestiaryMod
                 contentButtonTextures.Add(DaggerfallUI.GetTextureFromResources(blankTextureName));
         }
 
-        List<string> GetAvailablePages()
+        private List<string> GetAvailablePages()
         {
             List<string> output = new List<string>();
 
             foreach (var item in allPagesArchive)
             {
                 List<EntryInfo> tempEntries = GetcurrentEntriesFromFile(item, true);
-
-                for (int i = 0; i < tempEntries.Count / 2; i++)
+                foreach (var itemm in tempEntries)
                 {
-                    if (BestiaryMain.killCounts.ContainsKey(tempEntries[i * 2].Entry))
+                    Debug.Log(itemm.Entry);
+                }
+
+                for (int i = 0; i < tempEntries.Count; i++)
+                {
+                    if (BestiaryMain.killCounts.ContainsKey(tempEntries[i].Entry))
                     {
                         output.Add(item);
                         break;
@@ -395,7 +379,7 @@ namespace BestiaryMod
             return output;
         }
 
-        void LoadPage()
+        private void LoadPage()
         {
             for (int i = 0; i < currentEntries.Count && i < contentButtonTextures.Count; i++)
             {
@@ -407,7 +391,7 @@ namespace BestiaryMod
             }
         }
 
-        void LoadContent(string assetPath, bool reset = true)
+        private void LoadContent(string assetPath, bool reset = true)
         {
             List<string> textToApply = new List<string>();
             List<string> result;
@@ -466,7 +450,6 @@ namespace BestiaryMod
                             if (currentTexture.Frame != int.Parse(result[0]))
                                 currentTexture = new TextureInfo(int.Parse(result[0]));
                         }
-
                         break;
                     case 1:
                         break;
@@ -510,7 +493,7 @@ namespace BestiaryMod
             ApplyText(textToApply);
         }
 
-        void ResetTextLabels()
+        private void ResetTextLabels()
         {
             for (int i = 0; i < subtitleLabels.Count; i++)
             {
@@ -519,13 +502,14 @@ namespace BestiaryMod
             }
         }
 
-        void ResetButtonTextures()
+        private void ResetButtonTextures()
         {
             for (int i = 0; i < contentButtons.Count; i++)
                 contentButtons[i].BackgroundTexture = blankTexture;
         }
 
-        static string SplitLineToMultiline(string input, int rowLength) // taken from here: https://codereview.stackexchange.com/questions/54697/convert-string-to-multiline-text
+        //Taken from here: https://codereview.stackexchange.com/questions/54697/convert-string-to-multiline-text.
+        private static string SplitLineToMultiline(string input, int rowLength)
         {
             StringBuilder line = new StringBuilder();
             StringBuilder result = new StringBuilder();
@@ -555,14 +539,14 @@ namespace BestiaryMod
             return result.ToString();
         }
 
-        static string ReverseWords(string sentence)
+        private static string ReverseWords(string sentence)
         {
             string[] words = sentence.Split(' ');
             Array.Reverse(words);
             return string.Join(" ", words);
         }
 
-        void ApplyText(List<string> inputText)
+        private void ApplyText(List<string> inputText)
         {
             List<List<string>> textTemp = new List<List<string>>();
             List<string> text = new List<string>();
@@ -612,7 +596,7 @@ namespace BestiaryMod
             }
         }
 
-        List<EntryInfo> GetcurrentEntriesFromFile(string path, bool firstLoad = false)
+        private List<EntryInfo> GetcurrentEntriesFromFile(string path, bool firstLoad = false)
         {
             List<EntryInfo> output = new List<EntryInfo>();
 
@@ -652,7 +636,7 @@ namespace BestiaryMod
             return output;
         }
 
-        void SetUpUIElements()
+        private void SetUpUIElements()
         {
             ParentPanel.BackgroundColor = ScreenDimColor;
 
@@ -811,7 +795,8 @@ namespace BestiaryMod
             }
         }
 
-        static Texture2D FlipTexture(Texture2D original) //https://girlscancode.wordpress.com/2015/03/02/unity3d-flipping-a-texture/
+        //From here: https://girlscancode.wordpress.com/2015/03/02/unity3d-flipping-a-texture/.
+        private static Texture2D FlipTexture(Texture2D original)
         {
             Texture2D flipped = new Texture2D(original.width, original.height);
             flipped.filterMode = FilterMode.Point;
@@ -831,7 +816,8 @@ namespace BestiaryMod
             return flipped;
         }
 
-        static Texture2D DuplicateTexture(Texture2D source) //From here: https://stackoverflow.com/questions/44733841/how-to-make-texture2d-readable-via-script
+        //From here: https://stackoverflow.com/questions/44733841/how-to-make-texture2d-readable-via-script.
+        private static Texture2D DuplicateTexture(Texture2D source)
         {
             RenderTexture renderTex = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
 
@@ -851,7 +837,7 @@ namespace BestiaryMod
             return readableText;
         }
 
-        void ChangePage(bool right)
+        private void ChangePage(bool right)
         {
             int currentEntryNum = allPages.IndexOf(currentPage);
 
@@ -899,7 +885,6 @@ namespace BestiaryMod
                 entryToLoad = currentSummary;
                 LoadContent(entryToLoad, true);
             }
-
             allEntries = GetcurrentEntriesFromFile(allPages[currentEntryNum], true);
         }
         protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)

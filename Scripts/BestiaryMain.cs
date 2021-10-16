@@ -44,7 +44,7 @@ namespace BestiaryMod
         public static void Init(InitParams initParams)
         {
             mod = initParams.Mod;
-            
+
             var go = new GameObject(mod.Title);
             instance = go.AddComponent<BestiaryMain>();
 
@@ -92,7 +92,7 @@ namespace BestiaryMod
                             DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no entries to display. Slay Something first, weakling.");
                         break;
                 }
-                
+
             }
             else if (bestiaryUIScreen.isShowing && InputManager.Instance.GetKeyDown(openMenuKeyCode))
                 bestiaryUIScreen.CloseWindow();
@@ -101,12 +101,13 @@ namespace BestiaryMod
                     bestiaryUIScreen.CloseWindow();
         }
 
-        private static KeyCode SetKeyFromText(string text) //"Inspired" by code from Mighty Foot from numidium (https://www.nexusmods.com/daggerfallunity/mods/162)
+        //"Inspired" by code from Mighty Foot from numidium (https://www.nexusmods.com/daggerfallunity/mods/162).
+        private static KeyCode SetKeyFromText(string text)
         {
             KeyCode result;
             if (!System.Enum.TryParse(text, out result))
                 result = KeyCode.B;
-            
+
             return result;
         }
 
@@ -114,20 +115,21 @@ namespace BestiaryMod
         {
             DaggerfallUnityItem skillBook = ItemBuilder.CreateItem(ItemGroups.Books, BestiaryItem.templateIndex);
             GameManager.Instance.PlayerEntity.Items.AddItem(skillBook);
-            
+
             BestiaryUI.classicMode = modSettings.GetBool("General", "ClassicMode");
             menuUnlock = modSettings.GetValue<int>("General", "MenuUnlock");
             BestiaryUI.animate = modSettings.GetBool("General", "EnableAnimations");
             BestiaryUI.animationUpdateDelay = modSettings.GetValue<int>("General", "DelayBetweenAnimationFrames");
             BestiaryUI.defaultRotation = modSettings.GetValue<int>("General", "DefaultMobOrientation");
             BestiaryUI.rotate8 = modSettings.GetBool("General", "EnableEightDirectionRotation");
-            
+
             openMenuKeyCode = SetKeyFromText(modSettings.GetValue<string>("Controls", "Keybind"));
-            
+
             bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
         }
 
-        static bool HumanoidCheck(int enemyID) //https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs
+        //From here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
+        static bool HumanoidCheck(int enemyID)
         {
             switch (enemyID)
             {
@@ -151,13 +153,13 @@ namespace BestiaryMod
                 if (entityBehaviour != null)
                 {
                     EnemyEntity enemyEntity = entityBehaviour.Entity as EnemyEntity;
-                    if (true || enemyEntity != null && enemyEntity.GetEnemyGroup() != DFCareer.EnemyGroups.Humanoid)
+                    if (enemyEntity != null && enemyEntity.GetEnemyGroup() != DFCareer.EnemyGroups.Humanoid)
                     {
                         if (entityBehaviour.GetComponent<EnemySenses>().Target == GameManager.Instance.PlayerEntityBehaviour)
                         {
                             string monsterName = MonsterCareerIndexToString(enemyEntity.CareerIndex);
 
-                            if(killCounts.ContainsKey(monsterName))
+                            if (killCounts.ContainsKey(monsterName))
                                 killCounts[monsterName] += 1;
                             else
                             {
@@ -174,16 +176,17 @@ namespace BestiaryMod
             }
         }
 
-        public static void AddBestiary_OnLootSpawned(object sender, ContainerLootSpawnedEventArgs e) // Modifie, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs
+        //Modified, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
+        public static void AddBestiary_OnLootSpawned(object sender, ContainerLootSpawnedEventArgs e)
         {
             DaggerfallInterior interior = GameManager.Instance.PlayerEnterExit.Interior;
             if (interior != null &&
                 e.ContainerType == LootContainerTypes.ShopShelves &&
                 interior.BuildingData.BuildingType == DFLocation.BuildingTypes.Bookseller)
             {
-                int numBooks = UnityEngine.Random.Range(0, interior.BuildingData.Quality/5);
+                int numBooks = UnityEngine.Random.Range(0, interior.BuildingData.Quality / 5);
 
-                if(UnityEngine.Random.Range(1, 4) > 2)
+                if (UnityEngine.Random.Range(1, 4) > 2)
                 {
                     DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
                     e.Loot.AddItem(bestiaryItem);
@@ -191,7 +194,8 @@ namespace BestiaryMod
             }
         }
 
-        static void BestiaryLoot_OnEnemyDeath(object sender, EventArgs e) // Modifie, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs
+        //Modified, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
+        static void BestiaryLoot_OnEnemyDeath(object sender, EventArgs e)
         {
             EnemyDeath enemyDeath = sender as EnemyDeath;
             if (enemyDeath != null)
@@ -205,7 +209,7 @@ namespace BestiaryMod
                         if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human || HumanoidCheck(enemyEntity.MobileEnemy.ID))
                         {
                             int luckRoll = UnityEngine.Random.Range(1, 20) + ((playerEntity.Stats.LiveLuck / 10) - 5);
-                            
+
                             if (luckRoll > 18)
                             {
                                 DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
