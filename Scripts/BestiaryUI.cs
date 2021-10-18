@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using DaggerfallConnect;
@@ -263,14 +264,11 @@ namespace BestiaryMod
 
             SetUpUIElements();
             currentTexture = new TextureInfo(267);
-            currentTexture.UpdateTextures();
-
             currentEntries = GetcurrentEntriesFromFile(textPath);
             allEntries = GetcurrentEntriesFromFile(textPath, true);
 
             ResetButtonTextures();
             LoadPage();
-
             LoadContent(currentSummary, true);
         }
 
@@ -293,7 +291,6 @@ namespace BestiaryMod
         private static void UpdateImagePanel(Texture2D inputTexture, TextureInfo inputTextureInfo)
         {
             imagePanel.Size = inputTextureInfo.maxTextureSize;
-
             imagePanel.Position = new Vector2(imagePanelBasePos[0] + ((imagePanelMaxSize[0] - imagePanel.Size[0]) / 2), imagePanelBasePos[1] + ((imagePanelMaxSize[0] - imagePanel.Size[1]) / 2));
         }
 
@@ -596,19 +593,9 @@ namespace BestiaryMod
             List<EntryInfo> output = new List<EntryInfo>();
 
             currentPage = path;
-            TextAsset textAssetPage;
-            TextAsset textAssetEntry;
 
-            var pageTextTemp = new List<string>();
-
-            textAssetPage = bestiaryMod.GetAsset<TextAsset>(path);
-            var resultAssetPage = textAssetPage.text.Split(new[] { '\r', '\n' });
-
-            currentSummary = resultAssetPage[1];
-            for (int i = 1; i < resultAssetPage.Length; i++)
-                pageTextTemp.Add(resultAssetPage[i]);
-
-            resultAssetPage = pageTextTemp.ToArray();
+            string[] resultAssetPage = bestiaryMod.GetAsset<TextAsset>(path).text.Split(new[] { '\r', '\n' }).Skip(1).ToArray();
+            currentSummary = resultAssetPage[0];
 
             for (int i = 0; i < resultAssetPage.Length; i++)
             {
@@ -620,8 +607,8 @@ namespace BestiaryMod
                         if (!string.IsNullOrEmpty(resultAssetPage[i])
                             && ((BestiaryMain.menuUnlock != 2 || BestiaryMain.killCounts.ContainsKey(resultAssetPage[i])) || firstLoad))
                         {
-                            textAssetEntry = bestiaryMod.GetAsset<TextAsset>(resultAssetPage[i]);
-                            var resultAssetEntry = textAssetEntry.text.Split(new[] { '\r', '\n' });
+                            TextAsset textAssetEntry = bestiaryMod.GetAsset<TextAsset>(resultAssetPage[i]);
+                            string[] resultAssetEntry = textAssetEntry.text.Split(new[] { '\r', '\n' });
 
                             output.Add(new EntryInfo(resultAssetPage[i], resultAssetEntry[1]));
                         }
@@ -668,7 +655,8 @@ namespace BestiaryMod
             monsterNameLabel.Size = new Vector2(40, 14);
             monsterNameLabel.Font = DaggerfallUI.LargeFont;
 
-            if (oldFont) monsterNameLabel.TextScale = 0.85f;
+            if (oldFont)
+                monsterNameLabel.TextScale = 0.85f;
 
             mainPanel.Components.Add(monsterNameLabel);
 
@@ -1020,9 +1008,9 @@ namespace BestiaryMod
         protected void MainPanel_OnMouseScrollDown(BaseScreenComponent sender)
         {
             contentOffset += 1;
-
             LoadContent(entryToLoad, false);
         }
+
         protected void MainPanel_OnMouseScrollUp(BaseScreenComponent sender)
         {
             if (contentOffset > 0)
