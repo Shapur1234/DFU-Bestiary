@@ -92,7 +92,6 @@ namespace BestiaryMod
                             DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no entries to display. Slay Something first, weakling.");
                         break;
                 }
-
             }
             else if (bestiaryUIScreen.isShowing && InputManager.Instance.GetKeyDown(openMenuKeyCode))
                 bestiaryUIScreen.CloseWindow();
