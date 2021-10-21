@@ -43,6 +43,15 @@ namespace BestiaryMod
                 Frame = 0;
                 Flip = false;
 
+                switch (Archive)
+                {
+                    case 275:
+                        Mirrored = true;
+                        break;
+                    default:
+                        Mirrored = false;
+                        break;
+                }
                 Texture2D tempTexture = textureReader.GetTexture2D(Archive, 1, 0);
 
                 if (tempTexture.width > tempTexture.height)
@@ -142,6 +151,7 @@ namespace BestiaryMod
             public int Record;
             public int Frame;
             public bool Flip;
+            public bool Mirrored;
             public Vector2 maxTextureSize;
         }
 
@@ -161,7 +171,6 @@ namespace BestiaryMod
         public static int animationUpdateDelay;
         public static int defaultRotation;
         public static int attackModeOffset;
-        private static string arena2Path;
         private int contentOffset;
         private int descriptionLabelMaxCharacters;
         private int textLabelXOffset;
@@ -176,14 +185,14 @@ namespace BestiaryMod
         private string currentSummary;
         private string entrySuffix;
         private string entryToLoad;
-
+        private static string arena2Path;
         private const string pathToClassicPage = "page_classic";
-        private const string attackFalseTextureName = "button_attack_false";
-        private const string attackTrueTextureName = "button_attack_true";
-        private const string backgroundTextureName = "base_background";
         private const string blankTextureName = "blank";
-        private const string leftArrowTextureName = "button_arrow_left";
+        private const string backgroundTextureName = "base_background";
+        private const string attackTrueTextureName = "button_attack_true";
+        private const string attackFalseTextureName = "button_attack_false";
         private const string rightArrowTextureName = "button_arrow_right";
+        private const string leftArrowTextureName = "button_arrow_left";
 
         public List<Texture2D> contentButtonTextures = new List<Texture2D>();
         private Texture2D attackFalseTexture;
@@ -193,9 +202,9 @@ namespace BestiaryMod
         private Texture2D leftArrowTexture;
         private Texture2D rightArrowTexture;
 
+        private Vector2 pageNamePos = new Vector2(71, 14);
         private readonly List<Vector2> buttonAllPos = new List<Vector2> { new Vector2(4, 162), new Vector2(50, 162), new Vector2(95, 162), new Vector2(4, 174), new Vector2(50, 174), new Vector2(95, 174), new Vector2(4, 187), new Vector2(50, 187), new Vector2(95, 187) };
         private readonly Vector2 entryButtonSize = new Vector2(40, 9);
-        private Vector2 pageNamePos = new Vector2(71, 14);
         private readonly Vector2 pageNameSize = new Vector2(52, 10);
         private static readonly Vector2 imagePanelBasePos = new Vector2(18, 51);
         private static readonly Vector2 imagePanelMaxSize = new Vector2(102, 102);
@@ -227,15 +236,13 @@ namespace BestiaryMod
         protected override void Setup()
         {
             base.Setup();
-
             string textPath;
 
-            LoadTextures();
             arena2Path = DaggerfallUnity.Arena2Path;
-
             textureReader = new DaggerfallWorkshop.Utility.TextureReader(arena2Path);
             kabsUnleveledSpellsModFound = kabsUnleveledSpellsMod != null;
 
+            LoadTextures();
             if (!oldFont)
             {
                 descriptionLabelMaxCharacters = 48;
@@ -296,13 +303,23 @@ namespace BestiaryMod
 
         private static void ApplyTexture(Texture2D texture, TextureInfo inputTextureInfo)
         {
+            bool doFlip;
+
             if (rotate8)
             {
                 if (inputTextureInfo.Flip && inputTextureInfo.Record != 0)
-                    imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(texture));
+                    doFlip = true;
                 else
-                    imagePanel.BackgroundTexture = texture;
+                    doFlip = false;
+
+                if (inputTextureInfo.Mirrored)
+                    doFlip = !doFlip;
             }
+            else
+                doFlip = false;
+
+            if (doFlip)
+                imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(texture));
             else
                 imagePanel.BackgroundTexture = texture;
         }
