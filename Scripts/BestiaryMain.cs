@@ -112,9 +112,6 @@ namespace BestiaryMod
 
         static void LoadSettings(ModSettings modSettings, ModSettingsChange change)
         {
-            DaggerfallUnityItem skillBook = ItemBuilder.CreateItem(ItemGroups.Books, BestiaryItem.templateIndex);
-            GameManager.Instance.PlayerEntity.Items.AddItem(skillBook);
-
             BestiaryUI.classicMode = modSettings.GetBool("General", "ClassicMode");
             menuUnlock = modSettings.GetValue<int>("General", "MenuUnlock");
             BestiaryUI.animate = modSettings.GetBool("General", "EnableAnimations");
