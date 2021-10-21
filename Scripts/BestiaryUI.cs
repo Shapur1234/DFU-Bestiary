@@ -522,7 +522,6 @@ namespace BestiaryMod
         {
             StringBuilder line = new StringBuilder();
             StringBuilder result = new StringBuilder();
-
             Stack<string> stack = new Stack<string>(input.Split(' '));
 
             while (stack.Count > 0)
@@ -608,7 +607,6 @@ namespace BestiaryMod
         private List<EntryInfo> GetcurrentEntriesFromFile(string path, bool firstLoad = false)
         {
             List<EntryInfo> output = new List<EntryInfo>();
-
             currentPage = path;
 
             string[] resultAssetPage = bestiaryMod.GetAsset<TextAsset>(path).text.Split(new[] { '\r', '\n' }).Skip(1).ToArray();
@@ -844,40 +842,28 @@ namespace BestiaryMod
             if (right && currentEntryNum > 0)
             {
                 currentEntryNum -= 1;
-
                 currentEntries = GetcurrentEntriesFromFile(allPages[currentEntryNum]);
-                ResetButtonTextures();
-                LoadPage();
-                LoadContent(currentSummary, true);
             }
             else if (right && currentEntryNum <= 0)
             {
                 currentEntryNum = allPages.Count - 1;
-
                 currentEntries = GetcurrentEntriesFromFile(allPages[currentEntryNum]);
-                ResetButtonTextures();
-                LoadPage();
-                LoadContent(currentSummary, true);
             }
             else if (!right && currentEntryNum < (allPages.Count - 1))
             {
                 currentEntryNum += 1;
-
                 currentEntries = GetcurrentEntriesFromFile(allPages[currentEntryNum]);
-                ResetButtonTextures();
-                LoadPage();
-                LoadContent(currentSummary, true);
             }
             else
             {
                 currentEntryNum = 0;
-
                 currentEntries = GetcurrentEntriesFromFile(allPages[currentEntryNum]);
-                ResetButtonTextures();
-                LoadPage();
-                LoadContent(currentSummary, true);
             }
+
             allEntries = GetcurrentEntriesFromFile(allPages[currentEntryNum], true);
+            ResetButtonTextures();
+            LoadPage();
+            LoadContent(currentSummary, true);
         }
         protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
