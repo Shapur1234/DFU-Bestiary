@@ -1,6 +1,5 @@
 282
 button_daedroth
-Bestiary
 Daedroth
 Summary:*Daedroths (also known as Lesser Daedra) are crocodile-headed warriors wielding deadly axes and sinister spells. They can only be hit by weapons of mithril quality or higher.
 Advice:*Close in quickly and use melee attacks to deny the Daedroth an opportunity to cast its ranged spells. You may also wish to protect yourself with Spell Reflection, Spell Resistance, or Spell Absorption. Daedroths are especially dangerous to spellcasters, as they make frequent use of their Silence spell. However, they are in most cases inferior in combat, so if a Daedroth is itself silenced melee attacks should result in the creature's quick death. The Daedric language skill can sometimes render an enemy non-hostile.

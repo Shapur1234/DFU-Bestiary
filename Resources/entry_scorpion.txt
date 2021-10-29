@@ -1,6 +1,5 @@
 275
 button_scorpion
-Bestiary
 Scorpion
 Summary:*The giant scorpion is a large arachnid that attacks with claws and stinger, and has the ability to paralyze its foes. Giant scorpions can be hit by weapons of any material.
 Advice:*If you lack immunity to paralysis, ranged attacks are safer, especially at lower levels. Giant scorpions are quickly dispatched at higher levels with melee attacks.

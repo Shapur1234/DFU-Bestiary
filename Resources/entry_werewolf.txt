@@ -1,6 +1,5 @@
 264
 button_werewolf
-Bestiary
 Werewolf
 Summary:*Werewolves are half-man, half-wolf lycanthropes, whose attacks have a slight chance of passing their curse onto you. They can be hit by weapons of silver quality or higher.
 Advice:*If you don't wish to become a werewolf yourself, ranged attacks are safer at lower levels. Higher levels can quickly dispatch a werewolf with melee attacks.

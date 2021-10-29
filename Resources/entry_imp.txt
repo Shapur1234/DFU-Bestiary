@@ -1,6 +1,5 @@
 256
 button_imp
-Bestiary
 Imp
 Summary:*Imps are flying creatures that cast spells at their foes. They can be hit by weapons of steel quality or higher.
 Advice:*Kill imps as quickly as possible, especially at low levels. Spell Reflection, Spell Resistance, or Spell Absorption are helpful. The Impish language skill can sometimes render an enemy non-hostile.

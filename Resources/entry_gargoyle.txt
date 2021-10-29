@@ -1,6 +1,5 @@
 277
 button_gargoyle
-Bestiary
 Gargoyle
 Summary:*Gargoyles are creatures of living stone. They can be hit by weapons of mithril quality or higher.
 Advice:*Melee attacks.

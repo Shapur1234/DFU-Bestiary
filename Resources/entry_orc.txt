@@ -1,6 +1,5 @@
 262
 button_orc
-Bestiary
 Orc
 Summary:*Orcs are the basic foot soldiers of the Orcish race. They can be hit by weapons of any material.
 Advice:*Melee attacks. The Orcish language skill can sometimes render an enemy non-hostile.

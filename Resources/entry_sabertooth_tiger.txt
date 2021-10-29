@@ -1,6 +1,5 @@
 260
 button_sabertooth_tiger
-Bestiary
 Sabertooth Tiger
 Summary:*The sabertooth tiger is a large, fanged animal. They can be hit by weapons of any material.
 Advice:*Melee attacks.

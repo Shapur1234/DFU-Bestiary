@@ -1,6 +1,5 @@
 265
 button_nymph
-Bestiary
 Nymph
 Summary:*Nymphs are fae creatures of unearthly beauty that attack with mystical energy. They can be hit by weapons of elven quality or higher.
 Advice:*Nymphs can be easily dispatched with a melee attack. The Nymph language skill can sometimes render an enemy non-hostile.

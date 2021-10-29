@@ -1,6 +1,4 @@
 286
-Daedra
-Bestiary
 Summary - Daedra
 Overview:*"Daedra" is a term for any of the numerous varieties of otherworldly beings from the plane of Oblivion. They are fairly challenging adversaries, and can only be harmed by weapons of mithril quality or greater. All daedra can detect invisible foes.
 Killcount:*Daedra Lord - 

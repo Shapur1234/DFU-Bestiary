@@ -1,6 +1,5 @@
 258
 button_giant_bat
-Bestiary
 Giant Bat
 Summary:*The giant bat is a flying animal commonly encountered at low levels, but not so often at higher levels. They can be hit by weapons of any material.
 Advice:*Melee attacks can quickly dispatch these beasts, though attacking with arrows or spells will greatly reduce your odds of catching a disease.

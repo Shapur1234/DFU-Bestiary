@@ -20,20 +20,19 @@ using UnityEngine;
 
 namespace BestiaryMod
 {
+    struct EntryInfo
+    {
+        public EntryInfo(string entry, string button)
+        {
+            Entry = entry;
+            Button = button;
+        }
+        public string Entry;
+        public string Button;
+    }
+
     class BestiaryUI : DaggerfallPopupWindow
     {
-        struct EntryInfo
-        {
-            public EntryInfo(string entry, string button)
-            {
-                Entry = entry;
-                Button = button;
-            }
-
-            public string Entry;
-            public string Button;
-        }
-
         class TextureInfo
         {
             public TextureInfo(int archive)
@@ -160,13 +159,11 @@ namespace BestiaryMod
         private Mod kabsUnleveledSpellsMod = ModManager.Instance.GetMod("Unleveled Spells");
 
         public static bool animate;
-        public static bool classicMode;
         public static bool rotate8;
 
         public bool isShowing;
         public bool kabsUnleveledSpellsModFound;
-        public bool oldFont = !DaggerfallUnity.Settings.SDFFontRendering;
-
+        private readonly List<string> allPagesArchive = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
         private TextureInfo currentTexture;
         public static int animationUpdateDelay;
         public static int defaultRotation;
@@ -176,7 +173,6 @@ namespace BestiaryMod
         private int textLabelXOffset;
         private int animationDelay = 0;
 
-        readonly List<string> allPagesArchive = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
         private List<string> allPages = new List<string>();
         private List<EntryInfo> allEntries;
         private List<EntryInfo> currentEntries;
@@ -237,29 +233,20 @@ namespace BestiaryMod
         {
             base.Setup();
             string textPath;
+            BestiaryMain.allText.DebugThis();
 
             arena2Path = DaggerfallUnity.Arena2Path;
             textureReader = new DaggerfallWorkshop.Utility.TextureReader(arena2Path);
             kabsUnleveledSpellsModFound = kabsUnleveledSpellsMod != null;
 
             LoadTextures();
-            if (!oldFont)
-            {
-                descriptionLabelMaxCharacters = 48;
-                textLabelXOffset = 30;
-            }
-            else
-            {
-                descriptionLabelMaxCharacters = 24;
-                textLabelXOffset = 46;
-            }
 
-            if (BestiaryMain.menuUnlock == 2)
+            if (BestiaryMain.entries == 1)
                 allPages = GetAvailablePages();
             else
                 allPages = allPagesArchive;
 
-            if (classicMode)
+            if (BestiaryMain.entries == 2)
                 textPath = pathToClassicPage;
             else
                 textPath = allPages[0];
@@ -346,7 +333,7 @@ namespace BestiaryMod
             if (!blankTexture)
                 throw new Exception("BestiaryUI: Could not load blankTexture.");
 
-            if (!classicMode)
+            if (BestiaryMain.entries != 2)
             {
                 attackFalseTexture = DaggerfallUI.GetTextureFromResources(attackFalseTextureName);
                 attackTrueTexture = DaggerfallUI.GetTextureFromResources(attackTrueTextureName);
@@ -415,7 +402,7 @@ namespace BestiaryMod
             if (assetPath[0] == 's')
                 isSummary = true;
 
-            if (!classicMode)
+            if (BestiaryMain.entries != 2)
             {
                 attackModeOffset = 0;
                 attackButton.BackgroundTexture = attackFalseTexture;
@@ -467,7 +454,7 @@ namespace BestiaryMod
                         titleLabel.Text = result[2];
                         break;
                     case 3:
-                        if (oldFont)
+                        if (DaggerfallUnity.Settings.SDFFontRendering)
                             monsterNameLabel.Text = result[3].Replace(" - ", " ");
                         else
                             monsterNameLabel.Text = result[3];
@@ -620,7 +607,7 @@ namespace BestiaryMod
                         break;
                     default:
                         if (!string.IsNullOrEmpty(resultAssetPage[i])
-                            && ((BestiaryMain.menuUnlock != 2 || BestiaryMain.killCounts.ContainsKey(resultAssetPage[i])) || firstLoad))
+                            && ((BestiaryMain.entries != 1 || BestiaryMain.killCounts.ContainsKey(resultAssetPage[i])) || firstLoad))
                         {
                             TextAsset textAssetEntry = bestiaryMod.GetAsset<TextAsset>(resultAssetPage[i]);
                             string[] resultAssetEntry = textAssetEntry.text.Split(new[] { '\r', '\n' });
@@ -635,6 +622,17 @@ namespace BestiaryMod
 
         private void SetUpUIElements()
         {
+            if (DaggerfallUnity.Settings.SDFFontRendering)
+            {
+                descriptionLabelMaxCharacters = 48;
+                textLabelXOffset = 30;
+            }
+            else
+            {
+                descriptionLabelMaxCharacters = 24;
+                textLabelXOffset = 46;
+            }
+
             ParentPanel.BackgroundColor = ScreenDimColor;
 
             mainPanel = DaggerfallUI.AddPanel(NativePanel, AutoSizeModes.None);
@@ -655,14 +653,13 @@ namespace BestiaryMod
             titleLabel.Size = new Vector2(52, 22);
             titleLabel.Font = DaggerfallUI.TitleFont;
 
-            if (oldFont)
+            if (DaggerfallUnity.Settings.SDFFontRendering)
+                titleLabel.Position = new Vector2(15, 16);
+            else
             {
                 titleLabel.Position = new Vector2(15, 20);
                 titleLabel.TextScale = 0.7f;
             }
-            else
-                titleLabel.Position = new Vector2(15, 16);
-
             mainPanel.Components.Add(titleLabel);
 
             monsterNameLabel = new TextLabel();
@@ -670,7 +667,7 @@ namespace BestiaryMod
             monsterNameLabel.Size = new Vector2(40, 14);
             monsterNameLabel.Font = DaggerfallUI.LargeFont;
 
-            if (oldFont)
+            if (!DaggerfallUnity.Settings.SDFFontRendering)
                 monsterNameLabel.TextScale = 0.85f;
 
             mainPanel.Components.Add(monsterNameLabel);
@@ -736,7 +733,7 @@ namespace BestiaryMod
                 mainPanel.Components.Add(contentButtons[i]);
             }
 
-            if (!classicMode)
+            if (BestiaryMain.entries != 2)
             {
                 pageRightButton = new Button();
                 pageRightButton.Position = new Vector2(98, 25);
@@ -783,7 +780,7 @@ namespace BestiaryMod
                 pageNameLabel.Position = pageNamePos;
                 pageNameLabel.Size = pageNameSize;
 
-                if (!oldFont)
+                if (DaggerfallUnity.Settings.SDFFontRendering)
                     pageNameLabel.Font = DaggerfallUI.LargeFont;
                 else
                     pageNamePos[1] = 18;
@@ -798,7 +795,6 @@ namespace BestiaryMod
         {
             Texture2D flipped = new Texture2D(original.width, original.height);
             flipped.filterMode = FilterMode.Point;
-
 
             int xN = original.width;
             int yN = original.height;

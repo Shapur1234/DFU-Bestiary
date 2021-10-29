@@ -16,6 +16,8 @@ using DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings;
 
 using UnityEngine;
 
+using Wenzil.Console;
+
 namespace BestiaryMod
 {
     public class BestiaryMain : MonoBehaviour, IHasModSaveData
@@ -33,12 +35,16 @@ namespace BestiaryMod
         static BestiaryUI bestiaryUIScreen;
 
         static PlayerEntity playerEntity = GameManager.Instance.PlayerEntity;
-        static KeyCode openMenuKeyCode;
+        private static KeyCode openMenuKeyCode;
 
         public static int menuUnlock;
-
+        public static int entries;
+        public static bool spawnItem;
         public static bool unlockedBestiary;
         public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
+        public static AllText allText;
+        private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
+        private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
 
         [Invoke(StateManager.StateTypes.Start, 0)]
         public static void Init(InitParams initParams)
@@ -64,7 +70,8 @@ namespace BestiaryMod
         {
             Debug.Log("Begin mod init: Bestiary");
 
-            bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
+            RegisterBestiaryCommands();
+            InitializeUI();
             mod.LoadSettings();
 
             Debug.Log("Finished mod init: Bestiary");
@@ -72,7 +79,7 @@ namespace BestiaryMod
 
         void Update()
         {
-            if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && GameManager.Instance.IsPlayerOnHUD)
+            if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && !InputManager.Instance.IsPaused && GameManager.Instance.IsPlayerOnHUD)
             {
                 switch (menuUnlock)
                 {
@@ -100,6 +107,17 @@ namespace BestiaryMod
                     bestiaryUIScreen.CloseWindow();
         }
 
+        private static void InitializeUI()
+        {
+            if (entries == 2)
+                allText = new AllText(pagesClassic);
+            else
+                allText = new AllText(pagesFull);
+            bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
+
+            allText.DebugThis();
+        }
+
         //"Inspired" by code from Mighty Foot from numidium (https://www.nexusmods.com/daggerfallunity/mods/162).
         private static KeyCode SetKeyFromText(string text)
         {
@@ -112,16 +130,17 @@ namespace BestiaryMod
 
         static void LoadSettings(ModSettings modSettings, ModSettingsChange change)
         {
-            BestiaryUI.classicMode = modSettings.GetBool("General", "ClassicMode");
-            menuUnlock = modSettings.GetValue<int>("General", "MenuUnlock");
-            BestiaryUI.animate = modSettings.GetBool("General", "EnableAnimations");
-            BestiaryUI.animationUpdateDelay = modSettings.GetValue<int>("General", "DelayBetweenAnimationFrames");
-            BestiaryUI.defaultRotation = modSettings.GetValue<int>("General", "DefaultMobOrientation");
-            BestiaryUI.rotate8 = modSettings.GetBool("General", "EnableEightDirectionRotation");
+            menuUnlock = modSettings.GetValue<int>("Gameplay", "MenuUnlock");
+            entries = modSettings.GetValue<int>("Gameplay", "Entries");
+            spawnItem = modSettings.GetBool("Gameplay", "ItemSpawning");
+
+            BestiaryUI.defaultRotation = modSettings.GetValue<int>("UserInterface", "DefaultMobOrientation");
+            BestiaryUI.animationUpdateDelay = modSettings.GetValue<int>("UserInterface", "DelayBetweenAnimationFrames");
+            BestiaryUI.rotate8 = modSettings.GetBool("UserInterface", "EnableEightDirectionRotation");
+            BestiaryUI.animate = modSettings.GetBool("UserInterface", "EnableAnimations");
 
             openMenuKeyCode = SetKeyFromText(modSettings.GetValue<string>("Controls", "Keybind"));
-
-            bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
+            InitializeUI();
         }
 
         //From here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
@@ -160,10 +179,10 @@ namespace BestiaryMod
                             else
                             {
                                 killCounts.Add(monsterName, 1);
-                                if (menuUnlock == 2)
+                                if (menuUnlock == 2 && monsterName != "false")
                                 {
                                     DaggerfallUI.AddHUDText(String.Format("{0} has been added to the Bestiary.", new List<string>(mod.GetAsset<TextAsset>(monsterName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))[3]));
-                                    bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
+                                    InitializeUI();
                                 }
                             }
                         }
@@ -175,6 +194,9 @@ namespace BestiaryMod
         //Modified, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
         public static void AddBestiary_OnLootSpawned(object sender, ContainerLootSpawnedEventArgs e)
         {
+            if (!spawnItem)
+                return;
+
             DaggerfallInterior interior = GameManager.Instance.PlayerEnterExit.Interior;
             if (interior != null &&
                 e.ContainerType == LootContainerTypes.ShopShelves &&
@@ -193,6 +215,9 @@ namespace BestiaryMod
         //Modified, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
         static void BestiaryLoot_OnEnemyDeath(object sender, EventArgs e)
         {
+            if (!spawnItem)
+                return;
+
             EnemyDeath enemyDeath = sender as EnemyDeath;
             if (enemyDeath != null)
             {
@@ -214,6 +239,37 @@ namespace BestiaryMod
                         }
                     }
                 }
+            }
+        }
+
+        public static void RegisterBestiaryCommands()
+        {
+            Debug.Log("[Bestiary] Trying to register console commands.");
+            try
+            {
+                ConsoleCommandsDatabase.RegisterCommand(AddBestiaryItem.command, AddBestiaryItem.description, AddBestiaryItem.usage, AddBestiaryItem.Execute);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(string.Format("Error Registering Bestiary Console commands: {0}", e.Message));
+            }
+        }
+
+        private static class AddBestiaryItem
+        {
+            public static readonly string command = "add_BestiaryItem";
+            public static readonly string description = "Put the Bestiary (item) in players inventory";
+            public static readonly string usage = "add_BestiaryItem";
+
+            public static string Execute(params string[] args)
+            {
+                if (args.Length > 0)
+                    return usage;
+
+                int index = 900;
+                DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, index);
+                GameManager.Instance.PlayerEntity.Items.AddItem(bestiaryItem);
+                return "BestiaryItem added";
             }
         }
 

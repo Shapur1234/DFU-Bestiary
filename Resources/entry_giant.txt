@@ -1,6 +1,5 @@
 271
 button_giant
-Bestiary
 Giant
 Summary:*Giants are huge, territorial brutes that like to smash (and eat) their enemies. They can be hit by weapons of any material.
 Advice:*Melee attacks are the quickest. The Giantish language skill can sometimes render an enemy non-hostile.

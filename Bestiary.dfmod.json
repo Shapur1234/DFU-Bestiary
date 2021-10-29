@@ -1,6 +1,6 @@
 {
     "ModTitle": "Bestiary",
-    "ModVersion": "1.3",
+    "ModVersion": "1.3.1",
     "ModAuthor": "Shapur",
     "ContactInfo": "Shapur on the DFU Forums",
     "DFUnity_Version": "0.12.3",
@@ -128,6 +128,7 @@
         "Assets/Game/Mods/Bestiary/Resources/page_animals.txt",
         "Assets/Game/Mods/Bestiary/Textures/button_spider.png",
         "Assets/Game/Mods/Bestiary/Resources/entry_werewolf.txt",
-        "Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt"
+        "Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt",
+        "Assets/Game/Mods/Bestiary/Scripts/BestiaryText.cs"
     ]
 }

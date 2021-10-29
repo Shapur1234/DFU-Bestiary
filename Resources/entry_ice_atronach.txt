@@ -1,6 +1,5 @@
 293
 button_ice_atronach
-Bestiary
 Ice atronach
 Summary:*Ice Atronachs are golems constructed of ice shards and possess a cold-based damage aura. Unlike other atronachs, they may also be encountered underwater. They can be hit by weapons of any material.
 Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use fire-based spells.

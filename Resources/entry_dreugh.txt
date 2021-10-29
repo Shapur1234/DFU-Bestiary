@@ -1,6 +1,5 @@
 296
 button_dreugh
-Bestiary
 Dreugh
 Summary:*Dreughs are abominations resembling a human-octopus hybrid with powerful crab claws. They are only found underwater, and can be hit by weapons of any material.
 Advice:*Melee attacks.

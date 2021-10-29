@@ -1,6 +1,5 @@
 270
 button_skeletal_warrior
-Bestiary
 Skeletal Warrior
 Summary:*While they may appear fragile, Skeletal Warriors are tough, skilled fighters. Lacking flesh, these creatures take less damage from edged weapons. Skeletons can be hit by weapons of any material.
 Advice:*Skeletal Warriors are not much of a challenge for higher level characters. However, lower level characters should attack with blunt weapons to avoid the creature's damage reduction.

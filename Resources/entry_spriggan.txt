@@ -1,6 +1,5 @@
 257
 button_spriggan
-Bestiary
 Spriggan
 Summary:*Spriggans are plant-like monsters. They can be hit by weapons of any material.
 Advice:*Melee attacks work best.
