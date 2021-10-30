@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
+using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
 
 using UnityEngine;
@@ -88,11 +88,11 @@ namespace BestiaryMod
             Debug.Log(String.Format("PageTitle: {0}", PageTitle));
             PageSummary.DebugThis();
 
-            // Debug.Log("PageEntries:");
-            // foreach (var item in PageEntries)
-            // {
-            //     item.DebugThis();
-            // }
+            Debug.Log("PageEntries:");
+            foreach (var item in PageEntries)
+            {
+                item.DebugThis();
+            }
         }
 
         public string PageName;
@@ -187,7 +187,10 @@ namespace BestiaryMod
                         TextureRecord = int.Parse(rawText[i]);
                         break;
                     case 1:
-                        SummaryTitle = rawText[i];
+                        if (DaggerfallUnity.Settings.SDFFontRendering)
+                            SummaryTitle = rawText[i];
+                        else
+                            SummaryTitle = rawText[i].Replace(" - ", " "); ;
                         break;
                     default: // fix killcounts
                         if (rawText[i].Length > 2 && rawText[i].Contains("*"))
@@ -207,7 +210,6 @@ namespace BestiaryMod
                 }
             }
         }
-
         public void DebugThis()
         {
             Debug.Log(String.Format("Debugging Summary {0}", SummaryName));
@@ -232,11 +234,11 @@ namespace BestiaryMod
             TitleText = titleText;
             BodyText = bodyText;
         }
-
         public void DebugThis()
         {
             Debug.Log(String.Format("TitleText: {0}, BodyText: {1}", TitleText, BodyText));
         }
+
         public string TitleText;
         public string BodyText;
     }
