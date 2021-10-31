@@ -45,6 +45,7 @@ namespace BestiaryMod
 
         public string BestiaryTitle;
         public List<Page> AllPages;
+        private string EntrySuffix;
     }
     public class Page
     {
@@ -104,12 +105,10 @@ namespace BestiaryMod
     {
         public Entry(string assetPath)
         {
-            // string assetPathTemp;
 
-            // if (bestiaryMod.HasAsset(assetPath + entrySuffix)
-            //     assetPathTemp = assetPath + entrySuffix;
-            // else
-            //     assetPathTemp = assetPath;
+            if (ModManager.Instance.GetMod("Unleveled Spells") != null)
+                if (ModManager.Instance.GetMod("Bestiary").HasAsset(assetPath + "-kabs_unleveled_spells"))
+                    assetPath = assetPath + "-kabs_unleveled_spells";
 
             EntryName = assetPath;
             EntryButtonName = "Entry constructor error";
@@ -164,13 +163,6 @@ namespace BestiaryMod
     {
         public Summary(string assetPath)
         {
-            // string assetPathTemp;
-
-            // if (bestiaryMod.HasAsset(assetPath + entrySuffix))
-            //     assetPathTemp = assetPath + entrySuffix;
-            // else
-            //     assetPathTemp = assetPath;
-
             SummaryName = assetPath;
             SummaryTitle = "Summary constructor error";
             SummaryText = new List<TextPair>();
