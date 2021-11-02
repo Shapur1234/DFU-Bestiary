@@ -38,9 +38,7 @@ namespace BestiaryMod
 
             Debug.Log("AllPages:");
             foreach (var item in AllPages)
-            {
                 item.DebugThis();
-            }
         }
 
         public string BestiaryTitle;
@@ -113,7 +111,7 @@ namespace BestiaryMod
             EntryName = assetPath;
             EntryButtonName = "Entry constructor error";
             EntryTitle = "Entry constructor error";
-            TextureRecord = 0;
+            TextureArchive = 0;
             EntryText = new List<TextPair>();
 
             List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(EntryName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
@@ -122,7 +120,7 @@ namespace BestiaryMod
                 switch (i)
                 {
                     case 0:
-                        TextureRecord = int.Parse(rawText[i]);
+                        TextureArchive = int.Parse(rawText[i]);
                         break;
                     case 1:
                         EntryButtonName = rawText[i];
@@ -144,7 +142,7 @@ namespace BestiaryMod
         public void DebugThis()
         {
             Debug.Log(String.Format("Debugging Entry {0}", EntryName));
-            Debug.Log(String.Format("EntryButtonName: {0}, EntryTitle: {1}, TextureRecord: {2}", EntryButtonName, EntryTitle, TextureRecord));
+            Debug.Log(String.Format("EntryButtonName: {0}, EntryTitle: {1}, TextureArchive: {2}", EntryButtonName, EntryTitle, TextureArchive));
 
             Debug.Log("EntryText:");
             foreach (var item in EntryText)
@@ -156,7 +154,7 @@ namespace BestiaryMod
         public string EntryName;
         public string EntryButtonName;
         public string EntryTitle;
-        public int TextureRecord;
+        public int TextureArchive;
         public List<TextPair> EntryText;
     }
     public class Summary
@@ -166,7 +164,7 @@ namespace BestiaryMod
             SummaryName = assetPath;
             SummaryTitle = "Summary constructor error";
             SummaryText = new List<TextPair>();
-            TextureRecord = 0;
+            TextureArchive = 0;
 
             List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(SummaryName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
 
@@ -176,7 +174,7 @@ namespace BestiaryMod
                 switch (i)
                 {
                     case 0:
-                        TextureRecord = int.Parse(rawText[i]);
+                        TextureArchive = int.Parse(rawText[i]);
                         break;
                     case 1:
                         if (DaggerfallUnity.Settings.SDFFontRendering)
@@ -205,7 +203,7 @@ namespace BestiaryMod
         public void DebugThis()
         {
             Debug.Log(String.Format("Debugging Summary {0}", SummaryName));
-            Debug.Log(String.Format("SummaryTitle: {0}, TextureRecord: {1}", SummaryTitle, TextureRecord));
+            Debug.Log(String.Format("SummaryTitle: {0}, TextureArchive: {1}", SummaryTitle, TextureArchive));
 
             Debug.Log("SummaryText:");
             foreach (var item in SummaryText)
@@ -216,7 +214,7 @@ namespace BestiaryMod
 
         public string SummaryName;
         public string SummaryTitle;
-        public int TextureRecord;
+        public int TextureArchive;
         public List<TextPair> SummaryText;
     }
     public struct TextPair
