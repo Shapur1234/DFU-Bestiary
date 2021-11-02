@@ -1,8 +1,10 @@
 296
 button_dreugh
 Dreugh
-Summary:*Dreughs are abominations resembling a human-octopus hybrid with powerful crab claws. They are only found underwater, and can be hit by weapons of any material.
+Summary:*Dreughs are abominations resembling a human-octopus hybrid with powerful crab claws. They are only found underwater.
 Advice:*Melee attacks.
+Material:*No special material is requiered
+Language:*Impish
 Abilities:*Resistance to Magic
  *Immunity to Paralysis, Poison, and Disease
  *Regenerates Health in Darkness and in Water

@@ -1,8 +1,10 @@
 297
 button_lamia
 Lamia
-Summary:*Lamias are monsters with the upper body of a human and a snakelike lower section. They are only encountered underwater, and can be hit by weapons of any material.
+Summary:*Lamias are monsters with the upper body of a human and a snakelike lower section. They are only encountered underwater.
 Advice:*Use ranged weapons to avoid the lamia's fatigue drain.
+Material:*No special material is requiered
+Language:*Nymph
 Abilities:*Lamias drain 2 points of fatigue for every 1 point of health damage
  *Resistance to Magic
  *Immunity to Paralysis, Poison, and Disease

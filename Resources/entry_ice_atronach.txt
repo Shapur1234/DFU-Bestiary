@@ -1,8 +1,10 @@
 293
 button_ice_atronach
 Ice atronach
-Summary:*Ice Atronachs are golems constructed of ice shards and possess a cold-based damage aura. Unlike other atronachs, they may also be encountered underwater. They can be hit by weapons of any material.
+Summary:*Ice Atronachs are golems constructed of ice shards and possess a cold-based damage aura. Unlike other atronachs, they may also be encountered underwater.
 Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use fire-based spells.
+Material:*No special material is requiered
+Language:*None
 Abilities:*Healed by cold-based spells
  *Immunity to Paralysis, Poison, Frost and Disease
  *Regenerates Health in Darkness

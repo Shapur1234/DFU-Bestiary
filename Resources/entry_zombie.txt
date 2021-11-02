@@ -1,7 +1,9 @@
 272
 button_zombie
 Zombie
-Summary:*Zombies are animate, rotting corpses. They can deliver a powerful blow, and their decaying flesh harbors festering diseases. Zombies can be hit by weapons of any material.
+Summary:*Zombies are animate, rotting corpses. They can deliver a powerful blow, and their decaying flesh harbors festering diseases.
 Advice:*At lower levels, use ranged weapons to avoid the zombie's attacks and chance of disease. At higher levels, zombies can be easily destroyed with melee attacks.
+Material:*No special material is requiered
+Language:*None
 Abilities:*There is a 2% chance per hit of contracting a disease from a zombie
 Spells:*None

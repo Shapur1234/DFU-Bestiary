@@ -1,8 +1,10 @@
 284
 button_daedra_seducer
 Daedra Seducer
-Summary:*Daedra Seducers appear to be alluring spellcasters at first, but when attacked reveal their true bat-winged forms. They can only be hit by weapons of mithril quality or higher.
-Advice:*Daedra Seducers are best fought with ranged weapons or magic, as their spells can be devastating at close range (see Bugs). Spell Reflection, Spell Resistance, or Spell Absorption are recommended when fighting one. The Daedric language skill can sometimes render an enemy non-hostile.
+Summary:*Daedra Seducers appear to be alluring spellcasters at first, but when attacked reveal their true bat-winged forms.
+Advice:*Daedra Seducers are best fought with ranged weapons or magic, as their spells can be devastating at close range (see Bugs). Spell Reflection, Spell Resistance, or Spell Absorption are recommended when fighting one.
+Material:*Mithril or higher is requiered
+Language:*Daedric
 Abilities:*Can detect camouflaged or invisible foes
 Spells:*Energy Leech
  *Vampiric Touch

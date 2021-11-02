@@ -157,7 +157,7 @@ namespace BestiaryMod
         public static int animationUpdateDelay;
         #endregion
 
-        private TextureInfo currentTexture;
+        private TextureInfo currentTexture = null;
         private static string arena2Path;
 
         private int animationDelay = 0;
@@ -233,7 +233,6 @@ namespace BestiaryMod
 
             LoadTextures();
             SetUpUIElements();
-            currentTexture = new TextureInfo(BestiaryMain.allText.AllPages[currentPageIndex].PageEntries[currentEntryIndex].TextureArchive);
 
             LoadPage();
         }
@@ -241,8 +240,10 @@ namespace BestiaryMod
         public override void Update()
         {
             base.Update();
+
             if (Input.GetKeyUp(exitKey))
                 CloseWindow();
+
             if (animate)
             {
                 animationDelay += 1;
@@ -360,7 +361,7 @@ namespace BestiaryMod
         {
             scrollOffset = 0;
             currentEntryIndex = 69;
-            if (BestiaryMain.allText.AllPages[currentPageIndex].PageSummary.TextureArchive != currentTexture.Archive)
+            if (currentTexture == null || BestiaryMain.allText.AllPages[currentPageIndex].PageSummary.TextureArchive != currentTexture.Archive)
                 currentTexture = new TextureInfo(BestiaryMain.allText.AllPages[currentPageIndex].PageSummary.TextureArchive);
 
             monsterNameLabel.Text = BestiaryMain.allText.AllPages[currentPageIndex].PageSummary.SummaryTitle;
@@ -370,7 +371,7 @@ namespace BestiaryMod
         private void LoadEntry()
         {
             scrollOffset = 0;
-            if (BestiaryMain.allText.AllPages[currentPageIndex].PageEntries[currentEntryIndex].TextureArchive != currentTexture.Archive)
+            if (currentTexture == null || BestiaryMain.allText.AllPages[currentPageIndex].PageEntries[currentEntryIndex].TextureArchive != currentTexture.Archive)
                 currentTexture = new TextureInfo(BestiaryMain.allText.AllPages[currentPageIndex].PageEntries[currentEntryIndex].TextureArchive);
 
             monsterNameLabel.Text = BestiaryMain.allText.AllPages[currentPageIndex].PageEntries[currentEntryIndex].EntryTitle;

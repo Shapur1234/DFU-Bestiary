@@ -1,8 +1,10 @@
 292
 button_flesh_atronach
 Flesh Atronach
-Summary:*Flesh Atronachs are golems made of stitched-together cadavers and possess a poison-based damage aura. They can be hit by weapons of any material.
+Summary:*Flesh Atronachs are golems made of stitched-together cadavers and possess a poison-based damage aura.
 Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use electricity-based spells.
+Material:*No special material is requiered
+Language:*None
 Abilities:*Healed by poison-based spells
  *Immunity to Paralysis, Poison and Disease
  *Regenerates Health in Darkness
