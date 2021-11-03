@@ -11,6 +11,7 @@ using DaggerfallWorkshop.Game.Items;
 using DaggerfallWorkshop.Game.Serialization;
 using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
+using DaggerfallWorkshop.Game.Utility;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
 using DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings;
 
@@ -36,13 +37,13 @@ namespace BestiaryMod
 
         static PlayerEntity playerEntity = GameManager.Instance.PlayerEntity;
         private static KeyCode openMenuKeyCode;
-
+        private static bool readyToOpenUI;
         public static int MenuUnlock { get; set; }
         public static int Entries { get; set; }
         public static bool SpawnItem { get; set; }
         public static bool UnlockedBestiary { get; set; }
         public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
-        public static AllText AllText { get; set; }
+        public static AllTextClass AllText { get; set; }
         private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
         private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
 
@@ -54,11 +55,15 @@ namespace BestiaryMod
             var go = new GameObject(mod.Title);
             instance = go.AddComponent<BestiaryMain>();
 
+            readyToOpenUI = false;
+
             mod.SaveDataInterface = instance;
             mod.LoadSettingsCallback = LoadSettings;
 
             DaggerfallUnity.Instance.ItemHelper.RegisterCustomItem(BestiaryItem.templateIndex, ItemGroups.UselessItems2, typeof(BestiaryItem));
 
+            StateManager.OnStartNewGame += OnGameStarted;
+            StartGameBehaviour.OnStartGame += OnNewGameStarted;
             EnemyDeath.OnEnemyDeath += EnemyDeath_OnEnemyDeath;
             PlayerActivate.OnLootSpawned += AddBestiary_OnLootSpawned;
             EnemyDeath.OnEnemyDeath += BestiaryLoot_OnEnemyDeath;
@@ -71,7 +76,6 @@ namespace BestiaryMod
             Debug.Log("Begin mod init: Bestiary");
 
             RegisterBestiaryCommands();
-            InitializeUI();
             mod.LoadSettings();
 
             Debug.Log("Finished mod init: Bestiary");
@@ -79,38 +83,43 @@ namespace BestiaryMod
 
         void Update()
         {
-            if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && !InputManager.Instance.IsPaused && GameManager.Instance.IsPlayerOnHUD)
+            if (readyToOpenUI)
             {
-                switch (MenuUnlock)
+                if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && !InputManager.Instance.IsPaused && GameManager.Instance.IsPlayerOnHUD)
                 {
-                    case 0:
-                        DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
-                        break;
-                    case 1:
-                        if (UnlockedBestiary)
+                    switch (MenuUnlock)
+                    {
+                        case 0:
                             DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
-                        else
-                            DaggerfallUI.AddHUDText("You have not yet unlocked the Bestiary. Find the Bestiary book item and click USE on it.");
-                        break;
-                    case 2:
-                        if (killCounts.Count > 0)
-                            DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
-                        else
-                            DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no Entries to display. Slay Something first, weakling.");
-                        break;
+                            break;
+                        case 1:
+                            if (UnlockedBestiary)
+                                DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
+                            else
+                                DaggerfallUI.AddHUDText("You have not yet unlocked the Bestiary. Find the Bestiary book item and click USE on it.");
+                            break;
+                        case 2:
+                            if (killCounts.Count > 0)
+                                DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
+                            else
+                                DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no Entries to display. Slay Something first, weakling.");
+                            break;
+                    }
                 }
+                else if (bestiaryUIScreen.isShowing && openMenuKeyCode != KeyCode.None && InputManager.Instance.GetKeyDown(openMenuKeyCode))
+                    bestiaryUIScreen.CloseWindow();
             }
-            else if (bestiaryUIScreen.isShowing && openMenuKeyCode != KeyCode.None && InputManager.Instance.GetKeyDown(openMenuKeyCode))
-                bestiaryUIScreen.CloseWindow();
         }
 
         private static void InitializeUI()
         {
             if (Entries == 2)
-                AllText = new AllText(pagesClassic);
+                AllText = new AllTextClass(pagesClassic);
             else
-                AllText = new AllText(pagesFull);
+                AllText = new AllTextClass(pagesFull);
             bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
+
+            readyToOpenUI = true;
         }
 
         //"Inspired" by code from Mighty Foot from numidium (https://www.nexusmods.com/daggerfallunity/mods/162).
@@ -121,6 +130,14 @@ namespace BestiaryMod
                 result = KeyCode.B;
 
             return result;
+        }
+        static void OnGameStarted(object sender, EventArgs e)
+        {
+            mod.LoadSettings();
+        }
+        static void OnNewGameStarted(object sender, EventArgs e)
+        {
+            mod.LoadSettings();
         }
 
         static void LoadSettings(ModSettings modSettings, ModSettingsChange change)

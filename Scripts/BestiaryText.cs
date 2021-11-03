@@ -10,9 +10,9 @@ using UnityEngine;
 
 namespace BestiaryMod
 {
-    public class AllText
+    public class AllTextClass
     {
-        public AllText(List<string> pagesToLoad)
+        public AllTextClass(List<string> pagesToLoad)
         {
             BestiaryTitle = "Bestiary";
             AllPages = new List<Page>();
@@ -61,7 +61,6 @@ namespace BestiaryMod
                         switch (BestiaryMain.Entries)
                         {
                             case 1:
-                                Debug.Log(rawText[i]);
                                 if (BestiaryMain.killCounts.ContainsKey(rawText[i]))
                                     PageEntries.Add(new Entry(rawText[i]));
                                 break;
@@ -71,26 +70,6 @@ namespace BestiaryMod
                         }
                         break;
                 }
-            }
-            // Adds killcounts to Summary text
-            {
-                bool foundKillcountStart = false;
-                int killcountCounter = 0;
-                // for (int ii = 0; ii < PageSummary.SummaryText.Count; ii++)
-                // {
-                //     if (!foundKillcountStart && PageSummary.SummaryText[ii].TitleText == "Killcount:")
-                //         foundKillcountStart = true;
-
-                //     if (foundKillcountStart)
-                //     {
-                //         if (BestiaryMain.killCounts.ContainsKey(PageEntries[killcountCounter].EntryName))
-                //             PageSummary.SummaryText[ii] = new TextPair(PageSummary.SummaryText[ii].TitleText, PageSummary.SummaryText[ii].BodyText + BestiaryMain.killCounts[PageEntries[killcountCounter].EntryName].ToString());
-                //         else
-                //             PageSummary.SummaryText[ii] = new TextPair(PageSummary.SummaryText[ii].TitleText, PageSummary.SummaryText[ii].BodyText + "0");
-
-                //         killcountCounter++;
-                //     }
-                // }
             }
         }
 
@@ -103,9 +82,7 @@ namespace BestiaryMod
 
             Debug.Log("PageEntries:");
             foreach (var item in PageEntries)
-            {
                 item.DebugThis();
-            }
         }
 
         public string PageName { get; }
@@ -210,7 +187,15 @@ namespace BestiaryMod
             foreach (var item in SummaryText)
                 item.DebugThis();
         }
+        private static string EntryTitleToEntryName(string input)
+        {
+            switch (input)
+            {
 
+                default:
+                    return "false";
+            }
+        }
         public string SummaryName { get; }
         public string SummaryTitle { get; }
         public int TextureArchive { get; }

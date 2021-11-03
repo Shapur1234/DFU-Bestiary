@@ -352,8 +352,6 @@ namespace BestiaryMod
             }
             void LoadButtons()
             {
-                Debug.Log(currentPageIndex);
-
                 for (int i = 0; i < BestiaryMain.AllText.AllPages[currentPageIndex].PageEntries.Count && i < contentButtonTextures.Count; i++)
                 {
                     contentButtonTextures[i] = DaggerfallUI.GetTextureFromResources(BestiaryMain.AllText.AllPages[currentPageIndex].PageEntries[i].EntryButtonName);
