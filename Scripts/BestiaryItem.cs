@@ -34,18 +34,18 @@ namespace BestiaryMod
         {
             book = this;
 
-            if (BestiaryMain.menuUnlock == 1)
+            if (BestiaryMain.MenuUnlock == 1)
             {
-                if (!BestiaryMain.unlockedBestiary)
+                if (!BestiaryMain.UnlockedBestiary)
                 {
-                    BestiaryMain.unlockedBestiary = true;
+                    BestiaryMain.UnlockedBestiary = true;
                     BestiaryMain.DisplayMessage("You study the contents of the book closely. You have unlocked the Bestiary.");
                 }
                 else
                     BestiaryMain.DisplayMessage("You already know all this book has to offer.");
             }
             else
-                BestiaryMain.unlockedBestiary = true;
+                BestiaryMain.UnlockedBestiary = true;
 
 
             return true;

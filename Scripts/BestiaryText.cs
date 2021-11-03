@@ -19,17 +19,9 @@ namespace BestiaryMod
 
             foreach (var item in pagesToLoad)
             {
-                switch (BestiaryMain.entries)
-                {
-                    case 1:
-                        Page pageTemp = new Page(item);
-                        if (pageTemp.PageEntries.Count > 0)
-                            AllPages.Add(pageTemp);
-                        break;
-                    default:
-                        AllPages.Add(new Page(item));
-                        break;
-                }
+                Page pageTemp = new Page(item);
+                if (pageTemp.PageEntries.Count > 0)
+                    AllPages.Add(pageTemp);
             }
         }
         public void DebugThis()
@@ -41,9 +33,8 @@ namespace BestiaryMod
                 item.DebugThis();
         }
 
-        public string BestiaryTitle;
-        public List<Page> AllPages;
-        private string EntrySuffix;
+        public string BestiaryTitle { get; }
+        public List<Page> AllPages { get; }
     }
     public class Page
     {
@@ -63,12 +54,14 @@ namespace BestiaryMod
                         PageTitle = rawText[i];
                         break;
                     case 1:
-                        PageSummary = new Summary(rawText[i]);
+                        if (BestiaryMain.Entries != 2)
+                            PageSummary = new Summary(rawText[i]);
                         break;
                     default:
-                        switch (BestiaryMain.entries)
+                        switch (BestiaryMain.Entries)
                         {
                             case 1:
+                                Debug.Log(rawText[i]);
                                 if (BestiaryMain.killCounts.ContainsKey(rawText[i]))
                                     PageEntries.Add(new Entry(rawText[i]));
                                 break;
@@ -79,13 +72,34 @@ namespace BestiaryMod
                         break;
                 }
             }
+            // Adds killcounts to Summary text
+            {
+                bool foundKillcountStart = false;
+                int killcountCounter = 0;
+                // for (int ii = 0; ii < PageSummary.SummaryText.Count; ii++)
+                // {
+                //     if (!foundKillcountStart && PageSummary.SummaryText[ii].TitleText == "Killcount:")
+                //         foundKillcountStart = true;
+
+                //     if (foundKillcountStart)
+                //     {
+                //         if (BestiaryMain.killCounts.ContainsKey(PageEntries[killcountCounter].EntryName))
+                //             PageSummary.SummaryText[ii] = new TextPair(PageSummary.SummaryText[ii].TitleText, PageSummary.SummaryText[ii].BodyText + BestiaryMain.killCounts[PageEntries[killcountCounter].EntryName].ToString());
+                //         else
+                //             PageSummary.SummaryText[ii] = new TextPair(PageSummary.SummaryText[ii].TitleText, PageSummary.SummaryText[ii].BodyText + "0");
+
+                //         killcountCounter++;
+                //     }
+                // }
+            }
         }
 
         public void DebugThis()
         {
             Debug.Log(String.Format("Debugging Page {0}", PageName));
             Debug.Log(String.Format("PageTitle: {0}", PageTitle));
-            PageSummary.DebugThis();
+            if (PageSummary != null)
+                PageSummary.DebugThis();
 
             Debug.Log("PageEntries:");
             foreach (var item in PageEntries)
@@ -94,19 +108,17 @@ namespace BestiaryMod
             }
         }
 
-        public string PageName;
-        public string PageTitle;
-        public Summary PageSummary;
-        public List<Entry> PageEntries;
+        public string PageName { get; }
+        public string PageTitle { get; }
+        public Summary PageSummary { get; set; }
+        public List<Entry> PageEntries { get; }
     }
     public class Entry
     {
         public Entry(string assetPath)
         {
-
-            if (ModManager.Instance.GetMod("Unleveled Spells") != null)
-                if (ModManager.Instance.GetMod("Bestiary").HasAsset(assetPath + "-kabs_unleveled_spells"))
-                    assetPath = assetPath + "-kabs_unleveled_spells";
+            if (ModManager.Instance.GetMod("Unleveled Spells") != null && ModManager.Instance.GetMod("Bestiary").HasAsset(assetPath + "-kabs_unleveled_spells"))
+                assetPath = assetPath + "-kabs_unleveled_spells";
 
             EntryName = assetPath;
             EntryButtonName = "Entry constructor error";
@@ -144,18 +156,16 @@ namespace BestiaryMod
             Debug.Log(String.Format("Debugging Entry {0}", EntryName));
             Debug.Log(String.Format("EntryButtonName: {0}, EntryTitle: {1}, TextureArchive: {2}", EntryButtonName, EntryTitle, TextureArchive));
 
-            Debug.Log("EntryText:");
-            foreach (var item in EntryText)
-            {
-                item.DebugThis();
-            }
+            // Debug.Log("EntryText:");
+            // foreach (var item in EntryText)
+            //     item.DebugThis();
         }
 
-        public string EntryName;
-        public string EntryButtonName;
-        public string EntryTitle;
-        public int TextureArchive;
-        public List<TextPair> EntryText;
+        public string EntryName { get; }
+        public string EntryButtonName { get; }
+        public string EntryTitle { get; }
+        public int TextureArchive { get; }
+        public List<TextPair> EntryText { get; }
     }
     public class Summary
     {
@@ -168,7 +178,6 @@ namespace BestiaryMod
 
             List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(SummaryName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
 
-            bool foundKillcount = false;
             for (int i = 0; i < rawText.Count; i++)
             {
                 switch (i)
@@ -182,19 +191,11 @@ namespace BestiaryMod
                         else
                             SummaryTitle = rawText[i].Replace(" - ", " "); ;
                         break;
-                    default: // fix killcounts
+                    default:
                         if (rawText[i].Length > 2 && rawText[i].Contains("*"))
                         {
                             var splitResult = rawText[i].Split('*');
-                            string temp = splitResult[1];
-
-                            if (!foundKillcount && splitResult[0] == "Killcount:")
-                                foundKillcount = true;
-
-                            if (foundKillcount)
-                                temp += "^";
-
-                            SummaryText.Add(new TextPair(splitResult[0], temp));
+                            SummaryText.Add(new TextPair(splitResult[0], splitResult[1]));
                         }
                         break;
                 }
@@ -207,15 +208,13 @@ namespace BestiaryMod
 
             Debug.Log("SummaryText:");
             foreach (var item in SummaryText)
-            {
                 item.DebugThis();
-            }
         }
 
-        public string SummaryName;
-        public string SummaryTitle;
-        public int TextureArchive;
-        public List<TextPair> SummaryText;
+        public string SummaryName { get; }
+        public string SummaryTitle { get; }
+        public int TextureArchive { get; }
+        public List<TextPair> SummaryText { get; }
     }
     public struct TextPair
     {
@@ -229,7 +228,7 @@ namespace BestiaryMod
             Debug.Log(String.Format("TitleText: {0}, BodyText: {1}", TitleText, BodyText));
         }
 
-        public string TitleText;
-        public string BodyText;
+        public string TitleText { get; set; }
+        public string BodyText { get; set; }
     }
 }
