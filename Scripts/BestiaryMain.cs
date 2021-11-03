@@ -184,7 +184,7 @@ namespace BestiaryMod
                     {
                         if (entityBehaviour.GetComponent<EnemySenses>().Target == GameManager.Instance.PlayerEntityBehaviour)
                         {
-                            string monsterName = MonsterCareerIndexToString(enemyEntity.CareerIndex);
+                            string monsterName = AllTextClass.MonsterCareerIndexToString(enemyEntity.CareerIndex);
 
                             if (killCounts.ContainsKey(monsterName))
                                 killCounts[monsterName] += 1;
@@ -284,100 +284,6 @@ namespace BestiaryMod
                 return "BestiaryItem added";
             }
         }
-
-        public static string MonsterCareerIndexToString(int index)
-        {
-            switch (index)
-            {
-                case (int)MonsterCareers.AncientLich:
-                    return "entry_ancient_lich";
-                case (int)MonsterCareers.Centaur:
-                    return "entry_centaur";
-                case (int)MonsterCareers.DaedraLord:
-                    return "entry_daedra_lord";
-                case (int)MonsterCareers.DaedraSeducer:
-                    return "entry_daedra_seducer";
-                case (int)MonsterCareers.Daedroth:
-                    return "entry_daedroth";
-                case (int)MonsterCareers.Dragonling:
-                    return "entry_dragonling";
-                case (int)MonsterCareers.Dragonling_Alternate:
-                    return "entry_dragonling";
-                case (int)MonsterCareers.Dreugh:
-                    return "entry_dreugh";
-                case (int)MonsterCareers.FireAtronach:
-                    return "entry_fire_atronach";
-                case (int)MonsterCareers.FireDaedra:
-                    return "entry_fire_daedra";
-                case (int)MonsterCareers.FleshAtronach:
-                    return "entry_flesh_atronach";
-                case (int)MonsterCareers.FrostDaedra:
-                    return "entry_ice_daedra";
-                case (int)MonsterCareers.Gargoyle:
-                    return "entry_gargoyle";
-                case (int)MonsterCareers.Ghost:
-                    return "entry_ghost";
-                case (int)MonsterCareers.Giant:
-                    return "entry_giant";
-                case (int)MonsterCareers.GiantBat:
-                    return "entry_giant_bat";
-                case (int)MonsterCareers.GiantScorpion:
-                    return "entry_scorpion";
-                case (int)MonsterCareers.GrizzlyBear:
-                    return "entry_grizzly_bear";
-                case (int)MonsterCareers.Harpy:
-                    return "entry_harpy";
-                case (int)MonsterCareers.IceAtronach:
-                    return "entry_ice_atronach";
-                case (int)MonsterCareers.Imp:
-                    return "entry_imp";
-                case (int)MonsterCareers.IronAtronach:
-                    return "entry_iron_atronach";
-                case (int)MonsterCareers.Lamia:
-                    return "entry_lamia";
-                case (int)MonsterCareers.Lich:
-                    return "entry_lich";
-                case (int)MonsterCareers.Mummy:
-                    return "entry_mummy";
-                case (int)MonsterCareers.Nymph:
-                    return "entry_nymph";
-                case (int)MonsterCareers.Orc:
-                    return "entry_orc";
-                case (int)MonsterCareers.OrcSergeant:
-                    return "entry_orc_sergeant";
-                case (int)MonsterCareers.OrcShaman:
-                    return "entry_orc_shaman";
-                case (int)MonsterCareers.OrcWarlord:
-                    return "entry_orc_warlord";
-                case (int)MonsterCareers.Rat:
-                    return "entry_rat";
-                case (int)MonsterCareers.SabertoothTiger:
-                    return "entry_sabertooth_tiger";
-                case (int)MonsterCareers.SkeletalWarrior:
-                    return "entry_skeletal_warrior";
-                case (int)MonsterCareers.Slaughterfish:
-                    return "entry_slaughterfish";
-                case (int)MonsterCareers.Spider:
-                    return "entry_spider";
-                case (int)MonsterCareers.Spriggan:
-                    return "entry_spriggan";
-                case (int)MonsterCareers.Vampire:
-                    return "entry_vampire";
-                case (int)MonsterCareers.VampireAncient:
-                    return "entry_vampire_ancient";
-                case (int)MonsterCareers.Wereboar:
-                    return "entry_wereboar";
-                case (int)MonsterCareers.Werewolf:
-                    return "entry_werewolf";
-                case (int)MonsterCareers.Wraith:
-                    return "entry_wraith";
-                case (int)MonsterCareers.Zombie:
-                    return "entry_zombie";
-                default:
-                    return "false";
-            }
-        }
-
         public static void DisplayMessage(string message)
         {
             DaggerfallMessageBox daggerfallMessageBox = new DaggerfallMessageBox(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
