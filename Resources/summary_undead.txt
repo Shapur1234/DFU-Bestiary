@@ -6,7 +6,7 @@ Killcount:*Ghost -
  *Lich - 
  *Ancient Lich - 
  *Mummy - 
- *Skeleton - 
+ *Skeletal Warrior - 
  *Vampire - 
  *Vampire Ancient - 
  *Wraith - 

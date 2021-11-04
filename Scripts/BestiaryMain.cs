@@ -85,8 +85,13 @@ namespace BestiaryMod
         {
             if (readyToOpenUI)
             {
-                if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && !InputManager.Instance.IsPaused && GameManager.Instance.IsPlayerOnHUD)
+                if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && !InputManager.Instance.IsPaused && GameManager.Instance.IsPlayerOnHUD && AllText.AllPages.Count > 0)
                 {
+                    if (Entries == 1 && killCounts.Count < 1)
+                    {
+                        DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no Entries to display. Slay Something first, weakling.");
+                        return;
+                    }
                     switch (MenuUnlock)
                     {
                         case 0:
@@ -99,10 +104,10 @@ namespace BestiaryMod
                                 DaggerfallUI.AddHUDText("You have not yet unlocked the Bestiary. Find the Bestiary book item and click USE on it.");
                             break;
                         case 2:
-                            if (killCounts.Count > 0)
+                            if (UnlockedBestiary)
                                 DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
                             else
-                                DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no Entries to display. Slay Something first, weakling.");
+                                DaggerfallUI.AddHUDText("You have not yet unlocked the Bestiary. Find the Bestiary book item and click USE on it.");
                             break;
                     }
                 }
@@ -185,23 +190,27 @@ namespace BestiaryMod
                         if (entityBehaviour.GetComponent<EnemySenses>().Target == GameManager.Instance.PlayerEntityBehaviour)
                         {
                             string monsterName = AllTextClass.MonsterCareerIndexToString(enemyEntity.CareerIndex);
-
+                            Debug.Log(monsterName);
                             if (killCounts.ContainsKey(monsterName))
+                            {
                                 killCounts[monsterName] += 1;
+                                for (int i = 0; i < AllText.AllPages.Count; i++)
+                                    AllText.AllPages[i].PageSummary = new Summary(AllText.AllPages[i].PageSummary.SummaryName);
+                            }
                             else
                             {
+                                if (Entries == 1 && monsterName != "false")
+                                    DaggerfallUI.AddHUDText(String.Format("{0} has been added to the Bestiary.", new List<string>(mod.GetAsset<TextAsset>(monsterName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))[2]));
+
                                 killCounts.Add(monsterName, 1);
-                                if (MenuUnlock == 2 && monsterName != "false")
-                                {
-                                    DaggerfallUI.AddHUDText(String.Format("{0} has been added to the Bestiary.", new List<string>(mod.GetAsset<TextAsset>(monsterName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))[3]));
-                                    InitializeUI();
-                                }
+                                InitializeUI();
                             }
                         }
                     }
                 }
             }
         }
+
 
         //Modified, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
         public static void AddBestiary_OnLootSpawned(object sender, ContainerLootSpawnedEventArgs e)

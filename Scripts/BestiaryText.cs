@@ -116,7 +116,7 @@ namespace BestiaryMod
                     return "entry_ancient_lich";
                 case "Mummy":
                     return "entry_mummy";
-                case "Skeleton":
+                case "Skeletal Warrior":
                     return "entry_skeletal_warrior";
                 case "Vampire":
                     return "entry_vampire";
@@ -344,7 +344,7 @@ namespace BestiaryMod
             TextureArchive = 0;
 
             List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(SummaryName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-
+            bool foundKillcountStart = false;
             for (int i = 0; i < rawText.Count; i++)
             {
                 switch (i)
@@ -362,7 +362,20 @@ namespace BestiaryMod
                         if (rawText[i].Length > 2 && rawText[i].Contains("*"))
                         {
                             var splitResult = rawText[i].Split('*');
-                            SummaryText.Add(new TextPair(splitResult[0], splitResult[1]));
+                            if (!foundKillcountStart && splitResult[0] == "Killcount:")
+                                foundKillcountStart = true;
+
+                            if (foundKillcountStart && splitResult[1].Length > 3)
+                            {
+                                string temp = AllTextClass.EntryTitleToEntryName(splitResult[1].Remove(splitResult[1].Length - 3));
+
+                                if (BestiaryMain.killCounts.ContainsKey(temp))
+                                    SummaryText.Add(new TextPair(splitResult[0], splitResult[1] + BestiaryMain.killCounts[temp]));
+                                else
+                                    SummaryText.Add(new TextPair(splitResult[0], splitResult[1] + "0"));
+                            }
+                            else
+                                SummaryText.Add(new TextPair(splitResult[0], splitResult[1]));
                         }
                         break;
                 }
