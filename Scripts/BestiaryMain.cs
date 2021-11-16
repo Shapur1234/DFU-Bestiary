@@ -23,6 +23,8 @@ namespace BestiaryMod
 {
     public class BestiaryMain : MonoBehaviour, IHasModSaveData
     {
+        private static Mod mod;
+        #region saveDataStuff
         [FullSerializer.fsObject("v1")]
         public class MyModSaveData
         {
@@ -30,25 +32,28 @@ namespace BestiaryMod
             public bool UnlockedBestiary;
         }
         public Type SaveDataType { get { return typeof(MyModSaveData); } }
-        private static Mod mod;
+        public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
+        public static bool UnlockedBestiary { get; set; }
+        #endregion
         public static BestiaryMain instance;
         public static BestiaryUI bestiaryUIScreen;
+        public static AllTextClass AllText { get; set; }
 
-        private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
-        private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
-
+        #region settingsVars
+        public static int SettingMenuUnlock { get; set; }
+        public static int SettingEntries { get; set; }
+        public static bool SettingSpawnItem { get; set; }
+        public static int SettingDefaultRotation { get; set; }
+        public static int SettingAnimationUpdateDelay { get; set; }
+        public static bool SettingAnimate { get; set; }
+        public static bool SettingEnableAllDirectionRotation { get; set; }
+        #endregion
         private static PlayerEntity playerEntity = GameManager.Instance.PlayerEntity;
         private static KeyCode openMenuKeyCode;
         private static bool readyToOpenUI;
 
-        public static int MenuUnlock { get; set; }
-        public static int Entries { get; set; }
-        public static bool SpawnItem { get; set; }
-        public static bool UnlockedBestiary { get; set; }
-        public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
-        public static AllTextClass AllText { get; set; }
-
-
+        private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
+        private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
         [Invoke(StateManager.StateTypes.Start, 0)]
         public static void Init(InitParams initParams)
         {
@@ -61,15 +66,13 @@ namespace BestiaryMod
 
             mod.SaveDataInterface = instance;
             mod.LoadSettingsCallback = LoadSettings;
-
-            DaggerfallUnity.Instance.ItemHelper.RegisterCustomItem(BestiaryItem.templateIndex, ItemGroups.UselessItems2, typeof(BestiaryItem));
-
             StateManager.OnStartNewGame += OnGameStarted;
             StartGameBehaviour.OnStartGame += OnNewGameStarted;
             EnemyDeath.OnEnemyDeath += EnemyDeath_OnEnemyDeath;
             PlayerActivate.OnLootSpawned += AddBestiary_OnLootSpawned;
             EnemyDeath.OnEnemyDeath += BestiaryLoot_OnEnemyDeath;
 
+            DaggerfallUnity.Instance.ItemHelper.RegisterCustomItem(BestiaryItem.templateIndex, ItemGroups.UselessItems2, typeof(BestiaryItem));
             mod.IsReady = true;
         }
 
@@ -89,15 +92,15 @@ namespace BestiaryMod
             {
                 if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && !InputManager.Instance.IsPaused && GameManager.Instance.IsPlayerOnHUD)
                 {
-                    if (Entries == 1 && killCounts.Count < 1)
+                    if (SettingEntries == 1 && killCounts.Count < 1)
                     {
-                        DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no Entries to display. Slay Something first, weakling.");
+                        DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no SettingEntries to display. Slay Something first, weakling.");
                         return;
                     }
-                    if (AllText.AllPages.Count < 1)
+                    if (AllText.Pages.Count < 1)
                         return;
 
-                    switch (MenuUnlock)
+                    switch (SettingMenuUnlock)
                     {
                         case 0:
                             DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
@@ -123,7 +126,7 @@ namespace BestiaryMod
 
         private static void InitializeUI()
         {
-            if (Entries == 2)
+            if (SettingEntries == 2)
                 AllText = new AllTextClass(pagesClassic);
             else
                 AllText = new AllTextClass(pagesFull);
@@ -152,14 +155,13 @@ namespace BestiaryMod
 
         static void LoadSettings(ModSettings modSettings, ModSettingsChange change)
         {
-            MenuUnlock = modSettings.GetValue<int>("Gameplay", "MenuUnlock");
-            Entries = modSettings.GetValue<int>("Gameplay", "Entries");
-            SpawnItem = modSettings.GetBool("Gameplay", "ItemSpawning");
-
-            BestiaryUI.defaultRotation = modSettings.GetValue<int>("UserInterface", "DefaultMobOrientation");
-            BestiaryUI.animationUpdateDelay = modSettings.GetValue<int>("UserInterface", "DelayBetweenAnimationFrames");
-            BestiaryUI.rotate8 = modSettings.GetBool("UserInterface", "EnableEightDirectionRotation");
-            BestiaryUI.Animate = modSettings.GetBool("UserInterface", "EnableAnimations");
+            SettingMenuUnlock = modSettings.GetValue<int>("Gameplay", "MenuUnlock");
+            SettingEntries = modSettings.GetValue<int>("Gameplay", "Entries");
+            SettingSpawnItem = modSettings.GetBool("Gameplay", "ItemSpawning");
+            SettingDefaultRotation = modSettings.GetValue<int>("UserInterface", "DefaultMobOrientation");
+            SettingAnimationUpdateDelay = modSettings.GetValue<int>("UserInterface", "DelayBetweenAnimationFrames");
+            SettingAnimate = modSettings.GetBool("UserInterface", "EnableAnimations");
+            SettingEnableAllDirectionRotation = modSettings.GetBool("UserInterface", "EnableEightDirectionRotation");
 
             openMenuKeyCode = SetKeyFromText(modSettings.GetValue<string>("Controls", "Keybind"));
             InitializeUI();
@@ -199,12 +201,12 @@ namespace BestiaryMod
                             if (killCounts.ContainsKey(monsterName))
                             {
                                 killCounts[monsterName] += 1;
-                                for (int i = 0; i < AllText.AllPages.Count; i++)
-                                    AllText.AllPages[i].PageSummary = new Summary(AllText.AllPages[i].PageSummary.SummaryName);
+                                for (int i = 0; i < AllText.Pages.Count; i++)
+                                    AllText.Pages[i].PageSummary = new Summary(AllText.Pages[i].PageSummary.Name);
                             }
                             else
                             {
-                                if (Entries == 1 && monsterName != "false")
+                                if (SettingEntries == 1 && monsterName != "false")
                                     DaggerfallUI.AddHUDText(String.Format("{0} has been added to the Bestiary.", new List<string>(mod.GetAsset<TextAsset>(monsterName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))[2]));
 
                                 killCounts.Add(monsterName, 1);
@@ -220,7 +222,7 @@ namespace BestiaryMod
         //Modified, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
         public static void AddBestiary_OnLootSpawned(object sender, ContainerLootSpawnedEventArgs e)
         {
-            if (!SpawnItem)
+            if (!SettingSpawnItem)
                 return;
 
             DaggerfallInterior interior = GameManager.Instance.PlayerEnterExit.Interior;
@@ -241,7 +243,7 @@ namespace BestiaryMod
         //Modified, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
         static void BestiaryLoot_OnEnemyDeath(object sender, EventArgs e)
         {
-            if (!SpawnItem)
+            if (!SettingSpawnItem)
                 return;
 
             EnemyDeath enemyDeath = sender as EnemyDeath;
@@ -316,7 +318,6 @@ namespace BestiaryMod
                 UnlockedBestiary = false
             };
         }
-
         public object GetSaveData()
         {
             return new MyModSaveData
@@ -325,7 +326,6 @@ namespace BestiaryMod
                 UnlockedBestiary = UnlockedBestiary
             };
         }
-
         public void RestoreSaveData(object saveData)
         {
             var myModSaveData = (MyModSaveData)saveData;

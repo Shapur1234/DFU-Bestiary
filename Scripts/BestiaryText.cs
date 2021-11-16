@@ -16,21 +16,21 @@ namespace BestiaryMod
         public AllTextClass(List<string> pagesToLoad)
         {
             BestiaryTitle = "Bestiary";
-            AllPages = new List<Page>();
+            Pages = new List<Page>();
 
             foreach (var item in pagesToLoad)
             {
                 Page pageTemp = new Page(item);
-                if (pageTemp.PageEntries.Count > 0)
-                    AllPages.Add(pageTemp);
+                if (pageTemp.Entries.Count > 0)
+                    Pages.Add(pageTemp);
             }
         }
         public void DebugThis()
         {
             Debug.Log(String.Format("Debugging AllText {0}", BestiaryTitle));
 
-            Debug.Log("AllPages:");
-            foreach (var item in AllPages)
+            Debug.Log("Pages:");
+            foreach (var item in Pages)
                 item.DebugThis();
         }
         public static string EntryTitleToEntryName(string input)
@@ -224,38 +224,38 @@ namespace BestiaryMod
             }
         }
         public string BestiaryTitle { get; }
-        public List<Page> AllPages { get; }
+        public List<Page> Pages { get; }
     }
     public class Page
     {
         public Page(string assetPath)
         {
-            PageName = assetPath;
-            PageTitle = "Page constructor error";
+            Name = assetPath;
+            Title = "Page constructor error";
             PageSummary = null;
-            PageEntries = new List<Entry>();
+            Entries = new List<Entry>();
 
-            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(PageName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(Name).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
             for (int i = 0; i < rawText.Count; i++)
             {
                 switch (i)
                 {
                     case 0:
-                        PageTitle = rawText[i];
+                        Title = rawText[i];
                         break;
                     case 1:
-                        if (BestiaryMain.Entries != 2)
+                        if (BestiaryMain.SettingEntries != 2)
                             PageSummary = new Summary(rawText[i]);
                         break;
                     default:
-                        switch (BestiaryMain.Entries)
+                        switch (BestiaryMain.SettingEntries)
                         {
                             case 1:
                                 if (BestiaryMain.killCounts.ContainsKey(rawText[i]))
-                                    PageEntries.Add(new Entry(rawText[i]));
+                                    Entries.Add(new Entry(rawText[i]));
                                 break;
                             default:
-                                PageEntries.Add(new Entry(rawText[i]));
+                                Entries.Add(new Entry(rawText[i]));
                                 break;
                         }
                         break;
@@ -265,20 +265,20 @@ namespace BestiaryMod
 
         public void DebugThis()
         {
-            Debug.Log(String.Format("Debugging Page {0}", PageName));
-            Debug.Log(String.Format("PageTitle: {0}", PageTitle));
+            Debug.Log(String.Format("Debugging Page {0}", Name));
+            Debug.Log(String.Format("Title: {0}", Title));
             if (PageSummary != null)
                 PageSummary.DebugThis();
 
-            Debug.Log("PageEntries:");
-            foreach (var item in PageEntries)
+            Debug.Log("Entries:");
+            foreach (var item in Entries)
                 item.DebugThis();
         }
 
-        public string PageName { get; }
-        public string PageTitle { get; }
+        public string Name { get; }
+        public string Title { get; }
         public Summary PageSummary { get; set; }
-        public List<Entry> PageEntries { get; }
+        public List<Entry> Entries { get; }
     }
     public class Entry
     {
@@ -287,13 +287,13 @@ namespace BestiaryMod
             if (ModManager.Instance.GetMod("Unleveled Spells") != null && ModManager.Instance.GetMod("Bestiary").HasAsset(assetPath + "-kabs_unleveled_spells"))
                 assetPath = assetPath + "-kabs_unleveled_spells";
 
-            EntryName = assetPath;
-            EntryButtonName = "Entry constructor error";
-            EntryTitle = "Entry constructor error";
+            Name = assetPath;
+            ButtonTextureName = "Entry constructor error";
+            Title = "Entry constructor error";
             TextureArchive = 0;
-            EntryText = new List<TextPair>();
+            Text = new List<TextPair>();
 
-            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(EntryName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(Name).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
             for (int i = 0; i < rawText.Count; i++)
             {
                 switch (i)
@@ -302,16 +302,16 @@ namespace BestiaryMod
                         TextureArchive = int.Parse(rawText[i]);
                         break;
                     case 1:
-                        EntryButtonName = rawText[i];
+                        ButtonTextureName = rawText[i];
                         break;
                     case 2:
-                        EntryTitle = rawText[i];
+                        Title = rawText[i];
                         break;
                     default:
                         if (rawText[i].Length > 2 && rawText[i].Contains("*"))
                         {
                             var splitResult = rawText[i].Split('*');
-                            EntryText.Add(new TextPair(splitResult[0], splitResult[1]));
+                            Text.Add(new TextPair(splitResult[0], splitResult[1]));
                         }
                         break;
                 }
@@ -320,29 +320,29 @@ namespace BestiaryMod
 
         public void DebugThis()
         {
-            Debug.Log(String.Format("Debugging Entry {0}", EntryName));
-            Debug.Log(String.Format("EntryButtonName: {0}, EntryTitle: {1}, TextureArchive: {2}", EntryButtonName, EntryTitle, TextureArchive));
+            Debug.Log(String.Format("Debugging Entry {0}", Name));
+            Debug.Log(String.Format("ButtonTextureName: {0}, Title: {1}, TextureArchive: {2}", ButtonTextureName, Title, TextureArchive));
 
-            // Debug.Log("EntryText:");
-            // foreach (var item in EntryText)
+            // Debug.Log("Text:");
+            // foreach (var item in Text)
             //     item.DebugThis();
         }
 
-        public string EntryName { get; }
-        public string EntryButtonName { get; }
-        public string EntryTitle { get; }
+        public string Name { get; }
+        public string ButtonTextureName { get; }
+        public string Title { get; }
         public int TextureArchive { get; }
-        public List<TextPair> EntryText { get; }
+        public List<TextPair> Text { get; }
     }
     public class Summary
     {
         public Summary(string assetPath)
         {
-            SummaryName = assetPath;
-            SummaryTitle = "Summary constructor error";
-            SummaryText = new List<TextPair>();
+            Name = assetPath;
+            Title = "Summary constructor error";
+            Text = new List<TextPair>();
 
-            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(SummaryName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(Name).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
             bool foundKillcountStart = false;
             for (int i = 0; i < rawText.Count; i++)
             {
@@ -350,9 +350,9 @@ namespace BestiaryMod
                 {
                     case 0:
                         if (DaggerfallUnity.Settings.SDFFontRendering)
-                            SummaryTitle = rawText[i];
+                            Title = rawText[i];
                         else
-                            SummaryTitle = rawText[i].Replace(" - ", " "); ;
+                            Title = rawText[i].Replace(" - ", " "); ;
                         break;
                     default:
                         if (rawText[i].Length > 2 && rawText[i].Contains("*"))
@@ -366,12 +366,12 @@ namespace BestiaryMod
                                 string temp = AllTextClass.EntryTitleToEntryName(splitResult[1].Remove(splitResult[1].Length - 3));
 
                                 if (BestiaryMain.killCounts.ContainsKey(temp))
-                                    SummaryText.Add(new TextPair(splitResult[0], splitResult[1] + BestiaryMain.killCounts[temp]));
+                                    Text.Add(new TextPair(splitResult[0], splitResult[1] + BestiaryMain.killCounts[temp]));
                                 else
-                                    SummaryText.Add(new TextPair(splitResult[0], splitResult[1] + "0"));
+                                    Text.Add(new TextPair(splitResult[0], splitResult[1] + "0"));
                             }
                             else
-                                SummaryText.Add(new TextPair(splitResult[0], splitResult[1]));
+                                Text.Add(new TextPair(splitResult[0], splitResult[1]));
                         }
                         break;
                 }
@@ -379,31 +379,31 @@ namespace BestiaryMod
         }
         public void DebugThis()
         {
-            Debug.Log(String.Format("Debugging Summary {0}", SummaryName));
-            Debug.Log(String.Format("SummaryTitle: {0}, TextureArchive: {1}", SummaryTitle, TextureArchive));
+            Debug.Log(String.Format("Debugging Summary {0}", Name));
+            Debug.Log(String.Format("Title: {0}, TextureArchive: {1}", Title, TextureArchive));
 
-            Debug.Log("SummaryText:");
-            foreach (var item in SummaryText)
+            Debug.Log("Text:");
+            foreach (var item in Text)
                 item.DebugThis();
         }
-        public string SummaryName { get; }
-        public string SummaryTitle { get; }
+        public string Name { get; }
+        public string Title { get; }
         public int TextureArchive { get; }
-        public List<TextPair> SummaryText { get; }
+        public List<TextPair> Text { get; }
     }
     public struct TextPair
     {
-        public TextPair(string titleText, string bodyText)
+        public TextPair(string leftText, string rightText)
         {
-            TitleText = titleText;
-            BodyText = bodyText;
+            LeftText = leftText;
+            RightText = rightText;
         }
         public void DebugThis()
         {
-            Debug.Log(String.Format("TitleText: {0}, BodyText: {1}", TitleText, BodyText));
+            Debug.Log(String.Format("LeftText: {0}, RightText: {1}", LeftText, RightText));
         }
 
-        public string TitleText { get; set; }
-        public string BodyText { get; set; }
+        public string LeftText { get; set; }
+        public string RightText { get; set; }
     }
 }
