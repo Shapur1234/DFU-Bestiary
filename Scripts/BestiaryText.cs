@@ -341,7 +341,6 @@ namespace BestiaryMod
             SummaryName = assetPath;
             SummaryTitle = "Summary constructor error";
             SummaryText = new List<TextPair>();
-            TextureArchive = 0;
 
             List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(SummaryName).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
             bool foundKillcountStart = false;
@@ -350,9 +349,6 @@ namespace BestiaryMod
                 switch (i)
                 {
                     case 0:
-                        TextureArchive = int.Parse(rawText[i]);
-                        break;
-                    case 1:
                         if (DaggerfallUnity.Settings.SDFFontRendering)
                             SummaryTitle = rawText[i];
                         else

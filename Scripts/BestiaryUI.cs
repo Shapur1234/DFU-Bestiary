@@ -20,9 +20,9 @@ using UnityEngine;
 
 namespace BestiaryMod
 {
-    class BestiaryUI : DaggerfallPopupWindow
+    public class BestiaryUI : DaggerfallPopupWindow
     {
-        class TextureInfo
+        private class TextureInfo
         {
             public TextureInfo(int archive)
             {
@@ -176,7 +176,6 @@ namespace BestiaryMod
             public Vector2 maxTextureSize { get; }
         }
 
-        private static DaggerfallWorkshop.Utility.TextureReader textureReader;
         public bool isShowing;
 
         #region settingsVars
@@ -185,12 +184,6 @@ namespace BestiaryMod
         public static int defaultRotation { get; set; }
         public static int animationUpdateDelay { get; set; }
         #endregion
-
-        private TextureInfo currentTexture = null;
-        private static string arena2Path;
-
-        private int animationDelay;
-        private int scrollOffset;
 
         #region uiLayoutVars
         private int descriptionLabelMaxCharacters;
@@ -205,6 +198,7 @@ namespace BestiaryMod
         private const string rightArrowTextureName = "button_arrow_right";
         private const string leftArrowTextureName = "button_arrow_left";
         #endregion
+
         #region textureVars
         private List<Texture2D> contentButtonTextures = new List<Texture2D>();
         private static Texture2D attackFalseTexture;
@@ -214,6 +208,7 @@ namespace BestiaryMod
         private Texture2D leftArrowTexture;
         private Texture2D rightArrowTexture;
         #endregion
+
         #region uiVars
         private Vector2 pageNamePos = new Vector2(71, 14);
         private readonly List<Vector2> buttonAllPos = new List<Vector2> { new Vector2(4, 162), new Vector2(50, 162), new Vector2(95, 162), new Vector2(4, 174), new Vector2(50, 174), new Vector2(95, 174), new Vector2(4, 187), new Vector2(50, 187), new Vector2(95, 187) };
@@ -241,9 +236,14 @@ namespace BestiaryMod
         private static Button attackButton;
         #endregion
 
+        private static DaggerfallWorkshop.Utility.TextureReader textureReader;
+        private TextureInfo currentTexture = null;
         private static int currentEntryIndex;
         private static int currentPageIndex;
         private static List<TextPair> currentText;
+        private int animationDelay;
+        private int scrollOffset;
+        private static string arena2Path;
 
         public BestiaryUI(IUserInterfaceManager uiManager)
             : base(uiManager)
@@ -289,7 +289,6 @@ namespace BestiaryMod
         public override void OnPush()
         {
             base.OnPush();
-            // BestiaryMain.AllText.DebugThis();
             isShowing = true;
         }
 
@@ -373,8 +372,10 @@ namespace BestiaryMod
         {
             scrollOffset = 0;
             currentEntryIndex = 69;
-            if (updateTexture && currentTexture == null || BestiaryMain.AllText.AllPages[currentPageIndex].PageSummary.TextureArchive != currentTexture.Archive)
-                currentTexture = new TextureInfo(BestiaryMain.AllText.AllPages[currentPageIndex].PageSummary.TextureArchive);
+
+            int imageIndexToLoad = UnityEngine.Random.Range(0, BestiaryMain.AllText.AllPages[currentPageIndex].PageEntries.Count);
+            if (updateTexture && currentTexture == null || BestiaryMain.AllText.AllPages[currentPageIndex].PageEntries[imageIndexToLoad].TextureArchive != currentTexture.Archive)
+                currentTexture = new TextureInfo(BestiaryMain.AllText.AllPages[currentPageIndex].PageEntries[imageIndexToLoad].TextureArchive);
 
             monsterNameLabel.Text = BestiaryMain.AllText.AllPages[currentPageIndex].PageSummary.SummaryTitle;
             currentText = ProcessText(BestiaryMain.AllText.AllPages[currentPageIndex].PageSummary.SummaryText);
@@ -456,6 +457,7 @@ namespace BestiaryMod
                     result.AppendLine(line.ToString());
                     line.Clear();
                 }
+
                 line.Append(word + " ");
             }
             result.Append(line);

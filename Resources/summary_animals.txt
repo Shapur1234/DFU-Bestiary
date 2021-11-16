@@ -1,4 +1,3 @@
-258
 Summary - Animals
 Overview:*Animals are mundane creatures, or oversized versions of them. They never carry any treasure, though you may still retrieve arrows from their corpses. Certain animals are carriers of disease. No special materials are required to harm them.
  * 

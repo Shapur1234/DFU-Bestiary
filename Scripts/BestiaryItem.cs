@@ -17,10 +17,7 @@ namespace BestiaryMod
         public const int templateIndex = 900;
         internal const string NAME = "Bestiary";
 
-        static DaggerfallUnityItem book = null;
-
-        public BestiaryItem()
-            : base(ItemGroups.UselessItems2, templateIndex)
+        public BestiaryItem() : base(ItemGroups.UselessItems2, templateIndex)
         {
             shortName = "Bestiary";
         }
@@ -32,23 +29,33 @@ namespace BestiaryMod
 
         public override bool UseItem(ItemCollection collection)
         {
-            book = this;
-
-            if (BestiaryMain.MenuUnlock == 1)
+            switch (BestiaryMain.MenuUnlock)
             {
-                if (!BestiaryMain.UnlockedBestiary)
-                {
-                    BestiaryMain.UnlockedBestiary = true;
-                    BestiaryMain.DisplayMessage("You study the contents of the book closely. You have unlocked the Bestiary.");
-                }
-                else
-                    BestiaryMain.DisplayMessage("You already know all this book has to offer.");
+                case 0:
+                    DaggerfallUI.UIManager.PushWindow(BestiaryMain.bestiaryUIScreen);
+                    break;
+                case 1:
+                    DaggerfallUI.UIManager.PushWindow(BestiaryMain.bestiaryUIScreen);
+                    break;
+                case 2:
+                    if (!BestiaryMain.UnlockedBestiary)
+                    {
+                        BestiaryMain.UnlockedBestiary = true;
+                        BestiaryMain.DisplayMessage("You study the contents of the book closely. You have unlocked the Bestiary.");
+                        DaggerfallUI.UIManager.PushWindow(BestiaryMain.bestiaryUIScreen);
+                    }
+                    else
+                        DaggerfallUI.UIManager.PushWindow(BestiaryMain.bestiaryUIScreen);
+                    break;
             }
-            else
-                BestiaryMain.UnlockedBestiary = true;
-
-
             return true;
         }
+        public override ItemData_v1 GetSaveData()
+        {
+            ItemData_v1 data = base.GetSaveData();
+            data.className = typeof(BestiaryItem).ToString();
+            return data;
+        }
+
     }
 }

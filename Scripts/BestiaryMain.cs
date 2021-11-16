@@ -30,22 +30,24 @@ namespace BestiaryMod
             public bool UnlockedBestiary;
         }
         public Type SaveDataType { get { return typeof(MyModSaveData); } }
-
         private static Mod mod;
         public static BestiaryMain instance;
-        static BestiaryUI bestiaryUIScreen;
+        public static BestiaryUI bestiaryUIScreen;
 
-        static PlayerEntity playerEntity = GameManager.Instance.PlayerEntity;
+        private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
+        private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
+
+        private static PlayerEntity playerEntity = GameManager.Instance.PlayerEntity;
         private static KeyCode openMenuKeyCode;
         private static bool readyToOpenUI;
+
         public static int MenuUnlock { get; set; }
         public static int Entries { get; set; }
         public static bool SpawnItem { get; set; }
         public static bool UnlockedBestiary { get; set; }
         public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
         public static AllTextClass AllText { get; set; }
-        private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
-        private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
+
 
         [Invoke(StateManager.StateTypes.Start, 0)]
         public static void Init(InitParams initParams)
@@ -85,23 +87,26 @@ namespace BestiaryMod
         {
             if (readyToOpenUI)
             {
-                if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && !InputManager.Instance.IsPaused && GameManager.Instance.IsPlayerOnHUD && AllText.AllPages.Count > 0)
+                if (InputManager.Instance.GetKeyDown(openMenuKeyCode) && !InputManager.Instance.IsPaused && GameManager.Instance.IsPlayerOnHUD)
                 {
                     if (Entries == 1 && killCounts.Count < 1)
                     {
                         DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no Entries to display. Slay Something first, weakling.");
                         return;
                     }
+                    if (AllText.AllPages.Count < 1)
+                        return;
+
                     switch (MenuUnlock)
                     {
                         case 0:
                             DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
                             break;
                         case 1:
-                            if (UnlockedBestiary)
+                            if (playerEntity.Items.SearchItems(ItemGroups.UselessItems2, BestiaryItem.templateIndex).Count >= 1)
                                 DaggerfallUI.UIManager.PushWindow(bestiaryUIScreen);
                             else
-                                DaggerfallUI.AddHUDText("You have not yet unlocked the Bestiary. Find the Bestiary book item and click USE on it.");
+                                DaggerfallUI.AddHUDText("You do not to have the Bestiary item in your inventory.");
                             break;
                         case 2:
                             if (UnlockedBestiary)
@@ -251,7 +256,6 @@ namespace BestiaryMod
                         if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human || HumanoidCheck(enemyEntity.MobileEnemy.ID))
                         {
                             int luckRoll = UnityEngine.Random.Range(1, 20) + ((playerEntity.Stats.LiveLuck / 10) - 5);
-
                             if (luckRoll > 18)
                             {
                                 DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
@@ -278,9 +282,9 @@ namespace BestiaryMod
 
         private static class AddBestiaryItem
         {
-            public static readonly string command = "add_BestiaryItem";
+            public static readonly string command = "add_bestiaryitem";
             public static readonly string description = "Put the Bestiary (item) in players inventory";
-            public static readonly string usage = "add_BestiaryItem";
+            public static readonly string usage = "add_bestiaryitem";
 
             public static string Execute(params string[] args)
             {
