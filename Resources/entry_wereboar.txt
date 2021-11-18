@@ -1,9 +1,10 @@
 269
 button_wereboar
-Bestiary
 Wereboar
-Summary:*Wereboars are half-man, half-boar lycanthropes, whose attacks have a slight chance of passing their curse onto you. They can be hit by weapons of silver quality or higher.
+Summary:*Wereboars are half-man, half-boar lycanthropes, whose attacks have a slight chance of passing their curse onto you.
 Advice:*If you don't wish to become a wereboar yourself, ranged attacks are safer at lower levels. Higher levels can quickly dispatch a wereboar with melee attacks.
+Material:*Silver or higher is requiered
+Language:*None
 Abilities:*There is a 0.6% chance of contracting lycanthropy from the attack
  *Adrenaline Rush
 Spells:*None

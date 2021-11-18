@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using DaggerfallWorkshop;
+﻿using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.Entity;
 using DaggerfallWorkshop.Game.Items;
@@ -17,10 +14,7 @@ namespace BestiaryMod
         public const int templateIndex = 900;
         internal const string NAME = "Bestiary";
 
-        static DaggerfallUnityItem book = null;
-
-        public BestiaryItem()
-            : base(ItemGroups.UselessItems2, templateIndex)
+        public BestiaryItem() : base(ItemGroups.UselessItems2, templateIndex)
         {
             shortName = "Bestiary";
         }
@@ -32,23 +26,30 @@ namespace BestiaryMod
 
         public override bool UseItem(ItemCollection collection)
         {
-            book = this;
-
-            if (BestiaryMain.menuUnlock == 1)
+            switch (BestiaryMain.SettingMenuUnlock)
             {
-                if (!BestiaryMain.unlockedBestiary)
-                {
-                    BestiaryMain.unlockedBestiary = true;
-                    BestiaryMain.DisplayMessage("You study the contents of the book closely. You have unlocked the Bestiary.");
-                }
-                else
-                    BestiaryMain.DisplayMessage("You already know all this book has to offer.");
+                case 0:
+                    DaggerfallUI.UIManager.PushWindow(BestiaryMain.bestiaryUIScreen);
+                    break;
+                case 1:
+                    DaggerfallUI.UIManager.PushWindow(BestiaryMain.bestiaryUIScreen);
+                    break;
+                case 2:
+                    if (!BestiaryMain.UnlockedBestiary)
+                    {
+                        BestiaryMain.UnlockedBestiary = true;
+                        BestiaryMain.DisplayMessage("You study the contents of the book closely. You have unlocked the Bestiary.");
+                    }
+                    DaggerfallUI.UIManager.PushWindow(BestiaryMain.bestiaryUIScreen);
+                    break;
             }
-            else
-                BestiaryMain.unlockedBestiary = true;
-
-
             return true;
+        }
+        public override ItemData_v1 GetSaveData()
+        {
+            ItemData_v1 data = base.GetSaveData();
+            data.className = typeof(BestiaryItem).ToString();
+            return data;
         }
     }
 }
