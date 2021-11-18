@@ -127,6 +127,7 @@
         "Assets/Game/Mods/Bestiary/Resources/summary_daedra.txt",
         "Assets/Game/Mods/Bestiary/Settings/modpresets.json",
         "Assets/Game/Mods/Bestiary/Settings/modsettings.json",
-        "Assets/Game/Mods/Bestiary/Resources/page_animals.txt"
+        "Assets/Game/Mods/Bestiary/Resources/page_animals.txt",
+        "Assets/Game/Mods/Bestiary/ItemTemplates.json"
     ]
 }

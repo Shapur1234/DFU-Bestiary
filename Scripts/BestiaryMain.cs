@@ -64,6 +64,7 @@ namespace BestiaryMod
             instance = go.AddComponent<BestiaryMain>();
 
             readyToOpenUI = false;
+            DaggerfallUnity.Instance.ItemHelper.RegisterCustomItem(BestiaryItem.templateIndex, ItemGroups.UselessItems2, typeof(BestiaryItem));
 
             mod.SaveDataInterface = instance;
             mod.LoadSettingsCallback = LoadSettings;
@@ -73,7 +74,6 @@ namespace BestiaryMod
             PlayerActivate.OnLootSpawned += AddBestiary_OnLootSpawned;
             EnemyDeath.OnEnemyDeath += BestiaryLoot_OnEnemyDeath;
 
-            DaggerfallUnity.Instance.ItemHelper.RegisterCustomItem(BestiaryItem.templateIndex, ItemGroups.UselessItems2, typeof(BestiaryItem));
             mod.IsReady = true;
         }
 

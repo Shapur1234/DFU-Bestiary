@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4044776785
+CRC: 4127407907
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9279a4e9356f2a35fda56c91c036741c
+    Hash: 6269cc438dfbd4147178127e644efae1
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -114,6 +114,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_seducer.txt
 - Assets/Game/Mods/Bestiary/Settings/modpresets.json
 - Assets/Game/Mods/Bestiary/Resources/page_orcs.txt
+- Assets/Game/Mods/Bestiary/ItemTemplates.json
 - Assets/Game/Mods/Bestiary/Resources/page_lycanthropes.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_wraith-kabs_unleveled_spells.txt
 - Assets/Game/Mods/Bestiary/Textures/button_skeletal_warrior.png

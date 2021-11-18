@@ -14,14 +14,20 @@ namespace BestiaryMod
         public const int templateIndex = 900;
         internal const string NAME = "Bestiary";
 
-        public BestiaryItem() : base(ItemGroups.UselessItems2, templateIndex)
+        public BestiaryItem()
+            : base(ItemGroups.UselessItems2, templateIndex)
         {
-            shortName = "Bestiary";
+            shortName = NAME;
         }
 
         public override string ItemName
         {
-            get { return shortName; }
+            get { return NAME; }
+        }
+
+        public override string LongName
+        {
+            get { return NAME; }
         }
 
         public override bool UseItem(ItemCollection collection)
