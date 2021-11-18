@@ -5,7 +5,7 @@
         "Description": "Default settings.",
         "SettingsVersion": null,
         "Values": {
-            "General": {
+            "UserInterface": {
                 "EnableAnimations": "True"
             }
         },

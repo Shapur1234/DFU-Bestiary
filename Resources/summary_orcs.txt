@@ -1,8 +1,6 @@
-262
-Orcs
-Bestiary
 Summary - Orcs
 Overview:*Hailing from Orsinium, these savage brutes can be found across the Iliac Bay. Like humanoids, their spoils include a good deal of equipment. No special materials are required to harm them.
+ * 
 Killcount:*Orc - 
  *Orc Sergeant - 
  *Orc Shaman - 

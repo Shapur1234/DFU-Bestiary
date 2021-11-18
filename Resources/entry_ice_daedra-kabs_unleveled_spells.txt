@@ -1,9 +1,10 @@
 280
 button_ice_daedra
-Bestiary
 Ice or Frost Daedra
-Summary:*Frost Daedra are wreathed in the cold mists of Oblivion. Not only do their warhammers pack a devastating punch, but Frost Daedra can cast cold-based spells. They can only be hit by weapons of mithril quality or higher.
-Advice:*Close in quickly and use melee attacks to deny the Frost Daedra an opportunity to cast its ranged spells. You may also wish to protect yourself with Spell Reflection, Spell Resistance, or Spell Absorption, or attack with fire-based offensive spells. The Daedric language skill can sometimes render an enemy non-hostile.
+Summary:*Frost Daedra are wreathed in the cold mists of Oblivion. Not only do their warhammers pack a devastating punch, but Frost Daedra can cast cold-based spells.
+Advice:*Close in quickly and use melee attacks to deny the Frost Daedra an opportunity to cast its ranged spells. You may also wish to protect yourself with Spell Reflection, Spell Resistance, or Spell Absorption, or attack with fire-based offensive spells.
+Material:*Mithril or higher is requiered
+Language:*Daedric
 Abilities:*Can detect camouflaged or invisible foes
 Spells:*Frost Bolt
  *Ice Storm

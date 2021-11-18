@@ -1,8 +1,9 @@
 259
 button_grizzly_bear
-Bestiary
 Grizzly bear
-Summary:*The grizzly bear is a large animal that fights with tooth and claw. They can be hit by weapons of any material.
+Summary:*The grizzly bear is a large animal that fights with tooth and claw.
 Advice:*Melee attacks.
+Material:*No special material is requiered
+Language:*None
 Abilities:*None
 Spells:*None

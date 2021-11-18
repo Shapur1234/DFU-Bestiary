@@ -1,8 +1,9 @@
 266
 button_slaughterfish
-Bestiary
 Slaughterfish
-Summary:*A slaughterfish is a predatory, eel-like fish that dwells in underwater areas and attacks prey with its gaping maw. They can be hit by weapons of any material.
+Summary:*A slaughterfish is a predatory, eel-like fish that dwells in underwater areas and attacks prey with its gaping maw.
 Advice:*Melee attacks.
+Material:*No special material is requiered
+Language:*None
 Abilities:*None
 Spells:*None

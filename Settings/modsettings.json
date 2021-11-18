@@ -2,29 +2,49 @@
     "Version": null,
     "Sections": [
         {
-            "Name": "General",
+            "Name": "Gameplay",
             "Description": null,
             "IsAdvanced": false,
             "Keys": [
                 {
                     "Options": [
                         "Always unlocked",
-                        "Book item (Find a book that will unlock the Bestiary)",
-                        "Kill to unlock (Makes an entry viewable, only after you kill the corresponding monster (like Witcher 3))"
+                        "Item in inventory - You have to have the Bestiary item in your inventory",
+                        "Item unlock - Open the Bestiary with the Bestiary item in your inventory to unlock the Bestiary permanently"
                     ],
-                    "Value": 1,
+                    "Value": 0,
                     "Name": "MenuUnlock",
-                    "Description": "What do you need to do to unlock the Bestiary screen / entries.",
+                    "Description": "What criteria do you have to fulfill to open the Bestiary?",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
+                },
+                {
+                    "Options": [
+                        "All - Everything is viewable",
+                        "Kill to unlock - Only display those beasts already slain",
+                        "Classic - Display only those beasts seen in one of Daggerfalls demos"
+                    ],
+                    "Value": 0,
+                    "Name": "Entries",
+                    "Description": "Witch entries (beasts) will be viewable in the Bestiary",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 },
                 {
                     "Value": true,
-                    "Name": "EnableEightDirectionRotation",
-                    "Description": "ges are laggy, try disabeling this.ations. Not reccomended with DREAM. If  monster images are laggy, try disabeling this.",
+                    "Name": "ItemSpawning",
+                    "Description": "Will the Bestiary item spawn in the world?",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
-                },
+                }
+            ],
+            "$version": "v1"
+        },
+        {
+            "Name": "UserInterface",
+            "Description": null,
+            "IsAdvanced": false,
+            "Keys": [
                 {
                     "Options": [
                         "Front",
@@ -40,11 +60,13 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 },
                 {
-                    "Value": false,
-                    "Name": "ClassicMode",
-                    "Description": "Check this, if you want the original version, as seen in the demo.",
+                    "Min": 1,
+                    "Max": 120,
+                    "Value": 10,
+                    "Name": "DelayBetweenAnimationFrames",
+                    "Description": "Set the time it takes to switch one animation frame to another.",
                     "$version": "v1",
-                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.SliderIntKey"
                 },
                 {
                     "Value": true,
@@ -54,13 +76,11 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 },
                 {
-                    "Min": 1,
-                    "Max": 120,
-                    "Value": 10,
-                    "Name": "DelayBetweenAnimationFrames",
-                    "Description": "Set the time it takes to switch one animation frame to another.",
+                    "Value": true,
+                    "Name": "EnableEightDirectionRotation",
+                    "Description": "ges are laggy, try disabeling this.ations. Not reccomended with DREAM. If  monster images are laggy, try disabeling this.",
                     "$version": "v1",
-                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.SliderIntKey"
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 }
             ],
             "$version": "v1"

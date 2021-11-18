@@ -1,9 +1,10 @@
 274
 button_mummy
-Bestiary
 Mummy
-Summary:*Mummies are preserved corpses given new life. They pack a powerful punch, and their nature makes them vectors for disease. Mummies can be hit by weapons of silver quality or higher.
+Summary:*Mummies are preserved corpses given new life. They pack a powerful punch, and their nature makes them vectors for disease.
 Advice:*Mummies are best attacked with ranged weapons to avoid the chance of contracting a disease.
+Material:*Silver or higher is requiered
+Language:*None
 Abilities:*There is a 5% chance per hit of contracting a disease from a mummy
  *Immunity to Disease
 Spells:*None
