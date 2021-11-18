@@ -1,0 +1,5 @@
+
+*.manifest
+Out/StandaloneWindows/StandaloneWindows
+Out/StandaloneOSX/StandaloneOSX
+Out/StandaloneLinux64/StandaloneLinux64

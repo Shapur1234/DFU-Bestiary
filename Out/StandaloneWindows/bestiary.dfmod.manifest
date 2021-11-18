@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1609887459
+CRC: 1961377632
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 64d525ad13398bd39012163ee4031131
+    Hash: 6e1ae0f299ca45879430e1d9d27bb6b7
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -39,6 +39,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord-kabs_unleveled_spells.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt
 - Assets/Game/Mods/Bestiary/Textures/button_iron_atronach.png
+- Assets/Untracked/ModBuilder/Bestiary.dll.bytes
 - Assets/Game/Mods/Bestiary/Textures/button_giant.png
 - Assets/Game/Mods/Bestiary/Textures/button_attack_true.png
 - Assets/Game/Mods/Bestiary/Textures/button_ancient_lich.png
@@ -58,8 +59,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_nymph.txt
 - Assets/Game/Mods/Bestiary/Textures/blank.png
 - Assets/Game/Mods/Bestiary/Resources/entry_sabertooth_tiger.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryItem.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_ancient_lich-kabs_unleveled_spells.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire_ancient.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire_ancient-kabs_unleveled_spells.txt
@@ -100,7 +99,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_centaur.txt
 - Assets/Game/Mods/Bestiary/Textures/button_vampire.png
 - Assets/Game/Mods/Bestiary/Settings/modsettings.json
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_mummy.txt
 - Assets/Game/Mods/Bestiary/Textures/button_grizzly_bear.png
 - Assets/Game/Mods/Bestiary/Resources/summary_orcs.txt
@@ -121,7 +119,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_skeletal_warrior.png
 - Assets/Game/Mods/Bestiary/Resources/summary_undead.txt
 - Assets/Game/Mods/Bestiary/Textures/button_dreugh.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryText.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/summary_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_orc_shaman.png
 - Assets/Game/Mods/Bestiary/Resources/entry_harpy.txt
