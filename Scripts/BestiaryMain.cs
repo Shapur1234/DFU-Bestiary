@@ -54,6 +54,7 @@ namespace BestiaryMod
 
         private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
         private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
+
         [Invoke(StateManager.StateTypes.Start, 0)]
         public static void Init(InitParams initParams)
         {
@@ -94,7 +95,7 @@ namespace BestiaryMod
                 {
                     if (SettingEntries == 1 && killCounts.Count < 1)
                     {
-                        DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no SettingEntries to display. Slay Something first, weakling.");
+                        DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no entries to display. Slay Something first, weakling.");
                         return;
                     }
                     if (AllText.Pages.Count < 1)
@@ -192,12 +193,11 @@ namespace BestiaryMod
                 if (entityBehaviour != null)
                 {
                     EnemyEntity enemyEntity = entityBehaviour.Entity as EnemyEntity;
-                    if (enemyEntity != null && enemyEntity.GetEnemyGroup() != DFCareer.EnemyGroups.Humanoid)
+                    if (enemyEntity != null)
                     {
                         if (entityBehaviour.GetComponent<EnemySenses>().Target == GameManager.Instance.PlayerEntityBehaviour)
                         {
                             string monsterName = AllTextClass.MonsterCareerIndexToString(enemyEntity.CareerIndex);
-                            Debug.Log(monsterName);
                             if (killCounts.ContainsKey(monsterName))
                             {
                                 killCounts[monsterName] += 1;
@@ -217,7 +217,6 @@ namespace BestiaryMod
                 }
             }
         }
-
 
         //Modified, base from here: https://github.com/Ralzar81/SkillBooks/blob/cf024383284c12fbf4f27e6611ba2384c96508b9/SkillBooks/SkillBooks.cs.
         public static void AddBestiary_OnLootSpawned(object sender, ContainerLootSpawnedEventArgs e)

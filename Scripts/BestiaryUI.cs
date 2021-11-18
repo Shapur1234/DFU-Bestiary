@@ -599,6 +599,7 @@ namespace BestiaryMod
                 pageRightButton.BackgroundTexture = blankTexture;
                 pageLeftButton.BackgroundTexture = blankTexture;
             }
+
             rightRotateButton = new Button();
             rightRotateButton.Position = new Vector2(116, 145);
             rightRotateButton.Size = new Vector2(10, 10);
@@ -694,7 +695,6 @@ namespace BestiaryMod
                 if (currentPageIndex < 0)
                     currentPageIndex = BestiaryMain.AllText.Pages.Count - 1;
             }
-
             LoadPage();
         }
         protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)

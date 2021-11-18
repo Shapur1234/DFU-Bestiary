@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2828353717
+CRC: 291276886
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9cfb8a19096120618426952754345bb2
+    Hash: ca2a3d4b08d657c4aee0bb2e29730ff4
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -39,7 +39,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord-kabs_unleveled_spells.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_scorpion.txt
 - Assets/Game/Mods/Bestiary/Textures/button_iron_atronach.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryItem.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_giant.png
 - Assets/Game/Mods/Bestiary/Textures/button_attack_true.png
 - Assets/Game/Mods/Bestiary/Textures/button_ancient_lich.png
@@ -50,7 +49,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_orc_sergeant.png
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_lord.txt
 - Assets/Game/Mods/Bestiary/Resources/summary_lycanthropes.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_slaughterfish.txt
 - Assets/Game/Mods/Bestiary/Textures/button_arrow_right.png
 - Assets/Game/Mods/Bestiary/Textures/button_harpy.png
@@ -60,6 +58,8 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_nymph.txt
 - Assets/Game/Mods/Bestiary/Textures/blank.png
 - Assets/Game/Mods/Bestiary/Resources/entry_sabertooth_tiger.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryItem.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_ancient_lich-kabs_unleveled_spells.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire_ancient.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_vampire_ancient-kabs_unleveled_spells.txt
@@ -69,7 +69,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_fire_daedra.png
 - Assets/Game/Mods/Bestiary/Textures/900_0-0.png
 - Assets/Game/Mods/Bestiary/Resources/entry_fire_daedra.txt
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/summary_animals.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_orc.txt
 - Assets/Game/Mods/Bestiary/Resources/page_undead.txt
@@ -90,7 +89,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_ancient_lich.txt
 - Assets/Game/Mods/Bestiary/Textures/button_zombie.png
 - Assets/Game/Mods/Bestiary/Textures/button_wereboar.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryText.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_slaughterfish.png
 - Assets/Game/Mods/Bestiary/Resources/entry_dragonling.txt
 - Assets/Game/Mods/Bestiary/Textures/button_wraith.png
@@ -102,6 +100,7 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_centaur.txt
 - Assets/Game/Mods/Bestiary/Textures/button_vampire.png
 - Assets/Game/Mods/Bestiary/Settings/modsettings.json
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_mummy.txt
 - Assets/Game/Mods/Bestiary/Textures/button_grizzly_bear.png
 - Assets/Game/Mods/Bestiary/Resources/summary_orcs.txt
@@ -117,12 +116,12 @@ Assets:
 - Assets/Game/Mods/Bestiary/Resources/entry_daedra_seducer.txt
 - Assets/Game/Mods/Bestiary/Settings/modpresets.json
 - Assets/Game/Mods/Bestiary/Resources/page_orcs.txt
-- Assets/Game/Mods/Bestiary/ItemTemplates.json
 - Assets/Game/Mods/Bestiary/Resources/page_lycanthropes.txt
 - Assets/Game/Mods/Bestiary/Resources/entry_wraith-kabs_unleveled_spells.txt
 - Assets/Game/Mods/Bestiary/Textures/button_skeletal_warrior.png
 - Assets/Game/Mods/Bestiary/Resources/summary_undead.txt
 - Assets/Game/Mods/Bestiary/Textures/button_dreugh.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryText.cs.txt
 - Assets/Game/Mods/Bestiary/Resources/summary_daedra.txt
 - Assets/Game/Mods/Bestiary/Textures/button_orc_shaman.png
 - Assets/Game/Mods/Bestiary/Resources/entry_harpy.txt
