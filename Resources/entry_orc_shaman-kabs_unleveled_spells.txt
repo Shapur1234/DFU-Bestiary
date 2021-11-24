@@ -3,7 +3,7 @@ button_orc_shaman
 Orc Shaman
 Summary:*Orc Shamans are the spellcasters of Orsinium. They attack with powerful destruction spells, and make frequent use of their Invisibility spells in combat.
 Advice:*Use ranged attacks to avoid the damaging spell effects encountered in melee. The use of Spell Reflection, Spell Resistance, or Spell Absorption is advised.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*Orcish
 Abilities:*None
 Spells:*Invisibility

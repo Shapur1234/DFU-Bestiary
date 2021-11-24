@@ -3,7 +3,7 @@ button_iron_atronach
 Iron Atronach
 Summary:*Iron Atronachs are powerful metal golems that possess an electricity-based damage aura.
 Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use poison-based spells.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*None
 Abilities:*Healed by electricity-based spells
  *Immunity to Paralysis, Poison, Shock and Disease

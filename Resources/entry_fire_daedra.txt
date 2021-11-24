@@ -3,7 +3,7 @@ button_fire_daedra
 Fire Daedra
 Summary:*Fire Daedra are flame-clad horrors from Oblivion. In addition to their burning swords, these creatures can cast fire-based spells from afar.
 Advice:*Close in quickly and use melee attacks to deny the Fire Daedra an opportunity to cast its ranged spells. You may also wish to protect yourself with Spell Reflection, Spell Resistance, or Spell Absorption, or attack with cold-based offensive spells.
-Material:*Mithril or higher is requiered
+Material:*Mithril or higher is required
 Language:*Daedric
 Abilities:*Can detect camouflaged or invisible foes
 Spells:*Fireball

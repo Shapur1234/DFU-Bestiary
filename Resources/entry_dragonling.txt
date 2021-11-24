@@ -3,7 +3,7 @@ button_dragonling
 Dragonling
 Summary:*Dragonlings are winged reptiles that resemble dragons and attack by breathing fire.
 Advice:*Melee attacks are best. Beware its fiery breath, for it is not a spell. Dragonlings are heavily armored and can take a lot of hits.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*Dragonish
 Abilities:*Resistance to Magic
  *Immunity to Paralysis, Poison, and Disease

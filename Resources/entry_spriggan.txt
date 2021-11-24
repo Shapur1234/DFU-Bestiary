@@ -3,7 +3,7 @@ button_spriggan
 Spriggan
 Summary:*Spriggans are plant-like monsters.
 Advice:*Melee attacks work best.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*Spriggan
 Abilities:*Due to their nature, spriggans are almost impossible to hit with arrows.
 Spells:*None

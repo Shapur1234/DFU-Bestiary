@@ -3,7 +3,7 @@ button_slaughterfish
 Slaughterfish
 Summary:*A slaughterfish is a predatory, eel-like fish that dwells in underwater areas and attacks prey with its gaping maw.
 Advice:*Melee attacks.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*None
 Abilities:*None
 Spells:*None

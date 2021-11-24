@@ -3,7 +3,7 @@ button_giant_bat
 Giant Bat
 Summary:*The giant bat is a flying animal commonly encountered at low levels, but not so often at higher levels.
 Advice:*Melee attacks can quickly dispatch these beasts, though attacking with arrows or spells will greatly reduce your odds of catching a disease.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*None
 Abilities:*There is a 5% chance per hit of catching a disease from a giant bat.
 Spells:*None

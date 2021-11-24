@@ -3,7 +3,7 @@ button_daedra_lord
 Daedra Lord
 Summary:*With weapons and magic at their disposal, Daedra Lords are powerful and dangerous opponents.
 Advice:*One of the most dangerous foes in the game, the Daedra Lord possesses formidable fighting abilities in close combat. When fighting a Daedra Lord, close in quickly to prevent him from using magic too frequently, and backpedal after striking to avoid his attacks. Spell Reflection, Spell Resistance, or Spell Absorption is a must, especially when fighting at distance as he will use his area effect Fireball spell. A Daedra Lord will sometimes use this spell too close, resulting in his own harm or destruction from its blast.
-Material:*Mithril or higher is requiered
+Material:*Mithril or higher is required
 Language:*Daedric
 Abilities:*Can detect camouflaged or invisible foes
  *Immunity to Paralysis, Poison, and Disease

@@ -3,7 +3,7 @@ button_orc
 Orc
 Summary:*Orcs are the basic foot soldiers of the Orcish race.
 Advice:*Melee attacks.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*Orcish
 Abilities:*Resistance to Disease
  *Athleticism

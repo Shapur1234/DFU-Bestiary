@@ -3,7 +3,7 @@ button_fire_atronach
 Fire Atronach
 Summary:*Fire Atronachs are golems constructed of flames and possess a fire-based damage aura.
 Advice:*Melee attacks are recommended. Lower level characters who wish to avoid melee may use cold-based spells.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*None
 Abilities:*Healed by fire-based spells
  *Immunity to Paralysis, Poison, Fire and Disease

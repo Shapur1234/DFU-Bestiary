@@ -3,7 +3,7 @@ button_gargoyle
 Gargoyle
 Summary:*Gargoyles are creatures of living stone.
 Advice:*Melee attacks.
-Material:*Mithril or higher is requiered
+Material:*Mithril or higher is required
 Language:*Giantish
 Advice:*Melee attacks.
 Abilities:*Resistance to Magic

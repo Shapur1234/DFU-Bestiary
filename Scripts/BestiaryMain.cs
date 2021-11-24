@@ -95,7 +95,7 @@ namespace BestiaryMod
                 {
                     if (SettingEntries == 1 && killCounts.Count < 1)
                     {
-                        DaggerfallWorkshop.Game.DaggerfallUI.AddHUDText("You have no entries to display. Slay Something first, weakling.");
+                            
                         return;
                     }
                     if (AllText.Pages.Count < 1)

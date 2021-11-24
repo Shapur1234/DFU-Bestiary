@@ -3,7 +3,7 @@ button_sabertooth_tiger
 Sabertooth Tiger
 Summary:*The sabertooth tiger is a large, fanged animal.
 Advice:*Melee attacks.
-Material:*No special material is requiered
+Material:*No special material is required
 Language:*None
 Abilities:*None
 Spells:*None

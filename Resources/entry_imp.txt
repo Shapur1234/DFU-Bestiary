@@ -3,7 +3,7 @@ button_imp
 Imp
 Summary:*Imps are flying creatures that cast spells at their foes.
 Advice:*Kill imps as quickly as possible, especially at low levels. Spell Reflection, Spell Resistance, or Spell Absorption are helpful.
-Material:*Steel or higher is requiered
+Material:*Steel or higher is required
 Language:*Impish
 Abilities:*Can detect camouflaged or invisible foes
 Spells:*Chameleon

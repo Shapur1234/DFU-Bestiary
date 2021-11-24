@@ -3,7 +3,7 @@ button_lich
 Lich
 Summary:*Liches were powerful mages in life and achieved undeath of their own accord. They have retained their intellect - including their spellcasting abilities - while becoming much more physically powerful at the same time. As such, a lich is a dangerous adversary for even the most seasoned adventurers—provided they don't first annihilate themselves with their own magic, which they frequently do.
 Advice:*The use of Spell Reflection, Spell Resistance, or Spell Absorption is a definite must; a lich can easily kill you if you aren't prepared. Your safest bets are to attack with ranged weapons or have plenty of healing potions and spells on hand. Liches will sometimes use area affect damage spells at too close a range and harm or even destroy themselves.
-Material:*Mithril or higher is requiered
+Material:*Mithril or higher is required
 Language:*Etiquette
 Abilities:*Can detect camouflaged or invisible foes
 Spells:*Daedroth Lightning
