@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game.Entity;
@@ -9,6 +7,7 @@ using DaggerfallWorkshop.Game.Utility.ModSupport;
 
 using UnityEngine;
 
+// ReSharper disable CheckNamespace
 namespace BestiaryMod
 {
     public class AllTextClass
@@ -20,14 +19,14 @@ namespace BestiaryMod
 
             foreach (var item in pagesToLoad)
             {
-                Page pageTemp = new Page(item);
+                var pageTemp = new Page(item);
                 if (pageTemp.Entries.Count > 0)
                     Pages.Add(pageTemp);
             }
         }
         public void DebugThis()
         {
-            Debug.Log(String.Format("Debugging AllText {0}", BestiaryTitle));
+            Debug.Log($"Debugging AllText {BestiaryTitle}");
 
             Debug.Log("Pages:");
             foreach (var item in Pages)
@@ -131,6 +130,7 @@ namespace BestiaryMod
                     return "false";
             }
         }
+        // TextManager.Instance.GetLocalizedEnemyName(id)
         public static string MonsterCareerIndexToString(int index)
         {
             switch (index)
@@ -265,10 +265,9 @@ namespace BestiaryMod
 
         public void DebugThis()
         {
-            Debug.Log(String.Format("Debugging Page {0}", Name));
-            Debug.Log(String.Format("Title: {0}", Title));
-            if (PageSummary != null)
-                PageSummary.DebugThis();
+            Debug.Log($"Debugging Page {Name}");
+            Debug.Log($"Title: {Title}");
+            PageSummary?.DebugThis();
 
             Debug.Log("Entries:");
             foreach (var item in Entries)
@@ -285,7 +284,7 @@ namespace BestiaryMod
         public Entry(string assetPath)
         {
             if (ModManager.Instance.GetMod("Unleveled Spells") != null && ModManager.Instance.GetMod("Bestiary").HasAsset(assetPath + "-kabs_unleveled_spells"))
-                assetPath = assetPath + "-kabs_unleveled_spells";
+                assetPath += "-kabs_unleveled_spells";
 
             Name = assetPath;
             ButtonTextureName = "Entry constructor error";
@@ -320,8 +319,8 @@ namespace BestiaryMod
 
         public void DebugThis()
         {
-            Debug.Log(String.Format("Debugging Entry {0}", Name));
-            Debug.Log(String.Format("ButtonTextureName: {0}, Title: {1}, TextureArchive: {2}", ButtonTextureName, Title, TextureArchive));
+            Debug.Log($"Debugging Entry {Name}");
+            Debug.Log($"ButtonTextureName: {ButtonTextureName}, Title: {Title}, TextureArchive: {TextureArchive}");
 
             // Debug.Log("Text:");
             // foreach (var item in Text)
@@ -379,10 +378,10 @@ namespace BestiaryMod
         }
         public void DebugThis()
         {
-            Debug.Log(String.Format("Debugging Summary {0}", Name));
-            Debug.Log(String.Format("Title: {0}, TextureArchive: {1}", Title, TextureArchive));
-
+            Debug.Log($"Debugging Summary {Name}");
+            Debug.Log($"Title: {Title}, TextureArchive: {TextureArchive}");
             Debug.Log("Text:");
+
             foreach (var item in Text)
                 item.DebugThis();
         }
@@ -400,7 +399,7 @@ namespace BestiaryMod
         }
         public void DebugThis()
         {
-            Debug.Log(String.Format("LeftText: {0}, RightText: {1}", LeftText, RightText));
+            Debug.Log($"LeftText: {LeftText}, RightText: {RightText}");
         }
 
         public string LeftText { get; set; }
