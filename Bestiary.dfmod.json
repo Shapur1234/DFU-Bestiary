@@ -170,7 +170,8 @@
         "Assets/Game/Mods/Bestiary/Textures/button_sabertooth_tiger_active.png",
         "Assets/Game/Mods/Bestiary/Textures/button_orc_sergeant_active.png",
         "Assets/Game/Mods/Bestiary/Textures/button_orc_active.png",
-        "Assets/Game/Mods/Bestiary/Textures/button_spider_active.png"
+        "Assets/Game/Mods/Bestiary/Textures/button_spider_active.png",
+        "Assets/Game/Mods/Bestiary/Scripts/AddBestiaryItem.cs"
     ],
     "Dependencies": [
         {

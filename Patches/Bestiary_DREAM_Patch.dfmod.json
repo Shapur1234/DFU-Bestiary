@@ -16,8 +16,12 @@
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_attack_true.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_CENTAUR_active.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_CENTAUR.png",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDROTH_active.png",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DAEDROTH.png",
+        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedra_lord_active.png",
+        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedra_lord.png",
+        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedra_seducer_active.png",
+        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedra_seducer.png",
+        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedroth_active.png",
+        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedroth.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DRAGONLING_active.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DRAGONLING.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_DREUGH_active.png",
@@ -90,13 +94,7 @@
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_WRAITH.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ZOMBIE_active.png",
         "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_ZOMBIE.png",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary_DREAM_Patch.dfmod.json",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedroth.png",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedra_lord.png",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedroth_active.png",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedra_seducer_active.png",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedra_lord_active.png",
-        "Assets/Game/Mods/Bestiary/Patches/Bestiary - DREAM Patch/Textures/button_daedra_seducer.png"
+        "Assets/Game/Mods/Bestiary/Patches/Bestiary_DREAM_Patch.dfmod.json"
     ],
     "Dependencies": [
         {
