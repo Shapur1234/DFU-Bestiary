@@ -1,18 +1,14 @@
-﻿using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game;
-using DaggerfallWorkshop.Game.Entity;
 using DaggerfallWorkshop.Game.Items;
 using DaggerfallWorkshop.Game.Serialization;
-using DaggerfallWorkshop.Game.UserInterfaceWindows;
 
-using UnityEngine;
-
+// ReSharper disable CheckNamespace
 namespace BestiaryMod
 {
     public class BestiaryItem : DaggerfallUnityItem
     {
         public const int templateIndex = 900;
-        internal const string NAME = "Bestiary";
+        private const string NAME = "Bestiary";
 
         public BestiaryItem()
             : base(ItemGroups.UselessItems2, templateIndex)
@@ -53,7 +49,7 @@ namespace BestiaryMod
         }
         public override ItemData_v1 GetSaveData()
         {
-            ItemData_v1 data = base.GetSaveData();
+            var data = base.GetSaveData();
             data.className = typeof(BestiaryItem).ToString();
             return data;
         }

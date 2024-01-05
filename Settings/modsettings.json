@@ -1,5 +1,5 @@
 {
-    "Version": null,
+    "Version": "1.5",
     "Sections": [
         {
             "Name": "Gameplay",
@@ -60,9 +60,9 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 },
                 {
-                    "Min": 1,
+                    "Min": 30,
                     "Max": 120,
-                    "Value": 10,
+                    "Value": 50,
                     "Name": "DelayBetweenAnimationFrames",
                     "Description": "Set the time it takes to switch one animation frame to another.",
                     "$version": "v1",

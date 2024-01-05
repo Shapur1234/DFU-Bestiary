@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 
 using DaggerfallConnect;
@@ -8,8 +7,6 @@ using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.Entity;
 using DaggerfallWorkshop.Game.Items;
-using DaggerfallWorkshop.Game.Serialization;
-using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
 using DaggerfallWorkshop.Game.Utility;
 using DaggerfallWorkshop.Game.Utility.ModSupport;
@@ -19,6 +16,7 @@ using UnityEngine;
 
 using Wenzil.Console;
 
+// ReSharper disable CheckNamespace
 namespace BestiaryMod
 {
     public class BestiaryMain : MonoBehaviour, IHasModSaveData
@@ -87,7 +85,7 @@ namespace BestiaryMod
             Debug.Log("Finished mod init: Bestiary");
         }
 
-        void Update()
+        private void Update()
         {
             if (readyToOpenUI)
             {
@@ -95,7 +93,7 @@ namespace BestiaryMod
                 {
                     if (SettingEntries == 1 && killCounts.Count < 1)
                     {
-                            
+
                         return;
                     }
                     if (AllText.Pages.Count < 1)
@@ -131,7 +129,7 @@ namespace BestiaryMod
                 AllText = new AllTextClass(pagesClassic);
             else
                 AllText = new AllTextClass(pagesFull);
-            bestiaryUIScreen = new BestiaryUI(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
+            bestiaryUIScreen = new BestiaryUI(DaggerfallUI.UIManager);
 
             readyToOpenUI = true;
         }
@@ -273,34 +271,17 @@ namespace BestiaryMod
             Debug.Log("[Bestiary] Trying to register console commands.");
             try
             {
-                ConsoleCommandsDatabase.RegisterCommand(AddBestiaryItem.command, AddBestiaryItem.description, AddBestiaryItem.usage, AddBestiaryItem.Execute);
+                ConsoleCommandsDatabase.RegisterCommand(AddBestiaryItem.Command, AddBestiaryItem.Description, AddBestiaryItem.Usage, AddBestiaryItem.Execute);
             }
             catch (Exception e)
             {
-                Debug.LogError(string.Format("Error Registering Bestiary Console commands: {0}", e.Message));
+                Debug.LogError($"Error Registering Bestiary Console commands: {e.Message}");
             }
         }
 
-        private static class AddBestiaryItem
-        {
-            public static readonly string command = "add_bestiaryitem";
-            public static readonly string description = "Put the Bestiary (item) in players inventory";
-            public static readonly string usage = "add_bestiaryitem";
-
-            public static string Execute(params string[] args)
-            {
-                if (args.Length > 0)
-                    return usage;
-
-                int index = 900;
-                DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, index);
-                GameManager.Instance.PlayerEntity.Items.AddItem(bestiaryItem);
-                return "BestiaryItem added";
-            }
-        }
         public static void DisplayMessage(string message)
         {
-            DaggerfallMessageBox daggerfallMessageBox = new DaggerfallMessageBox(DaggerfallWorkshop.Game.DaggerfallUI.UIManager);
+            DaggerfallMessageBox daggerfallMessageBox = new DaggerfallMessageBox(DaggerfallUI.UIManager);
             daggerfallMessageBox.AllowCancel = true;
             daggerfallMessageBox.ClickAnywhereToClose = true;
             daggerfallMessageBox.ParentPanel.BackgroundColor = Color.clear;
