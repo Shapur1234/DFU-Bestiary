@@ -59,13 +59,13 @@ namespace BestiaryMod
 
                 if (!TextureReplacement.TryImportTexture(Archive, Record + AttackModeOffset, Frame, out pictureTexture))
                     pictureTexture = textureReader.GetTexture2D(Archive, Record + AttackModeOffset, Frame);
-                pictureTexture.filterMode = FilterMode.Point;
+
+                // Let ppl deside if they want to use blurred images
+                pictureTexture.filterMode = (FilterMode)DaggerfallUnity.Settings.GUIFilterMode;
 
                 UpdateImagePanel(this);
                 ApplyTexture(pictureTexture, this);
                 return;
-
-
             }
 
             private void UpdateImagePanel(TextureInfo inputTextureInfo)
@@ -665,8 +665,9 @@ namespace BestiaryMod
         //From here: https://girlscancode.wordpress.com/2015/03/02/unity3d-flipping-a-texture/.
         private static Texture2D FlipTexture(Texture2D original)
         {
-            Texture2D flipped = new Texture2D(original.width, original.height);
-            flipped.filterMode = FilterMode.Point;
+            Texture2D flipped = new Texture2D(original.width, original.height, original.format, original.mipmapCount > 1);
+            // Let ppl deside if they want to use blurred images
+            flipped.filterMode = (FilterMode)DaggerfallUnity.Settings.GUIFilterMode;
 
             int xN = original.width;
             int yN = original.height;
@@ -682,19 +683,25 @@ namespace BestiaryMod
         //From here: https://stackoverflow.com/questions/44733841/how-to-make-texture2d-readable-via-script.
         private static Texture2D DuplicateTexture(Texture2D source)
         {
-            RenderTexture renderTex = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+            // RenderTextureFormat.Default, RenderTextureReadWrite.Linear causing textures to go dark
+            // Create a RenderTexture to temporarily render the unreadable texture
+            RenderTexture renderTex = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.ARGB32);
 
+            // Set the active RenderTexture and draw the unreadable texture onto it
+            RenderTexture.active = renderTex;
             Graphics.Blit(source, renderTex);
 
-            RenderTexture previous = RenderTexture.active;
-            RenderTexture.active = renderTex;
-
-            Texture2D readableText = new Texture2D(source.width, source.height);
-
+            // Create a new texture and read the pixels from the RenderTexture to copy the data
+            Texture2D readableText = new Texture2D(source.width, source.height, TextureFormat.ARGB32, source.mipmapCount > 1)
+            {
+                // Need to set here too. Otherwise it takes some default value
+                filterMode = (FilterMode)DaggerfallUnity.Settings.GUIFilterMode,
+            };
             readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
             readableText.Apply();
 
-            RenderTexture.active = previous;
+            // Release the temporary RenderTexture
+            RenderTexture.active = null;
             RenderTexture.ReleaseTemporary(renderTex);
 
             return readableText;

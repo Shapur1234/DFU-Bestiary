@@ -1,9 +1,0 @@
-271
-button_giant
-Giant
-Summary:*Giants are huge, territorial brutes that like to smash (and eat) their enemies.
-Advice:*Melee attacks are the quickest.
-Material:*No special material is required
-Language:*Giantish
-Abilities:*None
-Spells:*None

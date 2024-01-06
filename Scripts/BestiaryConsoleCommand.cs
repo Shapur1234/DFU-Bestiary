@@ -1,14 +1,14 @@
-﻿using DaggerfallWorkshop.Game;
+using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.Items;
 
 // ReSharper disable CheckNamespace
 namespace BestiaryMod
 {
-    public static class AddBestiaryItem
+    public static class BestiaryConsoleCommand
     {
-        public const string Command = "add_bestiaryitem";
-        public const string Description = "Put the Bestiary (item) in players inventory";
-        public const string Usage = "add_bestiaryitem";
+        public static string Command = "add_bestiaryitem";
+        public static string Description = "Put the Bestiary (item) in players inventory";
+        public static string Usage = "add_bestiaryitem";
 
         public static string Execute(params string[] args)
         {

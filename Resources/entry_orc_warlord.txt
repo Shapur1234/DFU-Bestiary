@@ -1,9 +1,0 @@
-279
-button_orc_warlord
-Orc Warlord
-Summary:*Orc Warlords are elite warriors, by far the strongest and most dangerous members of the Orcish hordes. They appear similar to Orc Sergeants, with the addition of a tassel on their helms, capes, and gold bracers.
-Advice:*Use ranged attacks at lower levels, melee attacks at higher levels.
-Material:*No special material is required
-Language:*Orcish
-Abilities:*None
-Spells:*None

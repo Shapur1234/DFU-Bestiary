@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 
-using DaggerfallWorkshop;
+using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.Entity;
-using DaggerfallWorkshop.Game.Utility.ModSupport;
+using DaggerfallWorkshop.Utility;
 
 using UnityEngine;
 
@@ -14,13 +13,13 @@ namespace BestiaryMod
     {
         public AllTextClass(List<string> pagesToLoad)
         {
-            BestiaryTitle = "Bestiary";
+            BestiaryTitle = BestiaryTextDB.BestiaryTitle;
             Pages = new List<Page>();
 
             foreach (var item in pagesToLoad)
             {
-                var pageTemp = new Page(item);
-                if (pageTemp.Entries.Count > 0)
+                var pageTemp = BestiaryTextDB.GetPage(item);
+                if (pageTemp != null && pageTemp.Entries.Count > 0)
                     Pages.Add(pageTemp);
             }
         }
@@ -32,235 +31,38 @@ namespace BestiaryMod
             foreach (var item in Pages)
                 item.DebugThis();
         }
-        public static string EntryTitleToEntryName(string input)
-        {
-            switch (input)
-            {
-                case "Giant Bat":
-                    return "entry_giant_bat";
-                case "Giant Rat":
-                    return "entry_rat";
-                case "Grizzly Bear":
-                    return "entry_grizzly_bear";
-                case "Sabertooth Tiger":
-                    return "entry_sabertooth_tiger";
-                case "Scorpion":
-                    return "entry_scorpion";
-                case "Slaughterfish":
-                    return "entry_slaughterfish";
-                case "Spider":
-                    return "entry_spider";
-                // --------------------------
-                case "Centaur":
-                    return "entry_centaur";
-                case "Dragonling":
-                    return "entry_dragonling";
-                case "Dreugh":
-                    return "entry_dreugh";
-                case "Gargoyle":
-                    return "entry_gargoyle";
-                case "Giant":
-                    return "entry_giant";
-                // --------------------------
-                case "Harpy":
-                    return "entry_harpy";
-                case "Imp":
-                    return "entry_imp";
-                case "Lamia":
-                    return "entry_lamia";
-                case "Nymph":
-                    return "entry_nymph";
-                case "Spriggan":
-                    return "entry_spriggan";
-                // --------------------------
-                case "Daedra Lord":
-                    return "entry_daedra_lord";
-                case "Daedra Seducer":
-                    return "entry_daedra_seducer";
-                case "Daedroth":
-                    return "entry_daedroth";
-                case "Fire Daedra":
-                    return "entry_fire_daedra";
-                case "Ice Daedra":
-                    return "entry_ice_daedra";
-                // --------------------------
-                case "Fire Atronach":
-                    return "entry_fire_atronach";
-                case "Flesh Atronach":
-                    return "entry_flesh_atronach";
-                case "Ice Atronach":
-                    return "entry_ice_atronach";
-                case "Iron Atronach":
-                    return "entry_iron_atronach";
-                // --------------------------
-                case "Wereboar":
-                    return "entry_wereboar";
-                case "Werewolf":
-                    return "entry_werewolf";
-                // --------------------------
-                case "Orc":
-                    return "entry_orc";
-                case "Orc Sergeant":
-                    return "entry_orc_sergeant";
-                case "Orc Shaman":
-                    return "entry_orc_shaman";
-                case "Orc Warlord":
-                    return "entry_orc_warlord";
-                // --------------------------
-                case "Ghost":
-                    return "entry_ghost";
-                case "Lich":
-                    return "entry_lich";
-                case "Ancient Lich":
-                    return "entry_ancient_lich";
-                case "Mummy":
-                    return "entry_mummy";
-                case "Skeletal Warrior":
-                    return "entry_skeletal_warrior";
-                case "Vampire":
-                    return "entry_vampire";
-                case "Vampire Ancient":
-                    return "entry_vampire_ancient";
-                case "Wraith":
-                    return "entry_wraith";
-                case "Zombie":
-                    return "entry_zombie";
-                // --------------------------
-                default:
-                    return "false";
-            }
-        }
-        // TextManager.Instance.GetLocalizedEnemyName(id)
-        public static string MonsterCareerIndexToString(int index)
-        {
-            switch (index)
-            {
-                case (int)MonsterCareers.AncientLich:
-                    return "entry_ancient_lich";
-                case (int)MonsterCareers.Centaur:
-                    return "entry_centaur";
-                case (int)MonsterCareers.DaedraLord:
-                    return "entry_daedra_lord";
-                case (int)MonsterCareers.DaedraSeducer:
-                    return "entry_daedra_seducer";
-                case (int)MonsterCareers.Daedroth:
-                    return "entry_daedroth";
-                case (int)MonsterCareers.Dragonling:
-                    return "entry_dragonling";
-                case (int)MonsterCareers.Dragonling_Alternate:
-                    return "entry_dragonling";
-                case (int)MonsterCareers.Dreugh:
-                    return "entry_dreugh";
-                case (int)MonsterCareers.FireAtronach:
-                    return "entry_fire_atronach";
-                case (int)MonsterCareers.FireDaedra:
-                    return "entry_fire_daedra";
-                case (int)MonsterCareers.FleshAtronach:
-                    return "entry_flesh_atronach";
-                case (int)MonsterCareers.FrostDaedra:
-                    return "entry_ice_daedra";
-                case (int)MonsterCareers.Gargoyle:
-                    return "entry_gargoyle";
-                case (int)MonsterCareers.Ghost:
-                    return "entry_ghost";
-                case (int)MonsterCareers.Giant:
-                    return "entry_giant";
-                case (int)MonsterCareers.GiantBat:
-                    return "entry_giant_bat";
-                case (int)MonsterCareers.GiantScorpion:
-                    return "entry_scorpion";
-                case (int)MonsterCareers.GrizzlyBear:
-                    return "entry_grizzly_bear";
-                case (int)MonsterCareers.Harpy:
-                    return "entry_harpy";
-                case (int)MonsterCareers.IceAtronach:
-                    return "entry_ice_atronach";
-                case (int)MonsterCareers.Imp:
-                    return "entry_imp";
-                case (int)MonsterCareers.IronAtronach:
-                    return "entry_iron_atronach";
-                case (int)MonsterCareers.Lamia:
-                    return "entry_lamia";
-                case (int)MonsterCareers.Lich:
-                    return "entry_lich";
-                case (int)MonsterCareers.Mummy:
-                    return "entry_mummy";
-                case (int)MonsterCareers.Nymph:
-                    return "entry_nymph";
-                case (int)MonsterCareers.Orc:
-                    return "entry_orc";
-                case (int)MonsterCareers.OrcSergeant:
-                    return "entry_orc_sergeant";
-                case (int)MonsterCareers.OrcShaman:
-                    return "entry_orc_shaman";
-                case (int)MonsterCareers.OrcWarlord:
-                    return "entry_orc_warlord";
-                case (int)MonsterCareers.Rat:
-                    return "entry_rat";
-                case (int)MonsterCareers.SabertoothTiger:
-                    return "entry_sabertooth_tiger";
-                case (int)MonsterCareers.SkeletalWarrior:
-                    return "entry_skeletal_warrior";
-                case (int)MonsterCareers.Slaughterfish:
-                    return "entry_slaughterfish";
-                case (int)MonsterCareers.Spider:
-                    return "entry_spider";
-                case (int)MonsterCareers.Spriggan:
-                    return "entry_spriggan";
-                case (int)MonsterCareers.Vampire:
-                    return "entry_vampire";
-                case (int)MonsterCareers.VampireAncient:
-                    return "entry_vampire_ancient";
-                case (int)MonsterCareers.Wereboar:
-                    return "entry_wereboar";
-                case (int)MonsterCareers.Werewolf:
-                    return "entry_werewolf";
-                case (int)MonsterCareers.Wraith:
-                    return "entry_wraith";
-                case (int)MonsterCareers.Zombie:
-                    return "entry_zombie";
-                default:
-                    return "false";
-            }
-        }
         public string BestiaryTitle { get; }
         public List<Page> Pages { get; }
     }
+
     public class Page
     {
-        public Page(string assetPath)
+        public Page(string title, string summary, params MonsterCareers[] monsters)
         {
-            Name = assetPath;
-            Title = "Page constructor error";
-            PageSummary = null;
+            Title = title;
+            PageSummary = new Summary(title, summary, monsters);
             Entries = new List<Entry>();
 
-            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(Name).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-            for (int i = 0; i < rawText.Count; i++)
+            foreach (MonsterCareers monster in monsters)
             {
-                switch (i)
+                switch (BestiaryMain.SettingEntries)
                 {
-                    case 0:
-                        Title = rawText[i];
-                        break;
                     case 1:
-                        if (BestiaryMain.SettingEntries != 2)
-                            PageSummary = new Summary(rawText[i]);
+                        string mName = TextManager.Instance.GetLocalizedEnemyName((int)monster);
+                        if (BestiaryMain.killCounts.ContainsKey(mName))
+                        {
+                            Entries.Add(BestiaryTextDB.GetEntryByMonster(monster));
+                        }
                         break;
                     default:
-                        switch (BestiaryMain.SettingEntries)
-                        {
-                            case 1:
-                                if (BestiaryMain.killCounts.ContainsKey(rawText[i]))
-                                    Entries.Add(new Entry(rawText[i]));
-                                break;
-                            default:
-                                Entries.Add(new Entry(rawText[i]));
-                                break;
-                        }
+                        Entries.Add(BestiaryTextDB.GetEntryByMonster(monster));
                         break;
                 }
             }
+        }
+        public Page(string assetPath)
+        {
+            Name = assetPath;
         }
 
         public void DebugThis()
@@ -279,102 +81,241 @@ namespace BestiaryMod
         public Summary PageSummary { get; set; }
         public List<Entry> Entries { get; }
     }
+
     public class Entry
     {
-        public Entry(string assetPath)
+        private string title;
+        private int[] spells;
+        private string[] abilities;
+        private string language;
+        private string material;
+        private string advice;
+        private string summary;
+
+        public Entry(MonsterCareers monster)
         {
-            if (ModManager.Instance.GetMod("Unleveled Spells") != null && ModManager.Instance.GetMod("Bestiary").HasAsset(assetPath + "-kabs_unleveled_spells"))
-                assetPath += "-kabs_unleveled_spells";
-
-            Name = assetPath;
-            ButtonTextureName = "Entry constructor error";
-            Title = "Entry constructor error";
-            TextureArchive = 0;
-            Text = new List<TextPair>();
-
-            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(Name).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-            for (int i = 0; i < rawText.Count; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        TextureArchive = int.Parse(rawText[i]);
-                        break;
-                    case 1:
-                        ButtonTextureName = rawText[i];
-                        break;
-                    case 2:
-                        Title = rawText[i];
-                        break;
-                    default:
-                        if (rawText[i].Length > 2 && rawText[i].Contains("*"))
-                        {
-                            var splitResult = rawText[i].Split('*');
-                            Text.Add(new TextPair(splitResult[0], splitResult[1]));
-                        }
-                        break;
-                }
-            }
+            Id = (int)monster;
+            Title = TextManager.Instance.GetLocalizedEnemyName((int)monster);
+            TextureArchive = EnemyBasics.Enemies[(int)monster].MaleTexture;
         }
 
         public void DebugThis()
         {
-            Debug.Log($"Debugging Entry {Name}");
             Debug.Log($"ButtonTextureName: {ButtonTextureName}, Title: {Title}, TextureArchive: {TextureArchive}");
-
-            // Debug.Log("Text:");
-            // foreach (var item in Text)
-            //     item.DebugThis();
         }
 
-        public string Name { get; }
-        public string ButtonTextureName { get; }
-        public string Title { get; }
-        public int TextureArchive { get; }
-        public List<TextPair> Text { get; }
+        public string ButtonTextureName { get; set; }
+        public int TextureArchive { get; set; }
+        public int Id { get; }
+        public string Title
+        {
+            get
+            {
+
+                if (BestiaryTextDB.OverrideTitleTable.ContainsKey(Id))
+                    return BestiaryTextDB.OverrideTitleTable[Id];
+
+                return title;
+            }
+            set
+            {
+                title = value;
+            }
+        }
+        public string Summary
+        {
+            get
+            {
+                if (BestiaryTextDB.OverrideSummaryTable.ContainsKey(Id))
+                    return BestiaryTextDB.OverrideSummaryTable[Id];
+
+                return summary;
+            }
+            set
+            {
+                summary = value;
+            }
+        }
+        public string Advice
+        {
+            get
+            {
+                if (BestiaryTextDB.OverrideAdviceTable.ContainsKey(Id))
+                    return BestiaryTextDB.OverrideAdviceTable[Id];
+
+                return advice;
+            }
+            set
+            {
+                advice = value;
+            }
+        }
+        public string Material
+        {
+            get
+            {
+                if (BestiaryTextDB.OverrideMaterialTable.ContainsKey(Id))
+                    return BestiaryTextDB.OverrideMaterialTable[Id];
+
+                return material;
+            }
+            set
+            {
+                material = value;
+            }
+        }
+        public string Language
+        {
+            get
+            {
+                if (BestiaryTextDB.OverrideLanguageTable.ContainsKey(Id))
+                    return BestiaryTextDB.OverrideLanguageTable[Id];
+
+                return language;
+            }
+            set
+            {
+                language = value;
+            }
+        }
+        public string[] Abilities
+        {
+            get
+            {
+                if (BestiaryTextDB.OverrideAbilitiesTable.ContainsKey(Id))
+                    return BestiaryTextDB.OverrideAbilitiesTable[Id];
+
+                return abilities;
+            }
+            set
+            {
+                abilities = value;
+            }
+        }
+        public int[] Spells
+        {
+            get
+            {
+                if (BestiaryTextDB.OverrideSpellsIdsTable.ContainsKey(Id))
+                    return BestiaryTextDB.OverrideSpellsIdsTable[Id];
+
+                return spells;
+            }
+            set
+            {
+                spells = value;
+            }
+        }
+        public List<TextPair> Text
+        {
+            get
+            {
+                string[] AlternativeSpells;
+                List<TextPair> textPairs = new List<TextPair>();
+                if (Summary != null)
+                    textPairs.Add(new TextPair(BestiaryTextDB.SummaryLabel, Summary));
+                else
+                    textPairs.Add(new TextPair(BestiaryTextDB.SummaryLabel, BestiaryTextDB.NoneLabel));
+
+                if (Advice != null)
+                    textPairs.Add(new TextPair(BestiaryTextDB.AdviceLabel, Advice));
+                else
+                    textPairs.Add(new TextPair(BestiaryTextDB.AdviceLabel, BestiaryTextDB.NoneLabel));
+
+                if (Material != null)
+                    textPairs.Add(new TextPair(BestiaryTextDB.MaterialLabel, Material));
+                else
+                    textPairs.Add(new TextPair(BestiaryTextDB.MaterialLabel, BestiaryTextDB.NoneLabel));
+
+                if (Language != null)
+                    textPairs.Add(new TextPair(BestiaryTextDB.LanguageLabel, Language));
+                else
+                    textPairs.Add(new TextPair(BestiaryTextDB.LanguageLabel, BestiaryTextDB.NoneLabel));
+
+                if (Abilities != null)
+                    for (int i = 0; i < Abilities.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            textPairs.Add(new TextPair(BestiaryTextDB.AbilitiesLabel, Abilities[i]));
+                        }
+                        else
+                        {
+                            textPairs.Add(new TextPair(string.Empty, Abilities[i]));
+                        }
+                    }
+                else
+                    textPairs.Add(new TextPair(BestiaryTextDB.AbilitiesLabel, BestiaryTextDB.NoneLabel));
+
+                if (BestiaryTextDB.OverrideSpellsTable.ContainsKey(Id))
+                {
+                    AlternativeSpells = BestiaryTextDB.OverrideSpellsTable[Id];
+
+                    for (int i = 0; i < AlternativeSpells.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            textPairs.Add(new TextPair(BestiaryTextDB.SpellsLabel, AlternativeSpells[i]));
+                        }
+                        else
+                        {
+                            textPairs.Add(new TextPair(string.Empty, AlternativeSpells[i]));
+                        }
+                    }
+                }
+                else if (Spells != null)
+                {
+                    for (int i = 0; i < Spells.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            textPairs.Add(new TextPair(BestiaryTextDB.SpellsLabel, TextManager.Instance.GetLocalizedSpellName(Spells[i])));
+                        }
+                        else
+                        {
+                            textPairs.Add(new TextPair(string.Empty, TextManager.Instance.GetLocalizedSpellName(Spells[i])));
+                        }
+                    }
+                }
+                else
+                {
+                    textPairs.Add(new TextPair(BestiaryTextDB.SpellsLabel, BestiaryTextDB.NoneLabel));
+                }
+
+                return textPairs;
+            }
+        }
     }
+
     public class Summary
     {
+        public Summary(string title, string summary, MonsterCareers[] monsters)
+        {
+            Title = BestiaryTextDB.SummarySubTitle + " - " + title;
+
+            Text = new List<TextPair>
+            {
+                new TextPair(BestiaryTextDB.OverviewLabel, summary),
+                new TextPair(string.Empty, string.Empty),
+            };
+
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                uint kills;
+                string mName = TextManager.Instance.GetLocalizedEnemyName((int)monsters[i]);
+
+                BestiaryMain.killCounts.TryGetValue(mName, out kills);
+                string text = mName + " - " + kills;
+
+                if (i == 0)
+                    Text.Add(new TextPair(BestiaryTextDB.KillcountLabel, text));
+                else
+                    Text.Add(new TextPair(string.Empty, text));
+            }
+        }
         public Summary(string assetPath)
         {
             Name = assetPath;
-            Title = "Summary constructor error";
-            Text = new List<TextPair>();
-
-            List<string> rawText = new List<string>(ModManager.Instance.GetMod("Bestiary").GetAsset<TextAsset>(Name).text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-            bool foundKillcountStart = false;
-            for (int i = 0; i < rawText.Count; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        if (DaggerfallUnity.Settings.SDFFontRendering)
-                            Title = rawText[i];
-                        else
-                            Title = rawText[i].Replace(" - ", " "); ;
-                        break;
-                    default:
-                        if (rawText[i].Length > 2 && rawText[i].Contains("*"))
-                        {
-                            var splitResult = rawText[i].Split('*');
-                            if (!foundKillcountStart && splitResult[0] == "Killcount:")
-                                foundKillcountStart = true;
-
-                            if (foundKillcountStart && splitResult[1].Length > 3)
-                            {
-                                string temp = AllTextClass.EntryTitleToEntryName(splitResult[1].Remove(splitResult[1].Length - 3));
-
-                                if (BestiaryMain.killCounts.ContainsKey(temp))
-                                    Text.Add(new TextPair(splitResult[0], splitResult[1] + BestiaryMain.killCounts[temp]));
-                                else
-                                    Text.Add(new TextPair(splitResult[0], splitResult[1] + "0"));
-                            }
-                            else
-                                Text.Add(new TextPair(splitResult[0], splitResult[1]));
-                        }
-                        break;
-                }
-            }
         }
         public void DebugThis()
         {

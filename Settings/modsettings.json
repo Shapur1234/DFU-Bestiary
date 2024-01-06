@@ -1,5 +1,5 @@
 {
-    "Version": "1.5",
+    "Version": "2.0",
     "Sections": [
         {
             "Name": "Gameplay",
@@ -60,7 +60,7 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 },
                 {
-                    "Min": 30,
+                    "Min": 1,
                     "Max": 120,
                     "Value": 50,
                     "Name": "DelayBetweenAnimationFrames",

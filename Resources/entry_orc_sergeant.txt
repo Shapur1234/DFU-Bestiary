@@ -1,9 +1,0 @@
-267
-button_orc_sergeant
-Orc Sergeant
-Summary:*Orc Sergeants are Orcish fighters who are more powerful and well-equipped than normal Orcs. Orc Sergeants can be distinguished from their lesser brethren by their double-bladed axes, boots, and heavier armor.
-Advice:*Melee attacks.
-Material:*No special material is required
-Language:*Orcish
-Abilities:*None
-Spells:*None

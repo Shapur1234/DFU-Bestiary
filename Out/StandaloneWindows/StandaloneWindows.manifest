@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 1787425663
+CRC: 2590629712
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: bestiary - dream patch.dfmod
+      Name: bestiary.dfmod
       Dependencies: {}
