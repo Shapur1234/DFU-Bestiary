@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2151140786
+CRC: 414404893
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 189fb4bf1581b811dc597118f23c80a3
+    Hash: f0d29f33bf0691998850dc208bdd6f42
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8568e5201f97321957c300bce0003f95
@@ -18,8 +18,8 @@ Assets:
 - Assets/Game/Mods/Bestiary/Bestiary.dfmod.json
 - Assets/Game/Mods/Bestiary/Textures/button_gargoyle.png
 - Assets/Game/Mods/Bestiary/Textures/button_sabertooth_tiger.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryItem.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/base_background.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_mummy.png
 - Assets/Untracked/ModBuilder/Bestiary/BestiaryTextDB.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_iron_atronach.png
@@ -36,8 +36,11 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_daedroth_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_ancient_lich_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_iron_atronach_active.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryItem.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_arrow_right.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_harpy.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryConsoleCommand.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_centaur_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_orc.png
 - Assets/Game/Mods/Bestiary/Textures/button_gargoyle_active.png
@@ -46,13 +49,13 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_imp_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_nymph_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_grizzly_bear_active.png
+- Assets/Untracked/ModBuilder/Bestiary/BestiaryText.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_flesh_atronach_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_orc_sergeant_active.png
 - Assets/Game/Mods/Bestiary/Textures/NoText.png
 - Assets/Game/Mods/Bestiary/Textures/button_nymph.png
 - Assets/Game/Mods/Bestiary/Textures/button_fire_daedra.png
 - Assets/Game/Mods/Bestiary/Textures/900_0-0.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryUI.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_lich.png
 - Assets/Game/Mods/Bestiary/Textures/button_flesh_atronach.png
 - Assets/Game/Mods/Bestiary/Textures/button_daedra_lord.png
@@ -62,7 +65,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_orc_shaman_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_slaughterfish_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_rat.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryText.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_centaur.png
 - Assets/Game/Mods/Bestiary/Textures/button_rat_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_wraith_active.png
@@ -72,7 +74,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_wraith.png
 - Assets/Game/Mods/Bestiary/Textures/button_lich_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_giant_bat.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryConsoleCommand.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_harpy_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_spriggan_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_ghost.png
@@ -103,7 +104,6 @@ Assets:
 - Assets/Game/Mods/Bestiary/Textures/button_mummy_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_dreugh.png
 - Assets/Game/Mods/Bestiary/Textures/button_fire_daedra_active.png
-- Assets/Untracked/ModBuilder/Bestiary/BestiaryMain.cs.txt
 - Assets/Game/Mods/Bestiary/Textures/button_orc_shaman.png
 - Assets/Game/Mods/Bestiary/Textures/button_vampire_active.png
 - Assets/Game/Mods/Bestiary/Textures/button_giant_bat_active.png
