@@ -58,5 +58,4 @@ All credit goes to Jagget. He did all the work.
 Uplifted interface
 Added ACTIVE state to buttons
 Smashed some bugs
-PR
 ```
