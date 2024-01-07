@@ -1,9 +1,0 @@
-﻿Animals
-summary_animals
-entry_giant_bat
-entry_rat
-entry_grizzly_bear
-entry_sabertooth_tiger
-entry_scorpion
-entry_slaughterfish
-entry_spider

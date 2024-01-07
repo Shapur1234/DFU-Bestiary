@@ -1,7 +1,0 @@
-﻿Monsters - 1
-summary_monsters1
-entry_centaur
-entry_dragonling
-entry_dreugh
-entry_gargoyle
-entry_giant

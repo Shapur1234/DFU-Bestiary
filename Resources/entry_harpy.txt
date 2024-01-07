@@ -1,9 +1,0 @@
-268
-button_harpy
-Harpy
-Summary:*Harpies are humanoid-bird creatures with taloned feet.
-Advice:*Melee attacks are recommended.
-Material:*Dwarven or higher is required
-Language:*Harpy
-Abilities:*None
-Spells:*None

@@ -1,9 +1,0 @@
-261
-button_spider
-Spider
-Summary:*The spider is a large arachnid that can paralyze its victims.
-Advice:*If you lack immunity to paralysis, ranged attacks are preferable, especially at low levels. Spiders are quickly dispatched at higher levels with melee attacks.
-Material:*No special material is required
-Language:*None
-Abilities:*Paralyzing attacks
-Spells:*None

@@ -8,22 +8,21 @@ namespace BestiaryMod
     public class BestiaryItem : DaggerfallUnityItem
     {
         public const int templateIndex = 900;
-        private const string NAME = "Bestiary";
 
         public BestiaryItem()
             : base(ItemGroups.UselessItems2, templateIndex)
         {
-            shortName = NAME;
+            shortName = BestiaryTextDB.BestiaryTitle;
         }
 
         public override string ItemName
         {
-            get { return NAME; }
+            get { return BestiaryTextDB.BestiaryTitle; }
         }
 
         public override string LongName
         {
-            get { return NAME; }
+            get { return BestiaryTextDB.BestiaryTitle; }
         }
 
         public override bool UseItem(ItemCollection collection)
@@ -40,7 +39,7 @@ namespace BestiaryMod
                     if (!BestiaryMain.UnlockedBestiary)
                     {
                         BestiaryMain.UnlockedBestiary = true;
-                        BestiaryMain.DisplayMessage("You study the contents of the book closely. You have unlocked the Bestiary.");
+                        BestiaryMain.DisplayMessage(BestiaryTextDB.YouHaveUnlockedTheBestiary);
                     }
                     DaggerfallUI.UIManager.PushWindow(BestiaryMain.bestiaryUIScreen);
                     break;
