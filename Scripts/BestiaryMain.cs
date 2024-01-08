@@ -320,34 +320,38 @@ namespace BestiaryMod
 
         public static void EnemyDeath_OnEnemyDeath(object sender, EventArgs e)
         {
-            EnemyDeath enemyDeath = sender as EnemyDeath;
-            if (enemyDeath != null)
+            EnemyDeath enemyDeath = (EnemyDeath)sender;
+
+            DaggerfallEntityBehaviour entityBehaviour;
+
+            if (!enemyDeath.TryGetComponent<DaggerfallEntityBehaviour>(out entityBehaviour))
+                return;
+
+            EnemyEntity enemyEntity = (EnemyEntity)entityBehaviour.Entity;
+
+            if (enemyEntity == null)
+                return;
+
+            // Here we go. We don't need to count Humans
+            if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human)
+                return;
+
+            if (entityBehaviour.GetComponent<EnemySenses>().Target == GameManager.Instance.PlayerEntityBehaviour)
             {
-                DaggerfallEntityBehaviour entityBehaviour = enemyDeath.GetComponent<DaggerfallEntityBehaviour>();
-                if (entityBehaviour != null)
+                string mName = TextManager.Instance.GetLocalizedEnemyName(enemyEntity.CareerIndex);
+
+                if (killCounts.ContainsKey(mName))
                 {
-                    EnemyEntity enemyEntity = entityBehaviour.Entity as EnemyEntity;
-                    if (enemyEntity != null)
-                    {
-                        if (entityBehaviour.GetComponent<EnemySenses>().Target == GameManager.Instance.PlayerEntityBehaviour)
-                        {
-                            string mName = TextManager.Instance.GetLocalizedEnemyName(enemyEntity.CareerIndex);
-
-                            if (killCounts.ContainsKey(mName))
-                            {
-                                killCounts[mName] += 1;
-                            }
-                            else
-                            {
-                                if (SettingEntries == 1)
-                                    DaggerfallUI.AddHUDText(string.Format(BestiaryTextDB.AddedToTheBestiary, mName));
-
-                                killCounts.Add(mName, 1);
-                            }
-                            InitializeUI();
-                        }
-                    }
+                    killCounts[mName] += 1;
                 }
+                else
+                {
+                    if (SettingEntries == 1)
+                        DaggerfallUI.AddHUDText(string.Format(BestiaryTextDB.AddedToTheBestiary, mName));
+
+                    killCounts.Add(mName, 1);
+                }
+                InitializeUI();
             }
         }
 
@@ -358,11 +362,14 @@ namespace BestiaryMod
                 return;
 
             DaggerfallInterior interior = GameManager.Instance.PlayerEnterExit.Interior;
-            if (interior != null &&
-                e.ContainerType == LootContainerTypes.ShopShelves &&
-                interior.BuildingData.BuildingType == DFLocation.BuildingTypes.Bookseller)
+
+            if (interior == null) return;
+
+            DFLocation.BuildingData buildingData = interior.BuildingData;
+
+            if (e.ContainerType == LootContainerTypes.ShopShelves && buildingData.BuildingType == DFLocation.BuildingTypes.Bookseller)
             {
-                int numBooks = UnityEngine.Random.Range(0, interior.BuildingData.Quality / 5);
+                int numBooks = UnityEngine.Random.Range(0, buildingData.Quality / 5);
 
                 if (UnityEngine.Random.Range(1, 4) > 2)
                 {
@@ -378,25 +385,25 @@ namespace BestiaryMod
             if (!SettingSpawnItem)
                 return;
 
-            EnemyDeath enemyDeath = sender as EnemyDeath;
-            if (enemyDeath != null)
+            EnemyDeath enemyDeath = (EnemyDeath)sender;
+
+            DaggerfallEntityBehaviour entityBehaviour;
+
+            if (!enemyDeath.TryGetComponent<DaggerfallEntityBehaviour>(out entityBehaviour))
+                return;
+
+            EnemyEntity enemyEntity = entityBehaviour.Entity as EnemyEntity;
+
+            if (enemyEntity == null)
+                return;
+
+            if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human || HumanoidCheck(enemyEntity.MobileEnemy.ID))
             {
-                DaggerfallEntityBehaviour entityBehaviour = enemyDeath.GetComponent<DaggerfallEntityBehaviour>();
-                if (entityBehaviour != null)
+                int luckRoll = UnityEngine.Random.Range(1, 20) + ((playerEntity.Stats.LiveLuck / 10) - 5);
+                if (luckRoll > 18)
                 {
-                    EnemyEntity enemyEntity = entityBehaviour.Entity as EnemyEntity;
-                    if (enemyEntity != null)
-                    {
-                        if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human || HumanoidCheck(enemyEntity.MobileEnemy.ID))
-                        {
-                            int luckRoll = UnityEngine.Random.Range(1, 20) + ((playerEntity.Stats.LiveLuck / 10) - 5);
-                            if (luckRoll > 18)
-                            {
-                                DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
-                                entityBehaviour.CorpseLootContainer.Items.AddItem(bestiaryItem);
-                            }
-                        }
-                    }
+                    DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
+                    entityBehaviour.CorpseLootContainer.Items.AddItem(bestiaryItem);
                 }
             }
         }
