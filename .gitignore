@@ -1,1 +1,3 @@
 .vs
+*.manifest
+*.manifest.meta
