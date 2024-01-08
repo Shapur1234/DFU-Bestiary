@@ -45,7 +45,6 @@ namespace BestiaryMod
         public Type SaveDataType { get { return typeof(MyModSaveData); } }
         public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
         public static bool UnlockedBestiary { get; set; }
-        public static bool ConvertedBestiarySaveData { get; set; }
         #endregion
         public static BestiaryMain instance;
         public static BestiaryUI bestiaryUIScreen;
@@ -82,8 +81,8 @@ namespace BestiaryMod
             mod.LoadSettingsCallback = LoadSettings;
             StateManager.OnStartNewGame += OnGameStarted;
             StartGameBehaviour.OnStartGame += OnNewGameStarted;
-            EnemyDeath.OnEnemyDeath += EnemyDeath_OnEnemyDeath;
             PlayerActivate.OnLootSpawned += AddBestiary_OnLootSpawned;
+            EnemyDeath.OnEnemyDeath += EnemyDeath_OnEnemyDeath;
             EnemyDeath.OnEnemyDeath += BestiaryLoot_OnEnemyDeath;
         }
 
@@ -307,12 +306,14 @@ namespace BestiaryMod
         {
             switch (enemyID)
             {
-                case (int)MobileTypes.Orc:
                 case (int)MobileTypes.Centaur:
-                case (int)MobileTypes.OrcSergeant:
                 case (int)MobileTypes.Giant:
+                case (int)MobileTypes.Orc:
+                case (int)MobileTypes.OrcSergeant:
                 case (int)MobileTypes.OrcShaman:
                 case (int)MobileTypes.OrcWarlord:
+                case (int)MobileTypes.Vampire:
+                case (int)MobileTypes.VampireAncient:
                     return true;
             }
             return false;
@@ -451,7 +452,7 @@ namespace BestiaryMod
         {
             return new MyModSaveData
             {
-                ConvertedBestiarySaveData = ConvertedBestiarySaveData,
+                ConvertedBestiarySaveData = true,
                 KillCounts = killCounts,
                 UnlockedBestiary = UnlockedBestiary
             };
@@ -462,20 +463,23 @@ namespace BestiaryMod
 
             if (!myModSaveData.ConvertedBestiarySaveData)
             {
-                var newKillCounts = new Dictionary<string, uint>();
-
-                foreach (var KillCount in myModSaveData.KillCounts)
+                try
                 {
-                    newKillCounts.Add(BestiarySaveConvert.Convert(KillCount.Key), KillCount.Value);
-                }
+                    var newKillCounts = new Dictionary<string, uint>();
 
-                myModSaveData.KillCounts = newKillCounts;
-                myModSaveData.ConvertedBestiarySaveData = true;
+                    foreach (var KillCount in myModSaveData.KillCounts)
+                    {
+                        newKillCounts.Add(BestiarySaveConvert.Convert(KillCount.Key), KillCount.Value);
+                    }
+
+                    myModSaveData.KillCounts = newKillCounts;
+                }
+                catch
+                { }
             }
 
             killCounts = myModSaveData.KillCounts;
             UnlockedBestiary = myModSaveData.UnlockedBestiary;
-            ConvertedBestiarySaveData = myModSaveData.ConvertedBestiarySaveData;
         }
     }
 
