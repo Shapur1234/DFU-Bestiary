@@ -369,9 +369,7 @@ namespace BestiaryMod
 
             if (e.ContainerType == LootContainerTypes.ShopShelves && buildingData.BuildingType == DFLocation.BuildingTypes.Bookseller)
             {
-                int numBooks = UnityEngine.Random.Range(0, buildingData.Quality / 5);
-
-                if (UnityEngine.Random.Range(1, 4) > 2)
+                if (GetLuckRoll())
                 {
                     DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
                     e.Loot.AddItem(bestiaryItem);
@@ -399,8 +397,7 @@ namespace BestiaryMod
 
             if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human || HumanoidCheck(enemyEntity.MobileEnemy.ID))
             {
-                int luckRoll = UnityEngine.Random.Range(1, 20) + ((playerEntity.Stats.LiveLuck / 10) - 5);
-                if (luckRoll > 18)
+                if (GetLuckRoll())
                 {
                     DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
                     entityBehaviour.CorpseLootContainer.Items.AddItem(bestiaryItem);
@@ -430,6 +427,15 @@ namespace BestiaryMod
 
             daggerfallMessageBox.SetText(message);
             DaggerfallUI.UIManager.PushWindow(daggerfallMessageBox);
+        }
+
+        private static bool GetLuckRoll()
+        {
+            int luckRollModifier = UnityEngine.Random.Range(0, playerEntity.Stats.LiveLuck);
+            int baseRollChance = UnityEngine.Random.Range(0, 100);
+            int luckRoll = UnityEngine.Random.Range(0, baseRollChance + luckRollModifier);
+
+            return luckRoll > 90;
         }
 
         public object NewSaveData()
