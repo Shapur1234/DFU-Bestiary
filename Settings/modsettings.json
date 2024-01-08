@@ -9,24 +9,24 @@
                 {
                     "Options": [
                         "Always unlocked",
-                        "Item in inventory - You have to have the Bestiary item in your inventory",
-                        "Item unlock - Open the Bestiary with the Bestiary item in your inventory to unlock the Bestiary permanently"
+                        "Item in inventory - You must have the Bestiary item in your inventory.",
+                        "Item Unlock - Open the Bestiary with the Bestiary Item in your inventory to permanently unlock the Bestiary."
                     ],
                     "Value": 0,
                     "Name": "MenuUnlock",
-                    "Description": "What criteria do you have to fulfill to open the Bestiary?",
+                    "Description": "What are the requirements to open the Bestiary?",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 },
                 {
                     "Options": [
-                        "All - Everything is viewable",
-                        "Kill to unlock - Only display those beasts already slain",
-                        "Classic - Display only those beasts seen in one of Daggerfalls demos"
+                        "All - Everything is visible",
+                        "Kill to unlock - Only show beasts that have already been killed.",
+                        "Classic - Show only the beasts seen in one of the Daggerfalls demos."
                     ],
                     "Value": 0,
                     "Name": "Entries",
-                    "Description": "Witch entries (beasts) will be viewable in the Bestiary",
+                    "Description": "Which entries (beasts) will be visible in the bestiary",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 },
@@ -55,7 +55,7 @@
                     ],
                     "Value": 0,
                     "Name": "DefaultMobOrientation",
-                    "Description": "Select the default mob orientation in the menu.",
+                    "Description": "Select the default mob orientation from the menu.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 },
@@ -64,21 +64,21 @@
                     "Max": 120,
                     "Value": 50,
                     "Name": "DelayBetweenAnimationFrames",
-                    "Description": "Set the time it takes to switch one animation frame to another.",
+                    "Description": "Specify the time it takes to transition from one animation frame to another.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.SliderIntKey"
                 },
                 {
                     "Value": true,
                     "Name": "EnableAnimations",
-                    "Description": "Check to enable animations in the menu.",
+                    "Description": "Check this box to enable animations in the menu.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 },
                 {
                     "Value": true,
                     "Name": "EnableEightDirectionRotation",
-                    "Description": "ges are laggy, try disabeling this.ations. Not reccomended with DREAM. If  monster images are laggy, try disabeling this.",
+                    "Description": "Allow rotation of the monster image in the book. Not recommended for DREAM. If monster images are laggy, try disabling this.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 }
