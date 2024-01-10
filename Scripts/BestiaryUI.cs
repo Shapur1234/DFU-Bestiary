@@ -237,7 +237,6 @@ namespace BestiaryMod
         private TextLabel titleLabel;
 
         private List<Button> contentButtons = new List<Button>();
-        private Button summaryButton;
         private Button rightRotateButton;
         private Button pageRightButton;
         private Button pageLeftButton;
@@ -383,10 +382,7 @@ namespace BestiaryMod
             if (BestiaryMain.AllText.Pages.Count < currentPageIndex + 1) return;
 
             pageNameLabel.Text = BestiaryMain.AllText.Pages[currentPageIndex].Title;
-
             pageNameLabel.Position = new Vector2(pageNamePos[0] + ((pageNameSize[0] - pageNameLabel.TextWidth) / 2), pageNamePos[1]);
-            summaryButton.Position = pageNameLabel.Position;
-            summaryButton.Size = new Vector2(pageNameLabel.TextWidth, pageNameSize[1]);
         }
         private void LoadSummary(bool updateTexture = true)
         {
@@ -486,8 +482,10 @@ namespace BestiaryMod
             monsterNamePanel.Components.Add(monsterNameLabel);
 
             if (!DaggerfallUnity.Settings.SDFFontRendering)
+            {
                 monsterNameLabel.TextScale = 0.80f;
                 monsterNameLabel.Font = DaggerfallUI.LargeFont;
+            }
 
             exitButton = new Button();
             exitButton.Position = new Vector2(216, 187);
@@ -577,12 +575,6 @@ namespace BestiaryMod
             attackButton.BackgroundTexture = attackFalseTexture;
             attackButton.OnMouseClick += AttackButton_OnMouseClick;
             mainPanel.Components.Add(attackButton);
-
-            summaryButton = new Button();
-            summaryButton.Position = pageNamePos;
-            summaryButton.Size = pageNameSize;
-            summaryButton.OnMouseClick += summaryButton_OnMouseClick;
-            mainPanel.Components.Add(summaryButton);
 
             pageNameLabel = new TextLabel();
             pageNameLabel.Position = pageNamePos;
@@ -928,16 +920,6 @@ namespace BestiaryMod
                 currentTexture.AttackModeOffset = 0;
                 attackButton.BackgroundTexture = attackFalseTexture;
                 currentTexture.UpdateTextures();
-            }
-        }
-
-        protected void summaryButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-            if (BestiaryMain.AllText.Pages[currentPageIndex].PageSummary != null && currentEntryIndex != 69)
-            {
-                currentEntryIndex = 69;
-                LoadSummary(false);
             }
         }
     }
