@@ -46,7 +46,7 @@ namespace BestiaryMod
         public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
         public static bool UnlockedBestiary { get; set; }
         #endregion
-        public static BestiaryMain instance;
+        public static BestiaryMain Instance;
         public static BestiaryUI bestiaryUIScreen;
         public static AllTextClass AllText { get; set; }
 
@@ -72,12 +72,12 @@ namespace BestiaryMod
             mod = initParams.Mod;
 
             var go = new GameObject(mod.Title);
-            instance = go.AddComponent<BestiaryMain>();
+            Instance = go.AddComponent<BestiaryMain>();
 
             readyToOpenUI = false;
             DaggerfallUnity.Instance.ItemHelper.RegisterCustomItem(BestiaryItem.templateIndex, ItemGroups.UselessItems2, typeof(BestiaryItem));
 
-            mod.SaveDataInterface = instance;
+            mod.SaveDataInterface = Instance;
             mod.LoadSettingsCallback = LoadSettings;
             StateManager.OnStartNewGame += OnGameStarted;
             StartGameBehaviour.OnStartGame += OnNewGameStarted;
@@ -275,10 +275,12 @@ namespace BestiaryMod
 
             return result;
         }
+
         static void OnGameStarted(object sender, EventArgs e)
         {
             mod.LoadSettings();
         }
+
         static void OnNewGameStarted(object sender, EventArgs e)
         {
             mod.LoadSettings();
@@ -295,8 +297,6 @@ namespace BestiaryMod
             SettingEnableAllDirectionRotation = modSettings.GetBool("UserInterface", "EnableEightDirectionRotation");
 
             openMenuKeyCode = SetKeyFromText(modSettings.GetValue<string>("Controls", "Keybind"));
-
-            BestiaryTextDB.Setup();
 
             InitializeUI();
         }
@@ -436,7 +436,10 @@ namespace BestiaryMod
             int baseRollChance = UnityEngine.Random.Range(0, 100);
             int luckRoll = UnityEngine.Random.Range(0, baseRollChance + luckRollModifier);
 
-            return luckRoll > 90;
+            float dropChance = ((float)luckRoll / ((float)playerEntity.Stats.LiveLuck + 100f));
+
+            // Approx. 1 in 120 enemies
+            return dropChance > 0.8;
         }
 
         public object NewSaveData()
@@ -448,6 +451,7 @@ namespace BestiaryMod
                 ConvertedBestiarySaveData = true,
             };
         }
+
         public object GetSaveData()
         {
             return new MyModSaveData
@@ -457,6 +461,7 @@ namespace BestiaryMod
                 UnlockedBestiary = UnlockedBestiary
             };
         }
+
         public void RestoreSaveData(object saveData)
         {
             var myModSaveData = (MyModSaveData)saveData;
@@ -480,6 +485,11 @@ namespace BestiaryMod
 
             killCounts = myModSaveData.KillCounts;
             UnlockedBestiary = myModSaveData.UnlockedBestiary;
+        }
+
+        public Mod GetMod()
+        {
+            return mod;
         }
     }
 
