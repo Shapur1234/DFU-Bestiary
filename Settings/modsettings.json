@@ -1,5 +1,5 @@
 {
-    "Version": "2.0",
+    "Version": "2.0.0",
     "Sections": [
         {
             "Name": "Gameplay",
@@ -96,7 +96,7 @@
                         "r": 243,
                         "g": 239,
                         "b": 44,
-                        "a": 0
+                        "a": 255
                     },
                     "Name": "FontColor",
                     "Description": "Font color in the book.",
@@ -105,13 +105,37 @@
                 },
                 {
                     "Value": {
+                        "r": 93,
+                        "g": 77,
+                        "b": 12,
+                        "a": 255
+                    },
+                    "Name": "FontShadowColor",
+                    "Description": "Font shadow color in the book.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ColorKey"
+                },
+                {
+                    "Value": {
                         "r": 243,
                         "g": 239,
                         "b": 44,
-                        "a": 0
+                        "a": 255
                     },
                     "Name": "HeaderFontColor",
                     "Description": "Headers font color in the book.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ColorKey"
+                },
+                {
+                    "Value": {
+                        "r": 93,
+                        "g": 77,
+                        "b": 12,
+                        "a": 255
+                    },
+                    "Name": "HeaderFontShadowColor",
+                    "Description": "Headers font shadow color in the book.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ColorKey"
                 }

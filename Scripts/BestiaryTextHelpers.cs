@@ -25,7 +25,7 @@ namespace BestiaryMod
                 Font = font,
                 HorizontalAlignment = alignment,
                 TextColor = color,
-                ShadowColor = DaggerfallUI.DaggerfallDefaultShadowColor,
+                ShadowColor = BestiaryMain.SettingFontShadowColor,
                 ShadowPosition = DaggerfallUI.DaggerfallDefaultShadowPos,
                 WrapText = true,
                 WrapWords = true,

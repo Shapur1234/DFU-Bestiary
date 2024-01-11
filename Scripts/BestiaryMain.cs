@@ -60,7 +60,9 @@ namespace BestiaryMod
         public static bool SettingAnimate { get; set; }
         public static bool SettingEnableAllDirectionRotation { get; set; }
         public static Color32 SettingFontColor { get; set; }
+        public static Color32 SettingFontShadowColor { get; set; }
         public static Color32 SettingHeaderFontColor { get; set; }
+        public static Color32 SettingHeaderFontShadowColor { get; set; }
         #endregion
         private static PlayerEntity playerEntity = GameManager.Instance.PlayerEntity;
         private static KeyCode openMenuKeyCode;
@@ -317,6 +319,8 @@ namespace BestiaryMod
             SettingAnimationUpdateDelay = modSettings.GetValue<int>("UserInterface", "DelayBetweenAnimationFrames");
             SettingAnimate = modSettings.GetBool("UserInterface", "EnableAnimations");
             SettingEnableAllDirectionRotation = modSettings.GetBool("UserInterface", "EnableEightDirectionRotation");
+            SettingFontShadowColor = modSettings.GetColor("UserInterface", "FontShadowColor");
+            SettingHeaderFontShadowColor = modSettings.GetColor("UserInterface", "HeaderFontShadowColor");
             SettingFontColor = modSettings.GetColor("UserInterface", "FontColor");
             SettingHeaderFontColor = modSettings.GetColor("UserInterface", "HeaderFontColor");
 
