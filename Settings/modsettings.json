@@ -90,6 +90,30 @@
                     "Description": "Allow rotation of the monster image in the book. Not recommended for DREAM. If monster images are laggy, try disabling this.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
+                },
+                {
+                    "Value": {
+                        "r": 243,
+                        "g": 239,
+                        "b": 44,
+                        "a": 0
+                    },
+                    "Name": "FontColor",
+                    "Description": "Font color in the book.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ColorKey"
+                },
+                {
+                    "Value": {
+                        "r": 243,
+                        "g": 239,
+                        "b": 44,
+                        "a": 0
+                    },
+                    "Name": "HeaderFontColor",
+                    "Description": "Headers font color in the book.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ColorKey"
                 }
             ],
             "$version": "v1"

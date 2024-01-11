@@ -10,12 +10,12 @@ namespace BestiaryMod
     {
         public static TextLabel CreateSubtitle(string text)
         {
-            return CreateLabel(DaggerfallUI.DefaultFont, HorizontalAlignment.Left, DaggerfallUI.DaggerfallDefaultTextColor, $"   {text}", 1.4f);
+            return CreateLabel(DaggerfallUI.DefaultFont, HorizontalAlignment.Left, BestiaryMain.SettingFontColor, $"   {text}", 1.4f);
         }
 
         public static TextLabel CreateText(string text)
         {
-            return CreateLabel(DaggerfallUI.DefaultFont, HorizontalAlignment.Left, DaggerfallUI.DaggerfallDefaultTextColor, text, 1.1f);
+            return CreateLabel(DaggerfallUI.DefaultFont, HorizontalAlignment.Left, BestiaryMain.SettingFontColor, text, 1.1f);
         }
 
         public static TextLabel CreateLabel(DaggerfallFont font, HorizontalAlignment alignment, Color color, string text, float scale = 1.0f)

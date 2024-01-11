@@ -460,6 +460,7 @@ namespace BestiaryMod
             titleLabel.Size = new Vector2(52, 22);
             titleLabel.Font = DaggerfallUI.TitleFont;
             titleLabel.Text = BestiaryMain.AllText.BestiaryTitle;
+            titleLabel.TextColor = BestiaryMain.SettingHeaderFontColor;
 
             if (DaggerfallUnity.Settings.SDFFontRendering)
                 titleLabel.Position = new Vector2(15, 16);
@@ -474,6 +475,7 @@ namespace BestiaryMod
             monsterNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
             monsterNameLabel.HorizontalAlignment = HorizontalAlignment.Center;
             monsterNameLabel.Font = DaggerfallUI.TitleFont;
+            monsterNameLabel.TextColor = BestiaryMain.SettingHeaderFontColor;
             monsterNameLabel.Position = Vector2.zero;
             monsterNameLabel.MaxWidth = (int)monsterNamePanel.Size.x;
             monsterNameLabel.RectRestrictedRenderArea = monsterNamePanel.RectRestrictedRenderArea;
@@ -579,6 +581,7 @@ namespace BestiaryMod
             pageNameLabel = new TextLabel();
             pageNameLabel.Position = pageNamePos;
             pageNameLabel.Size = pageNameSize;
+            pageNameLabel.TextColor = BestiaryMain.SettingHeaderFontColor;
 
             if (DaggerfallUnity.Settings.SDFFontRendering)
                 pageNameLabel.Font = DaggerfallUI.LargeFont;
