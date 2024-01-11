@@ -713,6 +713,9 @@ namespace BestiaryMod
                 y += label.Size.y;
                 maxHeight += label.Size.y;
             }
+
+            // Reenable labels after scrollPosition reset
+            ScrollBook(0);
         }
 
 
