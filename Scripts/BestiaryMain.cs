@@ -497,8 +497,10 @@ namespace BestiaryMod
 
                     myModSaveData.KillCounts = newKillCounts;
                 }
-                catch
-                { }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
             }
 
             killCounts = myModSaveData.KillCounts;
