@@ -1,5 +1,5 @@
 {
-    "Version": "1.5",
+    "Version": "2.0",
     "Sections": [
         {
             "Name": "Gameplay",
@@ -36,6 +36,15 @@
                     "Description": "Will the Bestiary item spawn in the world?",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
+                },
+                {
+                    "Min": 0,
+                    "Max": 100,
+                    "Value": 0,
+                    "Name": "ItemSpawningExtraChance",
+                    "Description": "Add chance modifyer of finding Bestiary Book in loot.",
+                    "$version": "v1",
+                    "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.SliderIntKey"
                 }
             ],
             "$version": "v1"

@@ -54,6 +54,7 @@ namespace BestiaryMod
         public static int SettingMenuUnlock { get; set; }
         public static int SettingEntries { get; set; }
         public static bool SettingSpawnItem { get; set; }
+        public static int SettingItemSpawningExtraChance { get; set; }
         public static int SettingDefaultRotation { get; set; }
         public static int SettingAnimationUpdateDelay { get; set; }
         public static bool SettingAnimate { get; set; }
@@ -309,6 +310,7 @@ namespace BestiaryMod
             SettingMenuUnlock = modSettings.GetValue<int>("Gameplay", "MenuUnlock");
             SettingEntries = modSettings.GetValue<int>("Gameplay", "Entries");
             SettingSpawnItem = modSettings.GetBool("Gameplay", "ItemSpawning");
+            SettingItemSpawningExtraChance = modSettings.GetInt("Gameplay", "ItemSpawningExtraChance");
             SettingDefaultRotation = modSettings.GetValue<int>("UserInterface", "DefaultMobOrientation");
             SettingAnimationUpdateDelay = modSettings.GetValue<int>("UserInterface", "DelayBetweenAnimationFrames");
             SettingAnimate = modSettings.GetBool("UserInterface", "EnableAnimations");
@@ -450,14 +452,15 @@ namespace BestiaryMod
 
         private static bool GetLuckRoll()
         {
-            int luckRollModifier = UnityEngine.Random.Range(0, playerEntity.Stats.LiveLuck);
-            int baseRollChance = UnityEngine.Random.Range(0, 100);
-            int luckRoll = UnityEngine.Random.Range(0, baseRollChance + luckRollModifier);
+            // Base roll 0 to 10
+            int baseRollChance = UnityEngine.Random.Range(0, 10);
+            // Added chance 1 to 50
+            int addedFromSettings = (int)Math.Ceiling(SettingItemSpawningExtraChance / 2f);
+            // Player luck 1 to 10
+            int luckRollModifier = (int)Math.Ceiling(UnityEngine.Random.Range(0, playerEntity.Stats.LiveLuck) / 10f);
 
-            float dropChance = ((float)luckRoll / ((float)playerEntity.Stats.LiveLuck + 100f));
-
-            // Approx. 1 in 120 enemies
-            return dropChance > 0.8;
+            // from 2:100 to 70:100 chance of success
+            return Dice100.SuccessRoll(baseRollChance + addedFromSettings + luckRollModifier);
         }
 
         public object NewSaveData()
