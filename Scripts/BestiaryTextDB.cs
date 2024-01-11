@@ -19,295 +19,295 @@ namespace BestiaryMod
 
         #region Strings
         // General
-        public static string NoneLabel = BestiaryMain.Instance.GetMod().Localize("NoneLabel");
-        public static string AbilitiesLabel = BestiaryMain.Instance.GetMod().Localize("AbilitiesLabel");
-        public static string AdviceLabel = BestiaryMain.Instance.GetMod().Localize("AdviceLabel");
-        public static string KillcountLabel = BestiaryMain.Instance.GetMod().Localize("KillcountLabel");
-        public static string LanguageLabel = BestiaryMain.Instance.GetMod().Localize("LanguageLabel");
-        public static string MaterialLabel = BestiaryMain.Instance.GetMod().Localize("MaterialLabel");
-        public static string OverviewLabel = BestiaryMain.Instance.GetMod().Localize("OverviewLabel");
-        public static string SpellsLabel = BestiaryMain.Instance.GetMod().Localize("SpellsLabel");
-        public static string SummaryLabel = BestiaryMain.Instance.GetMod().Localize("SummaryLabel");
-        public static string BestiaryTitle = BestiaryMain.Instance.GetMod().Localize("BestiaryTitle");
-        public static string SummarySubTitle = BestiaryMain.Instance.GetMod().Localize("SummarySubTitle");
-        public static string UnlockBestiaryToUseIt = BestiaryMain.Instance.GetMod().Localize("UnlockBestiaryToUseIt");
-        public static string YouDontHaveBestiary = BestiaryMain.Instance.GetMod().Localize("YouDontHaveBestiary");
-        public static string YouHaveUnlockedTheBestiary = BestiaryMain.Instance.GetMod().Localize("YouHaveUnlockedTheBestiary");
-        public static string AddedToTheBestiary = BestiaryMain.Instance.GetMod().Localize("AddedToTheBestiary");
+        public static string NoneLabel = BestiaryMain.Instance.Localize("NoneLabel");
+        public static string AbilitiesLabel = BestiaryMain.Instance.Localize("AbilitiesLabel");
+        public static string AdviceLabel = BestiaryMain.Instance.Localize("AdviceLabel");
+        public static string KillcountLabel = BestiaryMain.Instance.Localize("KillcountLabel");
+        public static string LanguageLabel = BestiaryMain.Instance.Localize("LanguageLabel");
+        public static string MaterialLabel = BestiaryMain.Instance.Localize("MaterialLabel");
+        public static string OverviewLabel = BestiaryMain.Instance.Localize("OverviewLabel");
+        public static string SpellsLabel = BestiaryMain.Instance.Localize("SpellsLabel");
+        public static string SummaryLabel = BestiaryMain.Instance.Localize("SummaryLabel");
+        public static string BestiaryTitle = BestiaryMain.Instance.Localize("BestiaryTitle");
+        public static string SummarySubTitle = BestiaryMain.Instance.Localize("SummarySubTitle");
+        public static string UnlockBestiaryToUseIt = BestiaryMain.Instance.Localize("UnlockBestiaryToUseIt");
+        public static string YouDontHaveBestiary = BestiaryMain.Instance.Localize("YouDontHaveBestiary");
+        public static string YouHaveUnlockedTheBestiary = BestiaryMain.Instance.Localize("YouHaveUnlockedTheBestiary");
+        public static string AddedToTheBestiary = BestiaryMain.Instance.Localize("AddedToTheBestiary");
 
         // Materials
-        public static string NoMaterial = BestiaryMain.Instance.GetMod().Localize("NoMaterial");
-        public static string MaterialMithril = BestiaryMain.Instance.GetMod().Localize("MaterialMithril");
-        public static string MaterialSilver = BestiaryMain.Instance.GetMod().Localize("MaterialSilver");
-        public static string MaterialDwarven = BestiaryMain.Instance.GetMod().Localize("MaterialDwarven");
-        public static string MaterialSteel = BestiaryMain.Instance.GetMod().Localize("MaterialSteel");
-        public static string MaterialElven = BestiaryMain.Instance.GetMod().Localize("MaterialElven");
+        public static string NoMaterial = BestiaryMain.Instance.Localize("NoMaterial");
+        public static string MaterialMithril = BestiaryMain.Instance.Localize("MaterialMithril");
+        public static string MaterialSilver = BestiaryMain.Instance.Localize("MaterialSilver");
+        public static string MaterialDwarven = BestiaryMain.Instance.Localize("MaterialDwarven");
+        public static string MaterialSteel = BestiaryMain.Instance.Localize("MaterialSteel");
+        public static string MaterialElven = BestiaryMain.Instance.Localize("MaterialElven");
 
         /*** PAGES ***/
         // Animals
-        public static string AnimalsTitle = BestiaryMain.Instance.GetMod().Localize("AnimalsTitle");
-        public static string AnimalsOverview = BestiaryMain.Instance.GetMod().Localize("AnimalsOverview");
+        public static string AnimalsTitle = BestiaryMain.Instance.Localize("AnimalsTitle");
+        public static string AnimalsOverview = BestiaryMain.Instance.Localize("AnimalsOverview");
 
         // Atronachs
-        public static string AtronachsTitle = BestiaryMain.Instance.GetMod().Localize("AtronachsTitle");
-        public static string AtronachsOverview = BestiaryMain.Instance.GetMod().Localize("AtronachsOverview");
+        public static string AtronachsTitle = BestiaryMain.Instance.Localize("AtronachsTitle");
+        public static string AtronachsOverview = BestiaryMain.Instance.Localize("AtronachsOverview");
 
         // Daedra
-        public static string DaedraTitle = BestiaryMain.Instance.GetMod().Localize("DaedraTitle");
-        public static string DaedraOverview = BestiaryMain.Instance.GetMod().Localize("DaedraOverview");
+        public static string DaedraTitle = BestiaryMain.Instance.Localize("DaedraTitle");
+        public static string DaedraOverview = BestiaryMain.Instance.Localize("DaedraOverview");
 
         // Lycanthropes
-        public static string LycanthropesTitle = BestiaryMain.Instance.GetMod().Localize("LycanthropesTitle");
-        public static string LycanthropesOverview = BestiaryMain.Instance.GetMod().Localize("LycanthropesOverview");
+        public static string LycanthropesTitle = BestiaryMain.Instance.Localize("LycanthropesTitle");
+        public static string LycanthropesOverview = BestiaryMain.Instance.Localize("LycanthropesOverview");
 
         // Monsters
-        public static string MonstersTitle = BestiaryMain.Instance.GetMod().Localize("MonstersTitle");
-        public static string MonstersOverview = BestiaryMain.Instance.GetMod().Localize("MonstersOverview");
+        public static string MonstersTitle = BestiaryMain.Instance.Localize("MonstersTitle");
+        public static string MonstersOverview = BestiaryMain.Instance.Localize("MonstersOverview");
 
         // Orcs
-        public static string OrcsTitle = BestiaryMain.Instance.GetMod().Localize("OrcsTitle");
-        public static string OrcsOverview = BestiaryMain.Instance.GetMod().Localize("OrcsOverview");
+        public static string OrcsTitle = BestiaryMain.Instance.Localize("OrcsTitle");
+        public static string OrcsOverview = BestiaryMain.Instance.Localize("OrcsOverview");
 
         // Undead
-        public static string UndeadTitle = BestiaryMain.Instance.GetMod().Localize("UndeadTitle");
-        public static string UndeadOverview = BestiaryMain.Instance.GetMod().Localize("UndeadOverview");
+        public static string UndeadTitle = BestiaryMain.Instance.Localize("UndeadTitle");
+        public static string UndeadOverview = BestiaryMain.Instance.Localize("UndeadOverview");
 
         /*** ENTRIES ***/
         //AncientLich
-        public static string AncientLichSummary = BestiaryMain.Instance.GetMod().Localize("AncientLichSummary");
-        public static string AncientLichAdvice = BestiaryMain.Instance.GetMod().Localize("AncientLichAdvice");
+        public static string AncientLichSummary = BestiaryMain.Instance.Localize("AncientLichSummary");
+        public static string AncientLichAdvice = BestiaryMain.Instance.Localize("AncientLichAdvice");
         public static string AncientLichMaterial = MaterialMithril;
         public static string AncientLichLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Etiquette);
 
         // Centaur
-        public static string CentaurSummary = BestiaryMain.Instance.GetMod().Localize("CentaurSummary");
-        public static string CentaurAdvice = BestiaryMain.Instance.GetMod().Localize("CentaurAdvice");
-        public static string CentaurAbility = BestiaryMain.Instance.GetMod().Localize("CentaurAbility");
+        public static string CentaurSummary = BestiaryMain.Instance.Localize("CentaurSummary");
+        public static string CentaurAdvice = BestiaryMain.Instance.Localize("CentaurAdvice");
+        public static string CentaurAbility = BestiaryMain.Instance.Localize("CentaurAbility");
         public static string CentaurLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Centaurian);
 
         // Daedra Lord
-        public static string DaedraLordSummary = BestiaryMain.Instance.GetMod().Localize("DaedraLordSummary");
-        public static string DaedraLordAdvice = BestiaryMain.Instance.GetMod().Localize("DaedraLordAdvice");
+        public static string DaedraLordSummary = BestiaryMain.Instance.Localize("DaedraLordSummary");
+        public static string DaedraLordAdvice = BestiaryMain.Instance.Localize("DaedraLordAdvice");
         public static string DaedraLordMaterial = MaterialMithril;
         public static string DaedraLordLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Daedric);
-        public static string DaedraLordAbilities = BestiaryMain.Instance.GetMod().Localize("DaedraLordAbilities");
+        public static string DaedraLordAbilities = BestiaryMain.Instance.Localize("DaedraLordAbilities");
 
         // Daedra Seducer
-        public static string DaedraSeducerSummary = BestiaryMain.Instance.GetMod().Localize("DaedraSeducerSummary");
-        public static string DaedraSeducerAdvice = BestiaryMain.Instance.GetMod().Localize("DaedraSeducerAdvice");
+        public static string DaedraSeducerSummary = BestiaryMain.Instance.Localize("DaedraSeducerSummary");
+        public static string DaedraSeducerAdvice = BestiaryMain.Instance.Localize("DaedraSeducerAdvice");
         public static string DaedraSeducerMaterial = MaterialMithril;
         public static string DaedraSeducerLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Daedric);
-        public static string DaedraSeducerAbilities = BestiaryMain.Instance.GetMod().Localize("DaedraSeducerAbilities");
+        public static string DaedraSeducerAbilities = BestiaryMain.Instance.Localize("DaedraSeducerAbilities");
 
         // Daedroth
-        public static string DaedrothSummary = BestiaryMain.Instance.GetMod().Localize("DaedrothSummary");
-        public static string DaedrothAdvice = BestiaryMain.Instance.GetMod().Localize("DaedrothAdvice");
+        public static string DaedrothSummary = BestiaryMain.Instance.Localize("DaedrothSummary");
+        public static string DaedrothAdvice = BestiaryMain.Instance.Localize("DaedrothAdvice");
         public static string DaedrothMaterial = MaterialMithril;
         public static string DaedrothLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Daedric);
-        public static string DaedrothAbilities = BestiaryMain.Instance.GetMod().Localize("DaedrothAbilities");
+        public static string DaedrothAbilities = BestiaryMain.Instance.Localize("DaedrothAbilities");
 
         // Dragonling
-        public static string DragonlingSummary = BestiaryMain.Instance.GetMod().Localize("DragonlingSummary");
-        public static string DragonlingAdvice = BestiaryMain.Instance.GetMod().Localize("DragonlingAdvice");
+        public static string DragonlingSummary = BestiaryMain.Instance.Localize("DragonlingSummary");
+        public static string DragonlingAdvice = BestiaryMain.Instance.Localize("DragonlingAdvice");
         public static string DragonlingLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Dragonish);
-        public static string DragonlingAbilities = BestiaryMain.Instance.GetMod().Localize("DragonlingAbilities");
+        public static string DragonlingAbilities = BestiaryMain.Instance.Localize("DragonlingAbilities");
 
         // Dreugh
-        public static string DreughSummary = BestiaryMain.Instance.GetMod().Localize("DreughSummary");
-        public static string DreughAdvice = BestiaryMain.Instance.GetMod().Localize("DreughAdvice");
+        public static string DreughSummary = BestiaryMain.Instance.Localize("DreughSummary");
+        public static string DreughAdvice = BestiaryMain.Instance.Localize("DreughAdvice");
         public static string DreughLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Impish);
-        public static string DreughAbilities = BestiaryMain.Instance.GetMod().Localize("DreughAbilities");
+        public static string DreughAbilities = BestiaryMain.Instance.Localize("DreughAbilities");
 
         // FireAtronach
-        public static string FireAtronachSummary = BestiaryMain.Instance.GetMod().Localize("FireAtronachSummary");
-        public static string FireAtronachAdvice = BestiaryMain.Instance.GetMod().Localize("FireAtronachAdvice");
-        public static string FireAtronachAbilities = BestiaryMain.Instance.GetMod().Localize("FireAtronachAbilities");
+        public static string FireAtronachSummary = BestiaryMain.Instance.Localize("FireAtronachSummary");
+        public static string FireAtronachAdvice = BestiaryMain.Instance.Localize("FireAtronachAdvice");
+        public static string FireAtronachAbilities = BestiaryMain.Instance.Localize("FireAtronachAbilities");
 
         // Fire Daedra
-        public static string FireDaedraSummary = BestiaryMain.Instance.GetMod().Localize("FireDaedraSummary");
-        public static string FireDaedraAdvice = BestiaryMain.Instance.GetMod().Localize("FireDaedraAdvice");
+        public static string FireDaedraSummary = BestiaryMain.Instance.Localize("FireDaedraSummary");
+        public static string FireDaedraAdvice = BestiaryMain.Instance.Localize("FireDaedraAdvice");
         public static string FireDaedraMaterial = MaterialMithril;
         public static string FireDaedraLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Daedric);
-        public static string FireDaedraAbilities = BestiaryMain.Instance.GetMod().Localize("FireDaedraAbilities");
+        public static string FireDaedraAbilities = BestiaryMain.Instance.Localize("FireDaedraAbilities");
 
         // Flesh Atronach
-        public static string FleshAtronachSummary = BestiaryMain.Instance.GetMod().Localize("FleshAtronachSummary");
-        public static string FleshAtronachAdvice = BestiaryMain.Instance.GetMod().Localize("FleshAtronachAdvice");
-        public static string FleshAtronachAbilities = BestiaryMain.Instance.GetMod().Localize("FleshAtronachAbilities");
+        public static string FleshAtronachSummary = BestiaryMain.Instance.Localize("FleshAtronachSummary");
+        public static string FleshAtronachAdvice = BestiaryMain.Instance.Localize("FleshAtronachAdvice");
+        public static string FleshAtronachAbilities = BestiaryMain.Instance.Localize("FleshAtronachAbilities");
 
         // Gargoyle
-        public static string GargoyleSummary = BestiaryMain.Instance.GetMod().Localize("GargoyleSummary");
-        public static string GargoyleAdvice = BestiaryMain.Instance.GetMod().Localize("GargoyleAdvice");
+        public static string GargoyleSummary = BestiaryMain.Instance.Localize("GargoyleSummary");
+        public static string GargoyleAdvice = BestiaryMain.Instance.Localize("GargoyleAdvice");
         public static string GargoyleMaterial = MaterialMithril;
         public static string GargoyleLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Giantish);
-        public static string GargoyleAbilities = BestiaryMain.Instance.GetMod().Localize("GargoyleAbilities");
+        public static string GargoyleAbilities = BestiaryMain.Instance.Localize("GargoyleAbilities");
 
         // Ghost
-        public static string GhostSummary = BestiaryMain.Instance.GetMod().Localize("GhostSummary");
-        public static string GhostAdvice = BestiaryMain.Instance.GetMod().Localize("GhostAdvice");
+        public static string GhostSummary = BestiaryMain.Instance.Localize("GhostSummary");
+        public static string GhostAdvice = BestiaryMain.Instance.Localize("GhostAdvice");
         public static string GhostMaterial = MaterialSilver;
 
         // Giant
-        public static string GiantSummary = BestiaryMain.Instance.GetMod().Localize("GiantSummary");
-        public static string GiantAdvice = BestiaryMain.Instance.GetMod().Localize("GiantAdvice");
+        public static string GiantSummary = BestiaryMain.Instance.Localize("GiantSummary");
+        public static string GiantAdvice = BestiaryMain.Instance.Localize("GiantAdvice");
         public static string GiantLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Giantish);
 
         // Giant Bat
-        public static string GiantBatSummary = BestiaryMain.Instance.GetMod().Localize("GiantBatSummary");
-        public static string GiantBatAdvice = BestiaryMain.Instance.GetMod().Localize("GiantBatAdvice");
-        public static string GiantBatAbilities = BestiaryMain.Instance.GetMod().Localize("GiantBatAbilities");
+        public static string GiantBatSummary = BestiaryMain.Instance.Localize("GiantBatSummary");
+        public static string GiantBatAdvice = BestiaryMain.Instance.Localize("GiantBatAdvice");
+        public static string GiantBatAbilities = BestiaryMain.Instance.Localize("GiantBatAbilities");
 
         // Grizzly bear
-        public static string GrizzlyBearSummary = BestiaryMain.Instance.GetMod().Localize("GrizzlyBearSummary");
-        public static string GrizzlyBearAdvice = BestiaryMain.Instance.GetMod().Localize("GrizzlyBearAdvice");
+        public static string GrizzlyBearSummary = BestiaryMain.Instance.Localize("GrizzlyBearSummary");
+        public static string GrizzlyBearAdvice = BestiaryMain.Instance.Localize("GrizzlyBearAdvice");
 
         // Harpy
-        public static string HarpySummary = BestiaryMain.Instance.GetMod().Localize("HarpySummary");
-        public static string HarpyAdvice = BestiaryMain.Instance.GetMod().Localize("HarpyAdvice");
+        public static string HarpySummary = BestiaryMain.Instance.Localize("HarpySummary");
+        public static string HarpyAdvice = BestiaryMain.Instance.Localize("HarpyAdvice");
         public static string HarpyMaterial = MaterialDwarven;
         public static string HarpyLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Harpy);
 
         // Ice atronach
-        public static string IceAtronachSummary = BestiaryMain.Instance.GetMod().Localize("IceAtronachSummary");
-        public static string IceAtronachAdvice = BestiaryMain.Instance.GetMod().Localize("IceAtronachAdvice");
-        public static string IceAtronachAbilities = BestiaryMain.Instance.GetMod().Localize("IceAtronachAbilities");
+        public static string IceAtronachSummary = BestiaryMain.Instance.Localize("IceAtronachSummary");
+        public static string IceAtronachAdvice = BestiaryMain.Instance.Localize("IceAtronachAdvice");
+        public static string IceAtronachAbilities = BestiaryMain.Instance.Localize("IceAtronachAbilities");
 
         // Frost Daedra
-        public static string FrostDaedraSummary = BestiaryMain.Instance.GetMod().Localize("FrostDaedraSummary");
-        public static string FrostDaedraAdvice = BestiaryMain.Instance.GetMod().Localize("FrostDaedraAdvice");
+        public static string FrostDaedraSummary = BestiaryMain.Instance.Localize("FrostDaedraSummary");
+        public static string FrostDaedraAdvice = BestiaryMain.Instance.Localize("FrostDaedraAdvice");
         public static string FrostDaedraMaterial = MaterialMithril;
         public static string FrostDaedraLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Daedric);
-        public static string FrostDaedraAbilities = BestiaryMain.Instance.GetMod().Localize("FrostDaedraAbilities");
+        public static string FrostDaedraAbilities = BestiaryMain.Instance.Localize("FrostDaedraAbilities");
 
         // Imp
-        public static string ImpSummary = BestiaryMain.Instance.GetMod().Localize("ImpSummary");
-        public static string ImpAdvice = BestiaryMain.Instance.GetMod().Localize("ImpAdvice");
+        public static string ImpSummary = BestiaryMain.Instance.Localize("ImpSummary");
+        public static string ImpAdvice = BestiaryMain.Instance.Localize("ImpAdvice");
         public static string ImpMaterial = MaterialSteel;
         public static string ImpLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Impish);
-        public static string ImpAbilities = BestiaryMain.Instance.GetMod().Localize("ImpAbilities");
+        public static string ImpAbilities = BestiaryMain.Instance.Localize("ImpAbilities");
 
         // Iron Atronach
-        public static string IronAtronachSummary = BestiaryMain.Instance.GetMod().Localize("IronAtronachSummary");
-        public static string IronAtronachAdvice = BestiaryMain.Instance.GetMod().Localize("IronAtronachAdvice");
-        public static string IronAtronachAbilities = BestiaryMain.Instance.GetMod().Localize("IronAtronachAbilities");
+        public static string IronAtronachSummary = BestiaryMain.Instance.Localize("IronAtronachSummary");
+        public static string IronAtronachAdvice = BestiaryMain.Instance.Localize("IronAtronachAdvice");
+        public static string IronAtronachAbilities = BestiaryMain.Instance.Localize("IronAtronachAbilities");
 
         // Lamia
-        public static string LamiaSummary = BestiaryMain.Instance.GetMod().Localize("LamiaSummary");
-        public static string LamiaAdvice = BestiaryMain.Instance.GetMod().Localize("LamiaAdvice");
+        public static string LamiaSummary = BestiaryMain.Instance.Localize("LamiaSummary");
+        public static string LamiaAdvice = BestiaryMain.Instance.Localize("LamiaAdvice");
         public static string LamiaLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Nymph);
-        public static string LamiaAbilities = BestiaryMain.Instance.GetMod().Localize("LamiaAbilities");
+        public static string LamiaAbilities = BestiaryMain.Instance.Localize("LamiaAbilities");
 
         // Lich
-        public static string LichSummary = BestiaryMain.Instance.GetMod().Localize("LichSummary");
-        public static string LichAdvice = BestiaryMain.Instance.GetMod().Localize("LichAdvice");
+        public static string LichSummary = BestiaryMain.Instance.Localize("LichSummary");
+        public static string LichAdvice = BestiaryMain.Instance.Localize("LichAdvice");
         public static string LichMaterial = MaterialMithril;
         public static string LichLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Etiquette);
-        public static string LichAbilities = BestiaryMain.Instance.GetMod().Localize("LichAbilities");
+        public static string LichAbilities = BestiaryMain.Instance.Localize("LichAbilities");
 
         // Mummy
-        public static string MummySummary = BestiaryMain.Instance.GetMod().Localize("MummySummary");
-        public static string MummyAdvice = BestiaryMain.Instance.GetMod().Localize("MummyAdvice");
+        public static string MummySummary = BestiaryMain.Instance.Localize("MummySummary");
+        public static string MummyAdvice = BestiaryMain.Instance.Localize("MummyAdvice");
         public static string MummyMaterial = MaterialSilver;
-        public static string MummyAbilities = BestiaryMain.Instance.GetMod().Localize("MummyAbilities");
+        public static string MummyAbilities = BestiaryMain.Instance.Localize("MummyAbilities");
 
         // Nymph
-        public static string NymphSummary = BestiaryMain.Instance.GetMod().Localize("NymphSummary");
-        public static string NymphAdvice = BestiaryMain.Instance.GetMod().Localize("NymphAdvice");
+        public static string NymphSummary = BestiaryMain.Instance.Localize("NymphSummary");
+        public static string NymphAdvice = BestiaryMain.Instance.Localize("NymphAdvice");
         public static string NymphMaterial = MaterialElven;
         public static string NymphLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Nymph);
-        public static string NymphAbilities = BestiaryMain.Instance.GetMod().Localize("NymphAbilities");
+        public static string NymphAbilities = BestiaryMain.Instance.Localize("NymphAbilities");
 
         // Orc
-        public static string OrcSummary = BestiaryMain.Instance.GetMod().Localize("OrcSummary");
-        public static string OrcAdvice = BestiaryMain.Instance.GetMod().Localize("OrcAdvice");
+        public static string OrcSummary = BestiaryMain.Instance.Localize("OrcSummary");
+        public static string OrcAdvice = BestiaryMain.Instance.Localize("OrcAdvice");
         public static string OrcLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Orcish);
-        public static string OrcAbilities = BestiaryMain.Instance.GetMod().Localize("OrcAbilities");
+        public static string OrcAbilities = BestiaryMain.Instance.Localize("OrcAbilities");
 
         // Orc Sergeant
-        public static string OrcSergeantSummary = BestiaryMain.Instance.GetMod().Localize("OrcSergeantSummary");
-        public static string OrcSergeantAdvice = BestiaryMain.Instance.GetMod().Localize("OrcSergeantAdvice");
+        public static string OrcSergeantSummary = BestiaryMain.Instance.Localize("OrcSergeantSummary");
+        public static string OrcSergeantAdvice = BestiaryMain.Instance.Localize("OrcSergeantAdvice");
         public static string OrcSergeantLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Orcish);
 
         // Orc Shaman
-        public static string OrcShamanSummary = BestiaryMain.Instance.GetMod().Localize("OrcShamanSummary");
-        public static string OrcShamanAdvice = BestiaryMain.Instance.GetMod().Localize("OrcShamanAdvice");
+        public static string OrcShamanSummary = BestiaryMain.Instance.Localize("OrcShamanSummary");
+        public static string OrcShamanAdvice = BestiaryMain.Instance.Localize("OrcShamanAdvice");
         public static string OrcShamanLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Orcish);
 
         // Orc Warlord
-        public static string OrcWarlordSummary = BestiaryMain.Instance.GetMod().Localize("OrcWarlordSummary");
-        public static string OrcWarlordAdvice = BestiaryMain.Instance.GetMod().Localize("OrcWarlordAdvice");
+        public static string OrcWarlordSummary = BestiaryMain.Instance.Localize("OrcWarlordSummary");
+        public static string OrcWarlordAdvice = BestiaryMain.Instance.Localize("OrcWarlordAdvice");
         public static string OrcWarlordLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Orcish);
 
         // Giant Rat
-        public static string RatSummary = BestiaryMain.Instance.GetMod().Localize("RatSummary");
-        public static string RatAdvice = BestiaryMain.Instance.GetMod().Localize("RatAdvice");
-        public static string RatAbilities = BestiaryMain.Instance.GetMod().Localize("RatAbilities");
+        public static string RatSummary = BestiaryMain.Instance.Localize("RatSummary");
+        public static string RatAdvice = BestiaryMain.Instance.Localize("RatAdvice");
+        public static string RatAbilities = BestiaryMain.Instance.Localize("RatAbilities");
 
         // Sabertooth Tiger
-        public static string SabertoothTigerSummary = BestiaryMain.Instance.GetMod().Localize("SabertoothTigerSummary");
-        public static string SabertoothTigerAdvice = BestiaryMain.Instance.GetMod().Localize("SabertoothTigerAdvice");
+        public static string SabertoothTigerSummary = BestiaryMain.Instance.Localize("SabertoothTigerSummary");
+        public static string SabertoothTigerAdvice = BestiaryMain.Instance.Localize("SabertoothTigerAdvice");
 
         // Scorpion
-        public static string GiantScorpionSummary = BestiaryMain.Instance.GetMod().Localize("GiantScorpionSummary");
-        public static string GiantScorpionAdvice = BestiaryMain.Instance.GetMod().Localize("GiantScorpionAdvice");
-        public static string GiantScorpionAbilities = BestiaryMain.Instance.GetMod().Localize("GiantScorpionAbilities");
+        public static string GiantScorpionSummary = BestiaryMain.Instance.Localize("GiantScorpionSummary");
+        public static string GiantScorpionAdvice = BestiaryMain.Instance.Localize("GiantScorpionAdvice");
+        public static string GiantScorpionAbilities = BestiaryMain.Instance.Localize("GiantScorpionAbilities");
 
         // Skeletal Warrior
-        public static string SkeletalWarriorSummary = BestiaryMain.Instance.GetMod().Localize("SkeletalWarriorSummary");
-        public static string SkeletalWarriorAdvice = BestiaryMain.Instance.GetMod().Localize("SkeletalWarriorAdvice");
-        public static string SkeletalWarriorAbilities = BestiaryMain.Instance.GetMod().Localize("SkeletalWarriorAbilities");
+        public static string SkeletalWarriorSummary = BestiaryMain.Instance.Localize("SkeletalWarriorSummary");
+        public static string SkeletalWarriorAdvice = BestiaryMain.Instance.Localize("SkeletalWarriorAdvice");
+        public static string SkeletalWarriorAbilities = BestiaryMain.Instance.Localize("SkeletalWarriorAbilities");
 
         // Slaughterfish
-        public static string SlaughterfishSummary = BestiaryMain.Instance.GetMod().Localize("SlaughterfishSummary");
-        public static string SlaughterfishAdvice = BestiaryMain.Instance.GetMod().Localize("SlaughterfishAdvice");
+        public static string SlaughterfishSummary = BestiaryMain.Instance.Localize("SlaughterfishSummary");
+        public static string SlaughterfishAdvice = BestiaryMain.Instance.Localize("SlaughterfishAdvice");
 
         // Spider
-        public static string SpiderSummary = BestiaryMain.Instance.GetMod().Localize("SpiderSummary");
-        public static string SpiderAdvice = BestiaryMain.Instance.GetMod().Localize("SpiderAdvice");
-        public static string SpiderAbilities = BestiaryMain.Instance.GetMod().Localize("SpiderAbilities");
+        public static string SpiderSummary = BestiaryMain.Instance.Localize("SpiderSummary");
+        public static string SpiderAdvice = BestiaryMain.Instance.Localize("SpiderAdvice");
+        public static string SpiderAbilities = BestiaryMain.Instance.Localize("SpiderAbilities");
 
         // Spriggan
-        public static string SprigganSummary = BestiaryMain.Instance.GetMod().Localize("SprigganSummary");
-        public static string SprigganAdvice = BestiaryMain.Instance.GetMod().Localize("SprigganAdvice");
+        public static string SprigganSummary = BestiaryMain.Instance.Localize("SprigganSummary");
+        public static string SprigganAdvice = BestiaryMain.Instance.Localize("SprigganAdvice");
         public static string SprigganLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Spriggan);
-        public static string SprigganAbilities = BestiaryMain.Instance.GetMod().Localize("SprigganAbilities");
+        public static string SprigganAbilities = BestiaryMain.Instance.Localize("SprigganAbilities");
 
         // Vampire
-        public static string VampireSummary = BestiaryMain.Instance.GetMod().Localize("VampireSummary");
-        public static string VampireAdvice = BestiaryMain.Instance.GetMod().Localize("VampireAdvice");
+        public static string VampireSummary = BestiaryMain.Instance.Localize("VampireSummary");
+        public static string VampireAdvice = BestiaryMain.Instance.Localize("VampireAdvice");
         public static string VampireMaterial = MaterialSilver;
         public static string VampireLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Etiquette);
-        public static string VampireAbilities = BestiaryMain.Instance.GetMod().Localize("VampireAbilities");
+        public static string VampireAbilities = BestiaryMain.Instance.Localize("VampireAbilities");
 
         // Vampire Ancient
-        public static string VampireAncientSummary = BestiaryMain.Instance.GetMod().Localize("VampireAncientSummary");
-        public static string VampireAncientAdvice = BestiaryMain.Instance.GetMod().Localize("VampireAncientAdvice");
+        public static string VampireAncientSummary = BestiaryMain.Instance.Localize("VampireAncientSummary");
+        public static string VampireAncientAdvice = BestiaryMain.Instance.Localize("VampireAncientAdvice");
         public static string VampireAncientMaterial = MaterialMithril;
         public static string VampireAncientLanguage = DaggerfallUnity.Instance.TextProvider.GetSkillName(DFCareer.Skills.Etiquette);
-        public static string VampireAncientAbilities = BestiaryMain.Instance.GetMod().Localize("VampireAncientAbilities");
+        public static string VampireAncientAbilities = BestiaryMain.Instance.Localize("VampireAncientAbilities");
 
         // Wereboar
-        public static string WereboarSummary = BestiaryMain.Instance.GetMod().Localize("WereboarSummary");
-        public static string WereboarAdvice = BestiaryMain.Instance.GetMod().Localize("WereboarAdvice");
+        public static string WereboarSummary = BestiaryMain.Instance.Localize("WereboarSummary");
+        public static string WereboarAdvice = BestiaryMain.Instance.Localize("WereboarAdvice");
         public static string WereboarMaterial = MaterialSilver;
-        public static string WereboarAbilities = BestiaryMain.Instance.GetMod().Localize("WereboarAbilities");
+        public static string WereboarAbilities = BestiaryMain.Instance.Localize("WereboarAbilities");
 
         // Werewolf
-        public static string WerewolfSummary = BestiaryMain.Instance.GetMod().Localize("WerewolfSummary");
-        public static string WerewolfAdvice = BestiaryMain.Instance.GetMod().Localize("WerewolfAdvice");
+        public static string WerewolfSummary = BestiaryMain.Instance.Localize("WerewolfSummary");
+        public static string WerewolfAdvice = BestiaryMain.Instance.Localize("WerewolfAdvice");
         public static string WerewolfMaterial = MaterialSilver;
-        public static string WerewolfAbilities = BestiaryMain.Instance.GetMod().Localize("WerewolfAbilities");
+        public static string WerewolfAbilities = BestiaryMain.Instance.Localize("WerewolfAbilities");
 
         // Wraith
-        public static string WraithSummary = BestiaryMain.Instance.GetMod().Localize("WraithSummary");
-        public static string WraithAdvice = BestiaryMain.Instance.GetMod().Localize("WraithAdvice");
+        public static string WraithSummary = BestiaryMain.Instance.Localize("WraithSummary");
+        public static string WraithAdvice = BestiaryMain.Instance.Localize("WraithAdvice");
         public static string WraithMaterial = MaterialSilver;
-        public static string WraithAbilities = BestiaryMain.Instance.GetMod().Localize("WraithAbilities");
+        public static string WraithAbilities = BestiaryMain.Instance.Localize("WraithAbilities");
 
         // Zombie
-        public static string ZombieSummary = BestiaryMain.Instance.GetMod().Localize("ZombieSummary");
-        public static string ZombieAdvice = BestiaryMain.Instance.GetMod().Localize("ZombieAdvice");
-        public static string ZombieAbilities = BestiaryMain.Instance.GetMod().Localize("ZombieAbilities");
+        public static string ZombieSummary = BestiaryMain.Instance.Localize("ZombieSummary");
+        public static string ZombieAdvice = BestiaryMain.Instance.Localize("ZombieAdvice");
+        public static string ZombieAbilities = BestiaryMain.Instance.Localize("ZombieAbilities");
         #endregion
 
 

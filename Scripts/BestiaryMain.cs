@@ -63,6 +63,9 @@ namespace BestiaryMod
         private static KeyCode openMenuKeyCode;
         private static bool readyToOpenUI;
 
+        Dictionary<string, string> baseText = null;
+        Dictionary<string, string> localization = null;
+
         private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
         private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
 
@@ -88,8 +91,23 @@ namespace BestiaryMod
 
         void Awake()
         {
+            LoadTextData();
+
             mod.MessageReceiver = MessageReceiver;
             mod.IsReady = true;
+        }
+
+        private void LoadTextData()
+        {
+            const string csvFilename = "BestiaryModData.csv";
+
+            if (baseText == null)
+                baseText = BestiaryModCSVParser.LoadDictionary(csvFilename);
+
+            if (localization == null)
+                localization = BestiaryModCSVParser.LoadDictionary(csvFilename, true);
+
+            return;
         }
 
         private void MessageReceiver(string message, object data, DFModMessageCallback callBack)
@@ -487,9 +505,15 @@ namespace BestiaryMod
             UnlockedBestiary = myModSaveData.UnlockedBestiary;
         }
 
-        public Mod GetMod()
+        public string Localize(string Key)
         {
-            return mod;
+            if (localization.ContainsKey(Key))
+                return localization[Key];
+
+            if (baseText.ContainsKey(Key))
+                return baseText[Key];
+
+            return string.Empty;
         }
     }
 

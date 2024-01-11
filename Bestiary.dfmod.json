@@ -108,7 +108,8 @@
         "Assets/Game/Mods/Bestiary/Bestiary.dfmod.json",
         "Assets/Game/Mods/Bestiary/ItemTemplates.json",
         "Assets/Game/Mods/Bestiary/Scripts/BestiaryTextHelpers.cs",
-        "Assets/Game/Mods/Bestiary/textdatabase.txt"
+        "Assets/Game/Mods/Bestiary/BestiaryModData.csv",
+        "Assets/Game/Mods/Bestiary/Scripts/BestiaryModCSVParser.cs"
     ],
     "Dependencies": [
         {
