@@ -1,6 +1,6 @@
 {
     "ModTitle": "Bestiary",
-    "ModVersion": "2.0",
+    "ModVersion": "2.0.0",
     "ModAuthor": "Shapur",
     "ContactInfo": "Shapur on the DFU Forums",
     "DFUnity_Version": "1.0.0",
@@ -106,7 +106,10 @@
         "Assets/Game/Mods/Bestiary/Textures/button_skeletal_warrior.png",
         "Assets/Game/Mods/Bestiary/Textures/button_skeletal_warrior_active.png",
         "Assets/Game/Mods/Bestiary/Bestiary.dfmod.json",
-        "Assets/Game/Mods/Bestiary/ItemTemplates.json"
+        "Assets/Game/Mods/Bestiary/ItemTemplates.json",
+        "Assets/Game/Mods/Bestiary/Scripts/BestiaryTextHelpers.cs",
+        "Assets/Game/Mods/Bestiary/BestiaryModData.csv",
+        "Assets/Game/Mods/Bestiary/Scripts/BestiaryModCSVParser.cs"
     ],
     "Dependencies": [
         {

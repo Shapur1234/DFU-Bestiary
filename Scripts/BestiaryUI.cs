@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 using DaggerfallConnect;
 using DaggerfallConnect.Arena2;
@@ -178,10 +177,6 @@ namespace BestiaryMod
         }
 
         public bool isShowing;
-        #region uiLayoutVars
-        private int descriptionLabelMaxCharacters;
-        private int textLabelXOffset;
-        #endregion
 
         #region textureNameVars
         private const string blankTextureName = "blank";
@@ -220,17 +215,28 @@ namespace BestiaryMod
         private static readonly Vector2 imagePanelBasePos = new Vector2(18, 51);
         private static readonly Vector2 imagePanelMaxSize = new Vector2(102, 102);
 
+        const float scrollAmount = 24;
+        Vector2 pagePanelPositionClassic = new Vector2(148, 40);
+        Vector2 pagePanelSizeClassic = new Vector2(159, 138);
+        Vector2 pagePanelPositionSDF = new Vector2(143, 40);
+        Vector2 pagePanelSizeSDF = new Vector2(169, 138);
+        Vector2 pagePanelPosition = Vector2.zero;
+        Vector2 pagePanelSize = Vector2.zero;
+
         static Panel imagePanel;
         private Panel mainPanel;
 
-        private List<TextLabel> descriptionLabels = new List<TextLabel>();
-        private List<TextLabel> subtitleLabels = new List<TextLabel>();
+        List<TextLabel> bookLabels = new List<TextLabel>();
+        Panel pagePanel = null;
+        Panel monsterNamePanel = null;
+        float maxHeight = 0;
+        float scrollPosition = 0;
+
         private TextLabel monsterNameLabel;
         private TextLabel pageNameLabel;
         private TextLabel titleLabel;
 
         private List<Button> contentButtons = new List<Button>();
-        private Button summaryButton;
         private Button rightRotateButton;
         private Button pageRightButton;
         private Button pageLeftButton;
@@ -243,9 +249,7 @@ namespace BestiaryMod
         private TextureInfo currentTexture = null;
         private static int currentEntryIndex;
         private static int currentPageIndex;
-        private static List<TextPair> currentText;
         private int animationDelay;
-        private int scrollOffset;
         private static string arena2Path;
 
         public BestiaryUI(IUserInterfaceManager uiManager)
@@ -292,6 +296,10 @@ namespace BestiaryMod
         public override void OnPush()
         {
             base.OnPush();
+            if (IsSetup)
+            {
+                LayoutBookLabels();
+            }
             isShowing = true;
         }
 
@@ -374,16 +382,12 @@ namespace BestiaryMod
             if (BestiaryMain.AllText.Pages.Count < currentPageIndex + 1) return;
 
             pageNameLabel.Text = BestiaryMain.AllText.Pages[currentPageIndex].Title;
-
             pageNameLabel.Position = new Vector2(pageNamePos[0] + ((pageNameSize[0] - pageNameLabel.TextWidth) / 2), pageNamePos[1]);
-            summaryButton.Position = pageNameLabel.Position;
-            summaryButton.Size = new Vector2(pageNameLabel.TextWidth, pageNameSize[1]);
         }
         private void LoadSummary(bool updateTexture = true)
         {
             if (BestiaryMain.AllText.Pages.Count < currentPageIndex + 1) return;
 
-            scrollOffset = 0;
             currentEntryIndex = 69;
 
             var imageIndexToLoad = UnityEngine.Random.Range(0, BestiaryMain.AllText.Pages[currentPageIndex].Entries.Count);
@@ -391,120 +395,60 @@ namespace BestiaryMod
                 currentTexture = new TextureInfo(BestiaryMain.AllText.Pages[currentPageIndex].Entries[imageIndexToLoad].TextureArchive);
 
             monsterNameLabel.Text = BestiaryMain.AllText.Pages[currentPageIndex].PageSummary.Title;
-            currentText = ProcessText(BestiaryMain.AllText.Pages[currentPageIndex].PageSummary.Text);
-            ApplyText();
+
+            bookLabels.Clear();
+            bookLabels = BestiaryMain.AllText.Pages[currentPageIndex].PageSummary.TextLabels;
+            LayoutBookLabels();
         }
         private void LoadEntry()
         {
-            scrollOffset = 0;
             if (currentTexture == null || BestiaryMain.AllText.Pages[currentPageIndex].Entries[currentEntryIndex].TextureArchive != currentTexture.Archive)
                 currentTexture = new TextureInfo(BestiaryMain.AllText.Pages[currentPageIndex].Entries[currentEntryIndex].TextureArchive);
 
             monsterNameLabel.Text = BestiaryMain.AllText.Pages[currentPageIndex].Entries[currentEntryIndex].Title;
-            currentText = ProcessText(BestiaryMain.AllText.Pages[currentPageIndex].Entries[currentEntryIndex].Text);
-            ApplyText();
-        }
-        private List<TextPair> ProcessText(List<TextPair> inputText)
-        {
-            List<TextPair> output = new List<TextPair>();
 
-            foreach (var item in inputText)
-            {
-                string temp = item.LeftText;
-                string[] splitText = SplitLineToMultiline(ReverseWords(item.RightText), descriptionLabelMaxCharacters).Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var itemm in splitText)
-                {
-                    output.Add(new TextPair(temp, itemm));
-                    temp = "";
-                }
-            }
-            return output;
-        }
-        private void ApplyText()
-        {
-            ResetTextLabels();
-
-            if (scrollOffset < 0 || currentText.Count <= subtitleLabels.Count)
-                scrollOffset = 0;
-            else if (currentText.Count - scrollOffset <= 0)
-                scrollOffset = currentText.Count - 1;
-
-            var textCounter = scrollOffset;
-            for (var i = 0; textCounter < currentText.Count && i < subtitleLabels.Count && i < descriptionLabels.Count; i++)
-            {
-                subtitleLabels[i].Text = currentText[textCounter].LeftText;
-                descriptionLabels[i].Text = currentText[textCounter].RightText;
-                textCounter += 1;
-            }
+            bookLabels.Clear();
+            bookLabels = BestiaryMain.AllText.Pages[currentPageIndex].Entries[currentEntryIndex].TextLabels;
+            LayoutBookLabels();
         }
 
-        private void ResetTextLabels()
-        {
-            for (var i = 0; i < subtitleLabels.Count && i < descriptionLabels.Count; i++)
-            {
-                subtitleLabels[i].Text = "";
-                descriptionLabels[i].Text = "";
-            }
-        }
-        //Taken from here: https://codereview.stackexchange.com/questions/54697/convert-string-to-multiline-text.
-        private static string SplitLineToMultiline(string input, int rowLength)
-        {
-            StringBuilder line = new StringBuilder();
-            StringBuilder result = new StringBuilder();
-            Stack<string> stack = new Stack<string>(input.Split(' '));
-
-            while (stack.Count > 0)
-            {
-                var word = stack.Pop();
-                if (word.Length > rowLength)
-                {
-                    string head = word.Substring(0, rowLength);
-                    string tail = word.Substring(rowLength);
-
-                    word = head;
-                    stack.Push(tail);
-                }
-
-                if (line.Length + word.Length > rowLength)
-                {
-                    result.AppendLine(line.ToString());
-                    line.Clear();
-                }
-
-                line.Append(word + " ");
-            }
-            result.Append(line);
-            return result.ToString();
-        }
-
-        private static string ReverseWords(string sentence)
-        {
-            string[] words = sentence.Split(' ');
-            Array.Reverse(words);
-            return string.Join(" ", words);
-        }
         private void SetUpUIElements()
         {
+            ParentPanel.BackgroundColor = ScreenDimColor;
+
+            // Use smaller margins for SDF book text and wider margins for non-SDF (classic pixel font) text
             if (DaggerfallUnity.Settings.SDFFontRendering)
             {
-                descriptionLabelMaxCharacters = 48;
-                textLabelXOffset = 30;
+                pagePanelPosition = pagePanelPositionSDF;
+                pagePanelSize = pagePanelSizeSDF;
             }
             else
             {
-                descriptionLabelMaxCharacters = 24;
-                textLabelXOffset = 46;
+                pagePanelPosition = pagePanelPositionClassic;
+                pagePanelSize = pagePanelSizeClassic;
             }
-
-            ParentPanel.BackgroundColor = ScreenDimColor;
 
             mainPanel = DaggerfallUI.AddPanel(NativePanel, AutoSizeModes.None);
             mainPanel.Size = new Vector2(320, 200);
             mainPanel.BackgroundTexture = backgroundTexture;
             mainPanel.VerticalAlignment = VerticalAlignment.Middle;
             mainPanel.HorizontalAlignment = HorizontalAlignment.Center;
-            mainPanel.OnMouseScrollDown += MainPanel_OnMouseScrollDown;
-            mainPanel.OnMouseScrollUp += MainPanel_OnMouseScrollUp;
+
+            // Setup panel to contain text labels
+            pagePanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
+            pagePanel.Position = pagePanelPosition;
+            pagePanel.Size = pagePanelSize;
+            pagePanel.RectRestrictedRenderArea = new Rect(pagePanel.Position, pagePanel.Size);
+
+            // Setup panel to contain header
+            monsterNamePanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
+            monsterNamePanel.Position = new Vector2(144, 23);
+            monsterNamePanel.Size = new Vector2(159, 30);
+            monsterNamePanel.RectRestrictedRenderArea = new Rect(monsterNamePanel.Position, monsterNamePanel.Size);
+
+            NativePanel.OnMouseScrollDown += Panel_OnMouseScrollDown;
+            NativePanel.OnMouseScrollUp += Panel_OnMouseScrollUp;
+            LayoutBookLabels();
 
             imagePanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
             imagePanel.Size = imagePanelMaxSize;
@@ -516,6 +460,8 @@ namespace BestiaryMod
             titleLabel.Size = new Vector2(52, 22);
             titleLabel.Font = DaggerfallUI.TitleFont;
             titleLabel.Text = BestiaryMain.AllText.BestiaryTitle;
+            titleLabel.TextColor = BestiaryMain.SettingHeaderFontColor;
+            titleLabel.ShadowColor = BestiaryMain.SettingHeaderFontShadowColor;
 
             if (DaggerfallUnity.Settings.SDFFontRendering)
                 titleLabel.Position = new Vector2(15, 16);
@@ -527,37 +473,29 @@ namespace BestiaryMod
             mainPanel.Components.Add(titleLabel);
 
             monsterNameLabel = new TextLabel();
-            monsterNameLabel.Position = new Vector2(144, 24);
-            monsterNameLabel.Size = new Vector2(40, 14);
-            monsterNameLabel.Font = DaggerfallUI.LargeFont;
+            monsterNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
+            monsterNameLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            monsterNameLabel.Font = DaggerfallUI.TitleFont;
+            monsterNameLabel.TextColor = BestiaryMain.SettingHeaderFontColor;
+            monsterNameLabel.ShadowColor = BestiaryMain.SettingHeaderFontShadowColor;
+            monsterNameLabel.Position = Vector2.zero;
+            monsterNameLabel.MaxWidth = (int)monsterNamePanel.Size.x;
+            monsterNameLabel.RectRestrictedRenderArea = monsterNamePanel.RectRestrictedRenderArea;
+            monsterNameLabel.RestrictedRenderAreaCoordinateType = TextLabel.RestrictedRenderArea_CoordinateType.ParentCoordinates;
+
+            monsterNamePanel.Components.Add(monsterNameLabel);
 
             if (!DaggerfallUnity.Settings.SDFFontRendering)
-                monsterNameLabel.TextScale = 0.85f;
-
-            mainPanel.Components.Add(monsterNameLabel);
+            {
+                monsterNameLabel.TextScale = 0.80f;
+                monsterNameLabel.Font = DaggerfallUI.LargeFont;
+            }
 
             exitButton = new Button();
             exitButton.Position = new Vector2(216, 187);
             exitButton.Size = entryButtonSize;
             exitButton.OnMouseClick += ExitButton_OnMouseClick;
             mainPanel.Components.Add(exitButton);
-
-            int yPos = 40;
-            for (int i = 0; i < 14; i++)
-            {
-                subtitleLabels.Add(new TextLabel());
-                subtitleLabels[i].Position = new Vector2(144, yPos);
-                subtitleLabels[i].Size = new Vector2(40, 14);
-                mainPanel.Components.Add(subtitleLabels[i]);
-
-                descriptionLabels.Add(new TextLabel());
-                descriptionLabels[i].Position = new Vector2(144 + textLabelXOffset, yPos);
-                descriptionLabels[i].Size = new Vector2(124, 10);
-                descriptionLabels[i].MaxCharacters = descriptionLabelMaxCharacters;
-                mainPanel.Components.Add(descriptionLabels[i]);
-
-                yPos += 10;
-            }
 
             for (int i = 0; i < 9; i++)
             {
@@ -642,15 +580,11 @@ namespace BestiaryMod
             attackButton.OnMouseClick += AttackButton_OnMouseClick;
             mainPanel.Components.Add(attackButton);
 
-            summaryButton = new Button();
-            summaryButton.Position = pageNamePos;
-            summaryButton.Size = pageNameSize;
-            summaryButton.OnMouseClick += summaryButton_OnMouseClick;
-            mainPanel.Components.Add(summaryButton);
-
             pageNameLabel = new TextLabel();
             pageNameLabel.Position = pageNamePos;
             pageNameLabel.Size = pageNameSize;
+            pageNameLabel.TextColor = BestiaryMain.SettingHeaderFontColor;
+            pageNameLabel.ShadowColor = BestiaryMain.SettingHeaderFontShadowColor;
 
             if (DaggerfallUnity.Settings.SDFFontRendering)
                 pageNameLabel.Font = DaggerfallUI.LargeFont;
@@ -725,6 +659,7 @@ namespace BestiaryMod
             }
             LoadPage();
         }
+
         protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
@@ -739,6 +674,54 @@ namespace BestiaryMod
             {
                 contentButtons[i].BackgroundTexture = activeTexture;
             }
+        }
+
+        private void Panel_OnMouseScrollDown(BaseScreenComponent sender)
+        {
+            ScrollBook(-scrollAmount);
+        }
+
+        private void Panel_OnMouseScrollUp(BaseScreenComponent sender)
+        {
+            ScrollBook(scrollAmount);
+        }
+
+        void ScrollBook(float amount)
+        {
+            // Stop scrolling at top or bottom of book layout
+            if (amount < 0 && scrollPosition - pagePanel.Size.y - amount < -maxHeight)
+                return;
+            else if (amount > 0 && scrollPosition == 0)
+                return;
+
+            // Scroll label and only draw what can be seen
+            scrollPosition += amount;
+            foreach (TextLabel label in bookLabels)
+            {
+                label.Position = new Vector2(label.Position.x, label.Position.y + amount);
+                label.Enabled = label.Position.y < pagePanel.Size.y && label.Position.y + label.Size.y > 0;
+            }
+        }
+
+        void LayoutBookLabels()
+        {
+            maxHeight = 0;
+            scrollPosition = 0;
+            pagePanel.Components.Clear();
+            float x = 0, y = 0;
+            foreach (TextLabel label in bookLabels)
+            {
+                label.Position = new Vector2(x, y);
+                label.MaxWidth = (int)pagePanel.Size.x;
+                label.RectRestrictedRenderArea = pagePanel.RectRestrictedRenderArea;
+                label.RestrictedRenderAreaCoordinateType = TextLabel.RestrictedRenderArea_CoordinateType.ParentCoordinates;
+                pagePanel.Components.Add(label);
+                y += label.Size.y;
+                maxHeight += label.Size.y;
+            }
+
+            // Reenable labels after scrollPosition reset
+            ScrollBook(0);
         }
 
 
@@ -946,28 +929,6 @@ namespace BestiaryMod
                 currentTexture.AttackModeOffset = 0;
                 attackButton.BackgroundTexture = attackFalseTexture;
                 currentTexture.UpdateTextures();
-            }
-        }
-
-        protected void MainPanel_OnMouseScrollDown(BaseScreenComponent sender)
-        {
-            scrollOffset += 1;
-            ApplyText();
-        }
-
-        protected void MainPanel_OnMouseScrollUp(BaseScreenComponent sender)
-        {
-            scrollOffset -= 1;
-            ApplyText();
-        }
-
-        protected void summaryButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-            if (BestiaryMain.AllText.Pages[currentPageIndex].PageSummary != null && currentEntryIndex != 69)
-            {
-                currentEntryIndex = 69;
-                LoadSummary(false);
             }
         }
     }

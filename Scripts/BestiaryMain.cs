@@ -45,9 +45,8 @@ namespace BestiaryMod
         public Type SaveDataType { get { return typeof(MyModSaveData); } }
         public static Dictionary<string, uint> killCounts = new Dictionary<string, uint>();
         public static bool UnlockedBestiary { get; set; }
-        public static bool ConvertedBestiarySaveData { get; set; }
         #endregion
-        public static BestiaryMain instance;
+        public static BestiaryMain Instance;
         public static BestiaryUI bestiaryUIScreen;
         public static AllTextClass AllText { get; set; }
 
@@ -55,14 +54,22 @@ namespace BestiaryMod
         public static int SettingMenuUnlock { get; set; }
         public static int SettingEntries { get; set; }
         public static bool SettingSpawnItem { get; set; }
+        public static int SettingItemSpawningExtraChance { get; set; }
         public static int SettingDefaultRotation { get; set; }
         public static int SettingAnimationUpdateDelay { get; set; }
         public static bool SettingAnimate { get; set; }
         public static bool SettingEnableAllDirectionRotation { get; set; }
+        public static Color32 SettingFontColor { get; set; }
+        public static Color32 SettingFontShadowColor { get; set; }
+        public static Color32 SettingHeaderFontColor { get; set; }
+        public static Color32 SettingHeaderFontShadowColor { get; set; }
         #endregion
         private static PlayerEntity playerEntity = GameManager.Instance.PlayerEntity;
         private static KeyCode openMenuKeyCode;
         private static bool readyToOpenUI;
+
+        Dictionary<string, string> baseText = null;
+        Dictionary<string, string> localization = null;
 
         private static readonly List<string> pagesFull = new List<string> { "page_animals", "page_atronachs", "page_daedra", "page_lycanthropes", "page_monsters1", "page_monsters2", "page_orcs", "page_undead" };
         private static readonly List<string> pagesClassic = new List<string> { "page_classic" };
@@ -73,24 +80,39 @@ namespace BestiaryMod
             mod = initParams.Mod;
 
             var go = new GameObject(mod.Title);
-            instance = go.AddComponent<BestiaryMain>();
+            Instance = go.AddComponent<BestiaryMain>();
 
             readyToOpenUI = false;
             DaggerfallUnity.Instance.ItemHelper.RegisterCustomItem(BestiaryItem.templateIndex, ItemGroups.UselessItems2, typeof(BestiaryItem));
 
-            mod.SaveDataInterface = instance;
+            mod.SaveDataInterface = Instance;
             mod.LoadSettingsCallback = LoadSettings;
             StateManager.OnStartNewGame += OnGameStarted;
             StartGameBehaviour.OnStartGame += OnNewGameStarted;
-            EnemyDeath.OnEnemyDeath += EnemyDeath_OnEnemyDeath;
             PlayerActivate.OnLootSpawned += AddBestiary_OnLootSpawned;
+            EnemyDeath.OnEnemyDeath += EnemyDeath_OnEnemyDeath;
             EnemyDeath.OnEnemyDeath += BestiaryLoot_OnEnemyDeath;
         }
 
         void Awake()
         {
+            LoadTextData();
+
             mod.MessageReceiver = MessageReceiver;
             mod.IsReady = true;
+        }
+
+        private void LoadTextData()
+        {
+            const string csvFilename = "BestiaryModData.csv";
+
+            if (baseText == null)
+                baseText = BestiaryModCSVParser.LoadDictionary(csvFilename);
+
+            if (localization == null)
+                localization = BestiaryModCSVParser.LoadDictionary(csvFilename, true);
+
+            return;
         }
 
         private void MessageReceiver(string message, object data, DFModMessageCallback callBack)
@@ -276,10 +298,12 @@ namespace BestiaryMod
 
             return result;
         }
+
         static void OnGameStarted(object sender, EventArgs e)
         {
             mod.LoadSettings();
         }
+
         static void OnNewGameStarted(object sender, EventArgs e)
         {
             mod.LoadSettings();
@@ -290,14 +314,17 @@ namespace BestiaryMod
             SettingMenuUnlock = modSettings.GetValue<int>("Gameplay", "MenuUnlock");
             SettingEntries = modSettings.GetValue<int>("Gameplay", "Entries");
             SettingSpawnItem = modSettings.GetBool("Gameplay", "ItemSpawning");
+            SettingItemSpawningExtraChance = modSettings.GetInt("Gameplay", "ItemSpawningExtraChance");
             SettingDefaultRotation = modSettings.GetValue<int>("UserInterface", "DefaultMobOrientation");
             SettingAnimationUpdateDelay = modSettings.GetValue<int>("UserInterface", "DelayBetweenAnimationFrames");
             SettingAnimate = modSettings.GetBool("UserInterface", "EnableAnimations");
             SettingEnableAllDirectionRotation = modSettings.GetBool("UserInterface", "EnableEightDirectionRotation");
+            SettingFontShadowColor = modSettings.GetColor("UserInterface", "FontShadowColor");
+            SettingHeaderFontShadowColor = modSettings.GetColor("UserInterface", "HeaderFontShadowColor");
+            SettingFontColor = modSettings.GetColor("UserInterface", "FontColor");
+            SettingHeaderFontColor = modSettings.GetColor("UserInterface", "HeaderFontColor");
 
             openMenuKeyCode = SetKeyFromText(modSettings.GetValue<string>("Controls", "Keybind"));
-
-            BestiaryTextDB.Setup();
 
             InitializeUI();
         }
@@ -307,12 +334,14 @@ namespace BestiaryMod
         {
             switch (enemyID)
             {
-                case (int)MobileTypes.Orc:
                 case (int)MobileTypes.Centaur:
-                case (int)MobileTypes.OrcSergeant:
                 case (int)MobileTypes.Giant:
+                case (int)MobileTypes.Orc:
+                case (int)MobileTypes.OrcSergeant:
                 case (int)MobileTypes.OrcShaman:
                 case (int)MobileTypes.OrcWarlord:
+                case (int)MobileTypes.Vampire:
+                case (int)MobileTypes.VampireAncient:
                     return true;
             }
             return false;
@@ -320,34 +349,38 @@ namespace BestiaryMod
 
         public static void EnemyDeath_OnEnemyDeath(object sender, EventArgs e)
         {
-            EnemyDeath enemyDeath = sender as EnemyDeath;
-            if (enemyDeath != null)
+            EnemyDeath enemyDeath = (EnemyDeath)sender;
+
+            DaggerfallEntityBehaviour entityBehaviour;
+
+            if (!enemyDeath.TryGetComponent<DaggerfallEntityBehaviour>(out entityBehaviour))
+                return;
+
+            EnemyEntity enemyEntity = (EnemyEntity)entityBehaviour.Entity;
+
+            if (enemyEntity == null)
+                return;
+
+            // Here we go. We don't need to count Humans
+            if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human)
+                return;
+
+            if (entityBehaviour.GetComponent<EnemySenses>().Target == GameManager.Instance.PlayerEntityBehaviour)
             {
-                DaggerfallEntityBehaviour entityBehaviour = enemyDeath.GetComponent<DaggerfallEntityBehaviour>();
-                if (entityBehaviour != null)
+                string mName = TextManager.Instance.GetLocalizedEnemyName(enemyEntity.CareerIndex);
+
+                if (killCounts.ContainsKey(mName))
                 {
-                    EnemyEntity enemyEntity = entityBehaviour.Entity as EnemyEntity;
-                    if (enemyEntity != null)
-                    {
-                        if (entityBehaviour.GetComponent<EnemySenses>().Target == GameManager.Instance.PlayerEntityBehaviour)
-                        {
-                            string mName = TextManager.Instance.GetLocalizedEnemyName(enemyEntity.CareerIndex);
-
-                            if (killCounts.ContainsKey(mName))
-                            {
-                                killCounts[mName] += 1;
-                            }
-                            else
-                            {
-                                if (SettingEntries == 1)
-                                    DaggerfallUI.AddHUDText(string.Format(BestiaryTextDB.AddedToTheBestiary, mName));
-
-                                killCounts.Add(mName, 1);
-                            }
-                            InitializeUI();
-                        }
-                    }
+                    killCounts[mName] += 1;
                 }
+                else
+                {
+                    if (SettingEntries == 1)
+                        DaggerfallUI.AddHUDText(string.Format(BestiaryTextDB.AddedToTheBestiary, mName));
+
+                    killCounts.Add(mName, 1);
+                }
+                InitializeUI();
             }
         }
 
@@ -358,13 +391,14 @@ namespace BestiaryMod
                 return;
 
             DaggerfallInterior interior = GameManager.Instance.PlayerEnterExit.Interior;
-            if (interior != null &&
-                e.ContainerType == LootContainerTypes.ShopShelves &&
-                interior.BuildingData.BuildingType == DFLocation.BuildingTypes.Bookseller)
-            {
-                int numBooks = UnityEngine.Random.Range(0, interior.BuildingData.Quality / 5);
 
-                if (UnityEngine.Random.Range(1, 4) > 2)
+            if (interior == null) return;
+
+            DFLocation.BuildingData buildingData = interior.BuildingData;
+
+            if (e.ContainerType == LootContainerTypes.ShopShelves && buildingData.BuildingType == DFLocation.BuildingTypes.Bookseller)
+            {
+                if (GetLuckRoll())
                 {
                     DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
                     e.Loot.AddItem(bestiaryItem);
@@ -378,25 +412,24 @@ namespace BestiaryMod
             if (!SettingSpawnItem)
                 return;
 
-            EnemyDeath enemyDeath = sender as EnemyDeath;
-            if (enemyDeath != null)
+            EnemyDeath enemyDeath = (EnemyDeath)sender;
+
+            DaggerfallEntityBehaviour entityBehaviour;
+
+            if (!enemyDeath.TryGetComponent<DaggerfallEntityBehaviour>(out entityBehaviour))
+                return;
+
+            EnemyEntity enemyEntity = entityBehaviour.Entity as EnemyEntity;
+
+            if (enemyEntity == null)
+                return;
+
+            if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human || HumanoidCheck(enemyEntity.MobileEnemy.ID))
             {
-                DaggerfallEntityBehaviour entityBehaviour = enemyDeath.GetComponent<DaggerfallEntityBehaviour>();
-                if (entityBehaviour != null)
+                if (GetLuckRoll())
                 {
-                    EnemyEntity enemyEntity = entityBehaviour.Entity as EnemyEntity;
-                    if (enemyEntity != null)
-                    {
-                        if (enemyEntity.MobileEnemy.Affinity == MobileAffinity.Human || HumanoidCheck(enemyEntity.MobileEnemy.ID))
-                        {
-                            int luckRoll = UnityEngine.Random.Range(1, 20) + ((playerEntity.Stats.LiveLuck / 10) - 5);
-                            if (luckRoll > 18)
-                            {
-                                DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
-                                entityBehaviour.CorpseLootContainer.Items.AddItem(bestiaryItem);
-                            }
-                        }
-                    }
+                    DaggerfallUnityItem bestiaryItem = ItemBuilder.CreateItem(ItemGroups.UselessItems2, BestiaryItem.templateIndex);
+                    entityBehaviour.CorpseLootContainer.Items.AddItem(bestiaryItem);
                 }
             }
         }
@@ -425,6 +458,19 @@ namespace BestiaryMod
             DaggerfallUI.UIManager.PushWindow(daggerfallMessageBox);
         }
 
+        private static bool GetLuckRoll()
+        {
+            // Base roll 0 to 10
+            int baseRollChance = UnityEngine.Random.Range(0, 10);
+            // Added chance 1 to 50
+            int addedFromSettings = (int)Math.Ceiling(SettingItemSpawningExtraChance / 2f);
+            // Player luck 1 to 10
+            int luckRollModifier = (int)Math.Ceiling(UnityEngine.Random.Range(0, playerEntity.Stats.LiveLuck) / 10f);
+
+            // from 2:100 to 70:100 chance of success
+            return Dice100.SuccessRoll(baseRollChance + addedFromSettings + luckRollModifier);
+        }
+
         public object NewSaveData()
         {
             return new MyModSaveData
@@ -434,35 +480,53 @@ namespace BestiaryMod
                 ConvertedBestiarySaveData = true,
             };
         }
+
         public object GetSaveData()
         {
             return new MyModSaveData
             {
-                ConvertedBestiarySaveData = ConvertedBestiarySaveData,
+                ConvertedBestiarySaveData = true,
                 KillCounts = killCounts,
                 UnlockedBestiary = UnlockedBestiary
             };
         }
+
         public void RestoreSaveData(object saveData)
         {
             var myModSaveData = (MyModSaveData)saveData;
 
             if (!myModSaveData.ConvertedBestiarySaveData)
             {
-                var newKillCounts = new Dictionary<string, uint>();
-
-                foreach (var KillCount in myModSaveData.KillCounts)
+                try
                 {
-                    newKillCounts.Add(BestiarySaveConvert.Convert(KillCount.Key), KillCount.Value);
-                }
+                    var newKillCounts = new Dictionary<string, uint>();
 
-                myModSaveData.KillCounts = newKillCounts;
-                myModSaveData.ConvertedBestiarySaveData = true;
+                    foreach (var KillCount in myModSaveData.KillCounts)
+                    {
+                        newKillCounts.Add(BestiarySaveConvert.Convert(KillCount.Key), KillCount.Value);
+                    }
+
+                    myModSaveData.KillCounts = newKillCounts;
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
             }
 
             killCounts = myModSaveData.KillCounts;
             UnlockedBestiary = myModSaveData.UnlockedBestiary;
-            ConvertedBestiarySaveData = myModSaveData.ConvertedBestiarySaveData;
+        }
+
+        public string Localize(string Key)
+        {
+            if (localization.ContainsKey(Key))
+                return localization[Key];
+
+            if (baseText.ContainsKey(Key))
+                return baseText[Key];
+
+            return string.Empty;
         }
     }
 
