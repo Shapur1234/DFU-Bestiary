@@ -11,9 +11,8 @@
 
 ## Screenshot
 
-![Without SDF fonts](./Screenshot/1.png)
-![With SDF fonts](./Screenshot/2.png)
-![DREAM version](./Screenshot/1.png)
+![Menu](./Screenshot/1.png)
+![Settings page](./Screenshot/3.png)
 
 ## Description
 
