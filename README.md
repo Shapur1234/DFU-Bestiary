@@ -9,6 +9,12 @@
 
 [Bestiary Demonstration](https://youtu.be/bcpwmayP4M8)
 
+## Screenshot
+
+![Without SDF fonts](./Screenshot/1.png)
+![With SDF fonts](./Screenshot/2.png)
+![DREAM version](./Screenshot/1.png)
+
 ## Description
 
 * Bestiary is a mod, that reintroduces the Bestiary as seen in one of Daggerfall's demos, and further builds upon it
