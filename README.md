@@ -54,8 +54,19 @@ Reworked a part of the internal, hopefully increasing stability
 Fixed a bunch of bugs
 
 1.5
-All credit goes to Jagget. He did all the work.
+All credit goes to Jagget
 Uplifted interface
 Added ACTIVE state to buttons
 Smashed some bugs
+
+2.0
+All credit goes to Jagget
+Reworked text database
+Reworked page rendering
+Fix humanoid bug
+Vampires could also carry the book
+The chance of the item spawning is lower now
+Makes the mod updatable from other mods. (No need to built-in support for Unleveled Spells)
+Fixed the darkened monster textures
+Added text color settings (for alternative skins)
 ```
