@@ -65,7 +65,7 @@ namespace BestiaryMod
                 }
                 catch
                 {
-                    // No origianl texture
+                    // No original texture
                 }
 
                 TextureReplacement.TryImportTexture(archive, record, frame, out externalTexture);
@@ -425,7 +425,7 @@ namespace BestiaryMod
         {
             if (BestiaryMain.AllText.Pages.Count < currentPageIndex + 1) return;
 
-            for (int i = 0; i < BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count && i < contentButtonTextures.Count; i++)
+            for (int i = 0; i < BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() && i < contentButtonTextures.Count; i++)
             {
                 contentButtonTextures[i] = DaggerfallUI.GetTextureFromResources(BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[i].ButtonTextureName);
                 if (!contentButtonTextures[i])
@@ -448,7 +448,7 @@ namespace BestiaryMod
 
             currentEntryIndex = 69;
 
-            var imageIndexToLoad = UnityEngine.Random.Range(0, BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count);
+            var imageIndexToLoad = UnityEngine.Random.Range(0, BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount());
             if (updateTexture && currentTexture == null || BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[imageIndexToLoad].TextureArchive != currentTexture.Archive)
                 currentTexture = new TextureInfo(BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[imageIndexToLoad].TextureArchive);
 
@@ -785,7 +785,7 @@ namespace BestiaryMod
 
         protected void ContentButton0_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 0)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 0)
             {
                 DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
                 if (currentEntryIndex != 0)
@@ -802,7 +802,7 @@ namespace BestiaryMod
         }
         protected void ContentButton1_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 1)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 1)
             {
                 DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
                 if (currentEntryIndex != 1)
@@ -819,7 +819,7 @@ namespace BestiaryMod
         }
         protected void ContentButton2_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 2)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 2)
             {
                 DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
                 if (currentEntryIndex != 2)
@@ -836,7 +836,7 @@ namespace BestiaryMod
         }
         protected void ContentButton3_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 3)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 3)
             {
                 DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
                 if (currentEntryIndex != 3)
@@ -853,7 +853,7 @@ namespace BestiaryMod
         }
         protected void ContentButton4_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 4)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 4)
             {
                 DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
                 if (currentEntryIndex != 4)
@@ -870,7 +870,7 @@ namespace BestiaryMod
         }
         protected void ContentButton5_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 5)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 5)
             {
                 DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
                 if (currentEntryIndex != 5)
@@ -887,7 +887,7 @@ namespace BestiaryMod
         }
         protected void ContentButton6_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 6)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 6)
             {
                 DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
                 if (currentEntryIndex != 6)
@@ -904,7 +904,7 @@ namespace BestiaryMod
         }
         protected void ContentButton7_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 7)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 7)
             {
                 DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
                 if (currentEntryIndex != 7)
@@ -921,7 +921,7 @@ namespace BestiaryMod
         }
         protected void ContentButton8_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries().Count > 8)
+            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 8)
             {
                 DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
                 if (currentEntryIndex != 8)

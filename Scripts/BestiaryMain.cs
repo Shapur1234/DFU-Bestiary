@@ -237,28 +237,10 @@ namespace BestiaryMod
                             string monsterName = (string)paramArray[i];
                             if (BestiaryTextDB.CustomEntries.ContainsKey(monsterName)) { continue; }
 
-                            var monsterData = BestiaryModCSVParser.LoadDictionary($"{monsterName}.csv");
+                            var monsterEntry = ReadEntityFromCSV(monsterName);
 
-                            if (monsterData == null) continue;
-
-                            var monsterEntry = new Entry(monsterName)
-                            {
-                                Title = monsterData["Title"],
-                                ButtonTextureName = monsterData["ButtonTextureName"],
-                                Summary = monsterData["Summary"],
-                                Advice = monsterData["Advice"],
-                                Material = monsterData["Material"],
-                                Language = monsterData["Language"],
-                                Abilities = monsterData["Abilities"].Split('\n'),
-                                NamedSpells = monsterData["NamedSpells"].Split('\n'),
-                            };
-                            int TextureArchive;
-                            if (int.TryParse(monsterData["TextureArchive"], out TextureArchive))
-                            {
-                                monsterEntry.TextureArchive = TextureArchive;
-                            }
-
-                            BestiaryTextDB.CustomEntries.Add(monsterName, monsterEntry);
+                            if (monsterEntry != null)
+                                BestiaryTextDB.CustomEntries.Add(monsterName, monsterEntry);
 
                             callBack?.Invoke(REGISTER_CUSTOM_ENTITY, true);
                         }
@@ -273,35 +255,27 @@ namespace BestiaryMod
                         string entryid = (string)paramArray[1];
 
                         var page = BestiaryTextDB.GetPage(pageid);
+
                         if (page == null)
                         {
                             callBack?.Invoke("error", "PAGE_ID does not exist: " + message);
                             break;
                         }
 
-                        if (BestiaryTextDB.CustomEntries.ContainsKey(entryid))
-                        {
-                            if (page.Entries.Count == 9)
-                            {
-                                callBack?.Invoke("error", "Page with this PAGE_ID is full: " + message);
-                            }
-                            else
-                            {
-                                if (BestiaryTextDB.ExtraForExistingPages.ContainsKey(pageid))
-                                {
-                                    BestiaryTextDB.ExtraForExistingPages[pageid].Add(BestiaryTextDB.CustomEntries[entryid]);
-                                }
-                                else
-                                {
-                                    BestiaryTextDB.ExtraForExistingPages.Add(pageid, new List<Entry> { BestiaryTextDB.CustomEntries[entryid] });
-                                }
-                                callBack?.Invoke(ADD_ENTITY_TO_EXISTING_PAGE, true);
-                            }
-                        }
-                        else
+                        if (!BestiaryTextDB.CustomEntries.TryGetValue(entryid, out var curtomEntry))
                         {
                             callBack?.Invoke("error", "CUSTOM_ENTITY does not exist: " + message);
+                            break;
                         }
+
+                        if (page.Entries.Count == 9)
+                        {
+                            callBack?.Invoke("error", "Page with this PAGE_ID is full: " + message);
+                            break;
+                        }
+
+                        BestiaryTextDB.ExtraForExistingPages.GetOrAdd(pageid, _ => new List<Entry>()).Add(curtomEntry);
+                        callBack?.Invoke(ADD_ENTITY_TO_EXISTING_PAGE, true);
 
                         break;
 
@@ -314,7 +288,7 @@ namespace BestiaryMod
                         string[] newPageEntryIds = (string[])paramArray[2];
 
                         var newPageEntries = newPageEntryIds
-                        .Where(id => BestiaryTextDB.CustomEntries.ContainsKey(id))
+                        .Where(BestiaryTextDB.CustomEntries.ContainsKey)
                         .Take(9)
                         .Select(id => BestiaryTextDB.CustomEntries[id]);
 
@@ -333,6 +307,32 @@ namespace BestiaryMod
             {
                 callBack?.Invoke("error", "Data passed is invalid for " + message);
             }
+        }
+
+        private Entry ReadEntityFromCSV(string monsterName)
+        {
+            var monsterData = BestiaryModCSVParser.LoadDictionary($"{monsterName}.csv");
+
+            if (monsterData == null) return null;
+
+            var monsterEntry = new Entry(monsterName)
+            {
+                Title = monsterData["Title"],
+                ButtonTextureName = monsterData["ButtonTextureName"],
+                Summary = monsterData["Summary"],
+                Advice = monsterData["Advice"],
+                Material = monsterData["Material"],
+                Language = monsterData["Language"],
+                Abilities = monsterData["Abilities"].Split('\n'),
+                NamedSpells = monsterData["NamedSpells"].Split('\n'),
+            };
+            int TextureArchive;
+            if (int.TryParse(monsterData["TextureArchive"], out TextureArchive))
+            {
+                monsterEntry.TextureArchive = TextureArchive;
+            }
+
+            return monsterEntry;
         }
 
         private void Start()
@@ -726,5 +726,11 @@ namespace BestiaryMod
                 default: return string.Empty;
             }
         }
+    }
+
+    static class BestiaryCodeExtentions
+    {
+        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, TValue> createValueFunc) =>
+            dictionary.TryGetValue(key, out var value) ? value : dictionary[key] = createValueFunc(key);
     }
 }

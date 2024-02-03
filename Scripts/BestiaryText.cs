@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DaggerfallWorkshop;
@@ -24,7 +25,7 @@ namespace BestiaryMod
                 var summary = BestiaryTextDB.ExtraPagesSummary[PageTitle];
                 var entries = BestiaryTextDB.ExtraPagesEntries[PageTitle];
                 var page = new Page(PageTitle, summary, entries);
-                if (page != null && page.FilterEntries().Count > 0)
+                if (page.FilterEntriesCount() > 0)
                     Pages.Add(page);
             }
         }
@@ -32,7 +33,7 @@ namespace BestiaryMod
         public void RegisterPage(string pageID)
         {
             var pageTemp = BestiaryTextDB.GetPage(pageID);
-            if (pageTemp != null && pageTemp.FilterEntries().Count > 0)
+            if (pageTemp != null && pageTemp.FilterEntriesCount() > 0)
                 Pages.Add(pageTemp);
         }
 
@@ -62,6 +63,14 @@ namespace BestiaryMod
                 return _entries.Where(item => BestiaryMain.killCounts.ContainsKey(item.Title)).ToArray();
             else
                 return _entries.ToArray();
+        }
+
+        public int FilterEntriesCount()
+        {
+            if (BestiaryMain.SettingEntries == 1)
+                return _entries.Count(item => BestiaryMain.killCounts.ContainsKey(item.Title));
+            else
+                return _entries.Count();
         }
     }
 
@@ -212,7 +221,7 @@ namespace BestiaryMod
                     return BestiaryTextDB.OverrideSpellsTable[Id];
                 }
 
-                return new string[0] { };
+                return Array.Empty<string>();
             }
             set
             {
@@ -330,14 +339,14 @@ namespace BestiaryMod
             Title = BestiaryTextDB.SummarySubTitle + (DaggerfallUnity.Settings.SDFFontRendering ? " - " : " ") + title;
             _summary = summary;
             _monsterCareers = monsterCareers;
-            _monsterNames = new string[0] { };
+            _monsterNames = Array.Empty<string>();
         }
 
         public Summary(string title, string summary, IEnumerable<string> monsterNames)
         {
             Title = BestiaryTextDB.SummarySubTitle + (DaggerfallUnity.Settings.SDFFontRendering ? " - " : " ") + title;
             _summary = summary;
-            _monsterCareers = new MonsterCareers[0] { };
+            _monsterCareers = Array.Empty<MonsterCareers>();
             _monsterNames = monsterNames.ToArray();
         }
         public string Title { get; }
