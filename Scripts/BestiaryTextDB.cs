@@ -2,20 +2,25 @@ using DaggerfallConnect;
 using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game.Entity;
 using System.Collections.Generic;
+using System.Linq;
 
 // ReSharper disable CheckNamespace
 namespace BestiaryMod
 {
     internal class BestiaryTextDB
     {
-        public static Dictionary<int, string> OverrideTitleTable = new Dictionary<int, string>();
-        public static Dictionary<int, string> OverrideSummaryTable = new Dictionary<int, string>();
-        public static Dictionary<int, string> OverrideAdviceTable = new Dictionary<int, string>();
-        public static Dictionary<int, string> OverrideMaterialTable = new Dictionary<int, string>();
-        public static Dictionary<int, string> OverrideLanguageTable = new Dictionary<int, string>();
-        public static Dictionary<int, string[]> OverrideAbilitiesTable = new Dictionary<int, string[]>();
-        public static Dictionary<int, string[]> OverrideSpellsTable = new Dictionary<int, string[]>();
-        public static Dictionary<int, int[]> OverrideSpellsIdsTable = new Dictionary<int, int[]>();
+        public static Dictionary<string, string> OverrideTitleTable = new Dictionary<string, string>();
+        public static Dictionary<string, string> OverrideSummaryTable = new Dictionary<string, string>();
+        public static Dictionary<string, string> OverrideAdviceTable = new Dictionary<string, string>();
+        public static Dictionary<string, string> OverrideMaterialTable = new Dictionary<string, string>();
+        public static Dictionary<string, string> OverrideLanguageTable = new Dictionary<string, string>();
+        public static Dictionary<string, string[]> OverrideAbilitiesTable = new Dictionary<string, string[]>();
+        public static Dictionary<string, string[]> OverrideSpellsTable = new Dictionary<string, string[]>();
+        public static Dictionary<string, int[]> OverrideSpellsIdsTable = new Dictionary<string, int[]>();
+        public static Dictionary<string, Entry> CustomEntries = new Dictionary<string, Entry>();
+        public static Dictionary<string, List<Entry>> ExtraForExistingPages = new Dictionary<string, List<Entry>>();
+        public static Dictionary<string, string> ExtraPagesSummary = new Dictionary<string, string>();
+        public static Dictionary<string, IEnumerable<Entry>> ExtraPagesEntries = new Dictionary<string, IEnumerable<Entry>>();
 
         #region Strings
         // General
@@ -851,99 +856,138 @@ namespace BestiaryMod
 
 
         #region Pages
+        public static List<Entry> GetExtraRecords(string pageid)
+        {
+            if (ExtraForExistingPages.ContainsKey(pageid))
+            {
+                return ExtraForExistingPages[pageid];
+            }
+            else
+            {
+                return new List<Entry>();
+            }
+        }
+
         public static Page Animals()
         {
-            return new Page(
-                AnimalsTitle,
-                AnimalsOverview,
+            var entries = new[]
+            {
                 MonsterCareers.GiantBat,
                 MonsterCareers.Rat,
                 MonsterCareers.GrizzlyBear,
                 MonsterCareers.SabertoothTiger,
                 MonsterCareers.GiantScorpion,
                 MonsterCareers.Slaughterfish,
-                MonsterCareers.Spider
-            );
+                MonsterCareers.Spider,
+            }
+            .Select(GetEntryByMonster)
+            .Concat(GetExtraRecords("page_animals"))
+            .Take(9);
+
+            return new Page(AnimalsTitle, AnimalsOverview, entries);
         }
 
         public static Page Atronachs()
         {
-            return new Page(
-                AtronachsTitle,
-                AtronachsOverview,
+            var entries = new[]
+            {
                 MonsterCareers.FireAtronach,
                 MonsterCareers.FleshAtronach,
                 MonsterCareers.IceAtronach,
-                MonsterCareers.IronAtronach
-            );
+                MonsterCareers.IronAtronach,
+            }
+            .Select(GetEntryByMonster)
+            .Concat(GetExtraRecords("page_atronachs"))
+            .Take(9);
+
+            return new Page(AtronachsTitle, AtronachsOverview, entries);
         }
 
         public static Page Daedra()
         {
-            return new Page(
-                DaedraTitle,
-                DaedraOverview,
+            var entries = new[]
+            {
                 MonsterCareers.DaedraLord,
                 MonsterCareers.DaedraSeducer,
                 MonsterCareers.Daedroth,
                 MonsterCareers.FireDaedra,
-                MonsterCareers.FrostDaedra
-            );
+                MonsterCareers.FrostDaedra,
+            }
+            .Select(GetEntryByMonster)
+            .Concat(GetExtraRecords("page_daedra"))
+            .Take(9);
+
+            return new Page(DaedraTitle, DaedraOverview, entries);
         }
 
         public static Page Lycanthropes()
         {
-            return new Page(
-                LycanthropesTitle,
-                LycanthropesOverview,
+            var entries = new[]
+            {
                 MonsterCareers.Wereboar,
-                MonsterCareers.Werewolf
-            );
+                MonsterCareers.Werewolf,
+            }
+            .Select(GetEntryByMonster)
+            .Concat(GetExtraRecords("page_lycanthropes"))
+            .Take(9);
+
+            return new Page(LycanthropesTitle, LycanthropesOverview, entries);
         }
 
         public static Page Monsters1()
         {
-            return new Page(
-                MonstersTitle,
-                MonstersOverview,
+            var entries = new[]
+            {
                 MonsterCareers.Centaur,
                 MonsterCareers.Dragonling,
                 MonsterCareers.Dreugh,
                 MonsterCareers.Gargoyle,
-                MonsterCareers.Giant
-            );
+                MonsterCareers.Giant,
+            }
+            .Select(GetEntryByMonster)
+            .Concat(GetExtraRecords("page_monsters1"))
+            .Take(9);
+
+            return new Page(MonstersTitle, MonstersOverview, entries);
         }
 
         public static Page Monsters2()
         {
-            return new Page(
-                MonstersTitle,
-                MonstersOverview,
+            var entries = new[]
+            {
                 MonsterCareers.Harpy,
                 MonsterCareers.Imp,
                 MonsterCareers.Lamia,
                 MonsterCareers.Nymph,
-                MonsterCareers.Spriggan
-            );
+                MonsterCareers.Spriggan,
+            }
+            .Select(GetEntryByMonster)
+            .Concat(GetExtraRecords("page_monsters2"))
+            .Take(9);
+
+            return new Page(MonstersTitle, MonstersOverview, entries);
         }
 
         public static Page Orcs()
         {
-            return new Page(
-                OrcsTitle,
-                OrcsOverview,
+            var entries = new[]
+            {
                 MonsterCareers.Orc,
                 MonsterCareers.OrcSergeant,
                 MonsterCareers.OrcShaman,
-                MonsterCareers.OrcWarlord
-            );
+                MonsterCareers.OrcWarlord,
+            }
+            .Select(GetEntryByMonster)
+            .Concat(GetExtraRecords("page_orcs"))
+            .Take(9);
+
+            return new Page(OrcsTitle, OrcsOverview, entries);
         }
 
         public static Page Undead()
         {
-            return new Page(
-                UndeadTitle,
-                UndeadOverview,
+            var entries = new[]
+            {
                 MonsterCareers.Ghost,
                 MonsterCareers.Lich,
                 MonsterCareers.AncientLich,
@@ -952,15 +996,17 @@ namespace BestiaryMod
                 MonsterCareers.Vampire,
                 MonsterCareers.VampireAncient,
                 MonsterCareers.Wraith,
-                MonsterCareers.Zombie
-            );
+                MonsterCareers.Zombie,
+            }
+            .Select(GetEntryByMonster);
+
+            return new Page(UndeadTitle, UndeadOverview, entries);
         }
 
         public static Page Classic()
         {
-            return new Page(
-                string.Empty,
-                string.Empty,
+            var entries = new[]
+            {
                 MonsterCareers.Centaur,
                 MonsterCareers.Daedroth,
                 MonsterCareers.Dreugh,
@@ -969,8 +1015,11 @@ namespace BestiaryMod
                 MonsterCareers.Orc,
                 MonsterCareers.GiantScorpion,
                 MonsterCareers.Spriggan,
-                MonsterCareers.Vampire
-            );
+                MonsterCareers.Vampire,
+            }
+            .Select(GetEntryByMonster);
+
+            return new Page(string.Empty, string.Empty, entries);
         }
 
         #endregion
