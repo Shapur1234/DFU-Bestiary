@@ -31,7 +31,7 @@
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.MultipleChoiceKey"
                 },
                 {
-                    "Value": true,
+                    "Value": false,
                     "Name": "ItemSpawning",
                     "Description": "Will the Bestiary item spawn in the world?",
                     "$version": "v1",
