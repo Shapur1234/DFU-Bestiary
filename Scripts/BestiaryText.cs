@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.Entity;
@@ -17,13 +18,23 @@ namespace BestiaryMod
             Pages = new List<Page>();
 
             foreach (var item in pagesToLoad)
+                RegisterPage(item);
+
+            foreach (var PageTitle in BestiaryTextDB.ExtraPagesSummary.Keys)
             {
-                var pageTemp = BestiaryTextDB.GetPage(item);
-                if (pageTemp != null && pageTemp.Entries.Count > 0)
-                {
-                    Pages.Add(pageTemp);
-                }
+                var summary = BestiaryTextDB.ExtraPagesSummary[PageTitle];
+                var entries = BestiaryTextDB.ExtraPagesEntries[PageTitle];
+                var page = new Page(PageTitle, summary, entries);
+                if (page.FilterEntriesCount() > 0)
+                    Pages.Add(page);
             }
+        }
+
+        public void RegisterPage(string pageID)
+        {
+            var pageTemp = BestiaryTextDB.GetPage(pageID);
+            if (pageTemp != null && pageTemp.FilterEntriesCount() > 0)
+                Pages.Add(pageTemp);
         }
 
         public string BestiaryTitle { get; }
@@ -32,55 +43,62 @@ namespace BestiaryMod
 
     public class Page
     {
-        public Page(string title, string summary, params MonsterCareers[] monsters)
+        private IReadOnlyCollection<Entry> _entries;
+
+        public Page(string title, string summary, IEnumerable<Entry> monsters)
         {
             Title = title;
-            PageSummary = new Summary(title, summary, monsters);
-            Entries = new List<Entry>();
-
-            foreach (MonsterCareers monster in monsters)
-            {
-                switch (BestiaryMain.SettingEntries)
-                {
-                    case 1:
-                        string mName = TextManager.Instance.GetLocalizedEnemyName((int)monster);
-                        if (BestiaryMain.killCounts.ContainsKey(mName))
-                        {
-                            Entries.Add(BestiaryTextDB.GetEntryByMonster(monster));
-                        }
-                        break;
-                    default:
-                        Entries.Add(BestiaryTextDB.GetEntryByMonster(monster));
-                        break;
-                }
-            }
+            Entries = monsters.ToArray();
+            var names = Entries.Select(monster => monster.Title);
+            PageSummary = new Summary(title, summary, names);
         }
 
         public string Title { get; }
         public Summary PageSummary { get; set; }
-        public List<Entry> Entries { get; }
+        public IReadOnlyCollection<Entry> Entries { get { return _entries; } set => _entries = value; }
+
+        public IReadOnlyList<Entry> FilterEntries()
+        {
+            if (BestiaryMain.SettingEntries == 1)
+                return _entries.Where(item => BestiaryMain.killCounts.ContainsKey(item.Title)).ToArray();
+            else
+                return _entries.ToArray();
+        }
+
+        public int FilterEntriesCount()
+        {
+            if (BestiaryMain.SettingEntries == 1)
+                return _entries.Count(item => BestiaryMain.killCounts.ContainsKey(item.Title));
+            else
+                return _entries.Count();
+        }
     }
 
     public class Entry
     {
-        private string title;
-        private int[] spells;
-        private string[] abilities;
-        private string language;
-        private string material;
-        private string advice;
-        private string summary;
+        private string _title;
+        private int[] _spells;
+        private string[] _abilities;
+        private string _language;
+        private string _material;
+        private string _advice;
+        private string _summary;
+
+        public Entry(string monsterId)
+        {
+            Id = monsterId;
+        }
 
         public Entry(MonsterCareers monster)
         {
-            Id = (int)monster;
+            Id = monster.ToString();
             Title = TextManager.Instance.GetLocalizedEnemyName((int)monster);
             TextureArchive = EnemyBasics.Enemies[(int)monster].MaleTexture;
         }
 
         public string ButtonTextureName { get; set; }
         public int TextureArchive { get; set; }
-        public int Id { get; }
+        public string Id { get; }
         public string Title
         {
             get
@@ -91,11 +109,11 @@ namespace BestiaryMod
                     return BestiaryTextDB.OverrideTitleTable[Id];
                 }
 
-                return title;
+                return _title;
             }
             set
             {
-                title = value;
+                _title = value;
             }
         }
         public string Summary
@@ -107,11 +125,11 @@ namespace BestiaryMod
                     return BestiaryTextDB.OverrideSummaryTable[Id];
                 }
 
-                return summary;
+                return _summary;
             }
             set
             {
-                summary = value;
+                _summary = value;
             }
         }
         public string Advice
@@ -123,11 +141,11 @@ namespace BestiaryMod
                     return BestiaryTextDB.OverrideAdviceTable[Id];
                 }
 
-                return advice;
+                return _advice;
             }
             set
             {
-                advice = value;
+                _advice = value;
             }
         }
         public string Material
@@ -139,11 +157,11 @@ namespace BestiaryMod
                     return BestiaryTextDB.OverrideMaterialTable[Id];
                 }
 
-                return material;
+                return _material;
             }
             set
             {
-                material = value;
+                _material = value;
             }
         }
         public string Language
@@ -155,11 +173,11 @@ namespace BestiaryMod
                     return BestiaryTextDB.OverrideLanguageTable[Id];
                 }
 
-                return language;
+                return _language;
             }
             set
             {
-                language = value;
+                _language = value;
             }
         }
         public string[] Abilities
@@ -171,11 +189,11 @@ namespace BestiaryMod
                     return BestiaryTextDB.OverrideAbilitiesTable[Id];
                 }
 
-                return abilities;
+                return _abilities;
             }
             set
             {
-                abilities = value;
+                _abilities = value;
             }
         }
         public int[] Spells
@@ -187,11 +205,27 @@ namespace BestiaryMod
                     return BestiaryTextDB.OverrideSpellsIdsTable[Id];
                 }
 
-                return spells;
+                return _spells;
             }
             set
             {
-                spells = value;
+                _spells = value;
+            }
+        }
+        public string[] NamedSpells
+        {
+            get
+            {
+                if (BestiaryTextDB.OverrideSpellsTable.ContainsKey(Id))
+                {
+                    return BestiaryTextDB.OverrideSpellsTable[Id];
+                }
+
+                return Array.Empty<string>();
+            }
+            set
+            {
+                BestiaryTextDB.OverrideSpellsTable.Add(Id, value);
             }
         }
 
@@ -296,14 +330,24 @@ namespace BestiaryMod
 
     public class Summary
     {
-        private readonly string summary;
-        private readonly MonsterCareers[] monsters;
+        private readonly string _summary;
+        private readonly IReadOnlyList<MonsterCareers> _monsterCareers;
+        private readonly IReadOnlyList<string> _monsterNames;
 
-        public Summary(string title, string summary, MonsterCareers[] monsters)
+        public Summary(string title, string summary, IReadOnlyList<MonsterCareers> monsterCareers)
         {
             Title = BestiaryTextDB.SummarySubTitle + (DaggerfallUnity.Settings.SDFFontRendering ? " - " : " ") + title;
-            this.summary = summary;
-            this.monsters = monsters;
+            _summary = summary;
+            _monsterCareers = monsterCareers;
+            _monsterNames = Array.Empty<string>();
+        }
+
+        public Summary(string title, string summary, IEnumerable<string> monsterNames)
+        {
+            Title = BestiaryTextDB.SummarySubTitle + (DaggerfallUnity.Settings.SDFFontRendering ? " - " : " ") + title;
+            _summary = summary;
+            _monsterCareers = Array.Empty<MonsterCareers>();
+            _monsterNames = monsterNames.ToArray();
         }
         public string Title { get; }
         public List<TextLabel> TextLabels
@@ -313,23 +357,31 @@ namespace BestiaryMod
                 var result = new List<TextLabel>
                 {
                     BestiaryTextHelpers.CreateSubtitle(BestiaryTextDB.OverviewLabel),
-                    BestiaryTextHelpers.CreateText(summary),
+                    BestiaryTextHelpers.CreateText(_summary),
                     BestiaryTextHelpers.CreateText(string.Empty)
                 };
 
-                if (monsters.Length > 0)
+                if (_monsterCareers.Count > 0 || _monsterNames.Count > 0)
                 {
                     result.Add(BestiaryTextHelpers.CreateSubtitle(BestiaryTextDB.KillcountLabel));
                 }
 
-                for (int i = 0; i < monsters.Length; i++)
+                for (int i = 0; i < _monsterCareers.Count; i++)
                 {
-                    string mName = TextManager.Instance.GetLocalizedEnemyName((int)monsters[i]);
+                    string mName = TextManager.Instance.GetLocalizedEnemyName((int)_monsterCareers[i]);
 
                     uint kills;
                     BestiaryMain.killCounts.TryGetValue(mName, out kills);
 
                     result.Add(BestiaryTextHelpers.CreateText($"- {mName} - {kills}"));
+                }
+
+                for (int i = 0; i < _monsterNames.Count; i++)
+                {
+                    uint kills;
+                    BestiaryMain.killCounts.TryGetValue(_monsterNames[i], out kills);
+
+                    result.Add(BestiaryTextHelpers.CreateText($"- {_monsterNames[i]} - {kills}"));
                 }
 
 

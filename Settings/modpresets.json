@@ -3,10 +3,26 @@
         "Title": "Default",
         "Author": "Shapur",
         "Description": "Default settings.",
-        "SettingsVersion": null,
+        "SettingsVersion": "2.0.0",
         "Values": {
             "UserInterface": {
-                "EnableAnimations": "True"
+                "EnableAnimations": "True",
+                "DefaultMobOrientation": "0",
+                "DelayBetweenAnimationFrames": "20",
+                "EnableEightDirectionRotation": "True",
+                "FontColor": "F3EF2CFF",
+                "FontShadowColor": "5D4D0CFF",
+                "HeaderFontColor": "F3EF2CFF",
+                "HeaderFontShadowColor": "5D4D0CFF"
+            },
+            "Gameplay": {
+                "MenuUnlock": "0",
+                "Entries": "0",
+                "ItemSpawning": "False",
+                "ItemSpawningExtraChance": "0"
+            },
+            "Controls": {
+                "Keybind": "B"
             }
         },
         "$version": "v1"

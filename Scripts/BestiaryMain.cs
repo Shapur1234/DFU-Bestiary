@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using DaggerfallConnect;
 
 using DaggerfallWorkshop;
@@ -30,6 +30,9 @@ namespace BestiaryMod
         public const string OVERRIDE_ABILITIES = "OVERRIDE_ABILITIES";
         public const string OVERRIDE_SPELLS_BY_NAME = "OVERRIDE_SPELLS_BY_NAME";
         public const string OVERRIDE_SPELLS_BY_IDS = "OVERRIDE_SPELLS_BY_IDS";
+        public const string REGISTER_CUSTOM_ENTITY = "REGISTER_CUSTOM_ENTITY";
+        public const string REGISTER_CUSTOM_PAGE = "REGISTER_CUSTOM_PAGE";
+        public const string ADD_ENTITY_TO_EXISTING_PAGE = "ADD_ENTITY_TO_EXISTING_PAGE";
         #endregion
 
 
@@ -120,14 +123,14 @@ namespace BestiaryMod
             try
             {
                 object[] paramArray;
-                int MonsterCareer;
+                string MonsterCareer;
                 switch (message)
                 {
                     // Allow to set monster page Title
-                    // SendModMessage("OVERRIDE_TITLE", [10, "New Title"]);
+                    // ModManager.Instance.SendModMessage("Bestiary", "OVERRIDE_TITLE", new object[] { "Rat", "New Title" });
                     case OVERRIDE_TITLE:
                         paramArray = (object[])data;
-                        MonsterCareer = (int)paramArray[0];
+                        MonsterCareer = (string)paramArray[0];
                         string newTitle = (string)paramArray[1];
 
                         BestiaryTextDB.OverrideTitleTable.Add(MonsterCareer, newTitle);
@@ -136,10 +139,10 @@ namespace BestiaryMod
                         break;
 
                     // Allow to set monster Summary
-                    // SendModMessage("OVERRIDE_SUMMARY", [10, "New summary text"]);
+                    // ModManager.Instance.SendModMessage("Bestiary", "OVERRIDE_SUMMARY", new object[] { "Rat", "New summary text" });
                     case OVERRIDE_SUMMARY:
                         paramArray = (object[])data;
-                        MonsterCareer = (int)paramArray[0];
+                        MonsterCareer = (string)paramArray[0];
                         string newSummary = (string)paramArray[1];
 
                         BestiaryTextDB.OverrideSummaryTable.Add(MonsterCareer, newSummary);
@@ -148,10 +151,10 @@ namespace BestiaryMod
                         break;
 
                     // Allow to set monster Advice text
-                    // SendModMessage("OVERRIDE_ADVICE", [10, "Always hit first!"]);
+                    // ModManager.Instance.SendModMessage("Bestiary", "OVERRIDE_ADVICE", new object[] { "Rat", "Always hit first!" });
                     case OVERRIDE_ADVICE:
                         paramArray = (object[])data;
-                        MonsterCareer = (int)paramArray[0];
+                        MonsterCareer = (string)paramArray[0];
                         string newAdvice = (string)paramArray[1];
 
                         BestiaryTextDB.OverrideAdviceTable.Add(MonsterCareer, newAdvice);
@@ -160,10 +163,10 @@ namespace BestiaryMod
                         break;
 
                     // Allow to set monster Material requirements text
-                    // SendModMessage("OVERRIDE_MATERIAL", [10, "Use only gold weapon"]);
+                    // ModManager.Instance.SendModMessage("Bestiary", "OVERRIDE_MATERIAL", new object[] { "Rat", "Use only gold weapon" });
                     case OVERRIDE_MATERIAL:
                         paramArray = (object[])data;
-                        MonsterCareer = (int)paramArray[0];
+                        MonsterCareer = (string)paramArray[0];
                         string newMaterial = (string)paramArray[1];
 
                         BestiaryTextDB.OverrideMaterialTable.Add(MonsterCareer, newMaterial);
@@ -172,10 +175,10 @@ namespace BestiaryMod
                         break;
 
                     // Allow to set monster Language
-                    // SendModMessage("OVERRIDE_LANGUAGE", [10, "Sentinel dialect of Orcish"]);
+                    // ModManager.Instance.SendModMessage("Bestiary", "OVERRIDE_LANGUAGE", new object[] { "Rat", "Sentinel dialect of Orcish" });
                     case OVERRIDE_LANGUAGE:
                         paramArray = (object[])data;
-                        MonsterCareer = (int)paramArray[0];
+                        MonsterCareer = (string)paramArray[0];
                         string newLanguage = (string)paramArray[1];
 
                         BestiaryTextDB.OverrideLanguageTable.Add(MonsterCareer, newLanguage);
@@ -184,10 +187,10 @@ namespace BestiaryMod
                         break;
 
                     // Allow to set monster Abilities list
-                    // SendModMessage("OVERRIDE_ABILITIES", [10, ["Can swim", "Can fly", "Can run"]]);
+                    // ModManager.Instance.SendModMessage("Bestiary", "OVERRIDE_ABILITIES", new object[] { "Rat", new string[] { "Can swim", "Can fly", "Can run" } });
                     case OVERRIDE_ABILITIES:
                         paramArray = (object[])data;
-                        MonsterCareer = (int)paramArray[0];
+                        MonsterCareer = (string)paramArray[0];
                         string[] newAbilities = (string[])paramArray[1];
 
                         BestiaryTextDB.OverrideAbilitiesTable.Add(MonsterCareer, newAbilities);
@@ -197,10 +200,10 @@ namespace BestiaryMod
 
                     // Allow to set monster Spells using direct names
                     // If spells are overriden by names, then the IDs are ignored
-                    // SendModMessage("OVERRIDE_SPELLS_BY_NAME", [10, ["Zipper", "Balina's poison", "Frost fist"]]);
+                    // ModManager.Instance.SendModMessage("Bestiary", "OVERRIDE_SPELLS_BY_NAME", new object[] { "Rat", new string[] { "Zipper", "Balina's poison", "Frost fist" } });
                     case OVERRIDE_SPELLS_BY_NAME:
                         paramArray = (object[])data;
-                        MonsterCareer = (int)paramArray[0];
+                        MonsterCareer = (string)paramArray[0];
                         string[] newSpellsNames = (string[])paramArray[1];
 
                         BestiaryTextDB.OverrideSpellsTable.Add(MonsterCareer, newSpellsNames);
@@ -209,15 +212,91 @@ namespace BestiaryMod
                         break;
 
                     // Allow to set monster Spells using standart IDs
-                    // SendModMessage("OVERRIDE_SPELLS_BY_IDS", [10, [11, 23, 13, 8]]);
+                    // ModManager.Instance.SendModMessage("Bestiary", "OVERRIDE_SPELLS_BY_IDS", new object[] { "Rat", new int[] { 11, 23, 13, 8 } });
                     case OVERRIDE_SPELLS_BY_IDS:
                         paramArray = (object[])data;
-                        MonsterCareer = (int)paramArray[0];
+                        MonsterCareer = (string)paramArray[0];
                         int[] newSpellsIds = (int[])paramArray[1];
 
                         BestiaryTextDB.OverrideSpellsIdsTable.Add(MonsterCareer, newSpellsIds);
 
                         callBack?.Invoke(OVERRIDE_SPELLS_BY_IDS, true);
+                        break;
+
+                    // Register new monster records
+                    // The data will be attempted to read from MonsterName.csv
+                    // Your mod have to provide these files
+                    // Like: Cockroach.csv, Walrus.csv, Raccoon.csv
+                    // See ExampleMonster.csv for details
+                    // ModManager.Instance.SendModMessage("Bestiary", "REGISTER_CUSTOM_ENTITY", new object[] { "Cockroach", "Walrus", "Raccoon" });
+                    case REGISTER_CUSTOM_ENTITY:
+                        paramArray = (object[])data;
+
+                        for (int i = 0; i < paramArray.Length; i++)
+                        {
+                            string monsterName = (string)paramArray[i];
+                            if (BestiaryTextDB.CustomEntries.ContainsKey(monsterName)) { continue; }
+
+                            var monsterEntry = ReadEntityFromCSV(monsterName);
+
+                            if (monsterEntry != null)
+                                BestiaryTextDB.CustomEntries.Add(monsterName, monsterEntry);
+
+                            callBack?.Invoke(REGISTER_CUSTOM_ENTITY, true);
+                        }
+                        break;
+
+                    // Add one more record to existing page, up to 9 per page
+                    // ModManager.Instance.SendModMessage("Bestiary", "ADD_ENTITY_TO_EXISTING_PAGE", new object[] { "PAGE_ID", "CUSTOM_ENTITY_NAME" });
+                    case ADD_ENTITY_TO_EXISTING_PAGE:
+                        paramArray = (object[])data;
+
+                        string pageid = (string)paramArray[0];
+                        string entryid = (string)paramArray[1];
+
+                        var page = BestiaryTextDB.GetPage(pageid);
+
+                        if (page == null)
+                        {
+                            callBack?.Invoke("error", "PAGE_ID does not exist: " + message);
+                            break;
+                        }
+
+                        if (!BestiaryTextDB.CustomEntries.TryGetValue(entryid, out var curtomEntry))
+                        {
+                            callBack?.Invoke("error", "CUSTOM_ENTITY does not exist: " + message);
+                            break;
+                        }
+
+                        if (page.Entries.Count == 9)
+                        {
+                            callBack?.Invoke("error", "Page with this PAGE_ID is full: " + message);
+                            break;
+                        }
+
+                        BestiaryTextDB.ExtraForExistingPages.GetOrAdd(pageid, _ => new List<Entry>()).Add(curtomEntry);
+                        callBack?.Invoke(ADD_ENTITY_TO_EXISTING_PAGE, true);
+
+                        break;
+
+                    // Create and register new page with up to 9 records
+                    // ModManager.Instance.SendModMessage("Bestiary", "REGISTER_CUSTOM_PAGE", new object[] { "Page Title", "Page summary", new string[] { "Cockroach", "Walrus", "Raccoon" } });
+                    case REGISTER_CUSTOM_PAGE:
+                        paramArray = (object[])data;
+                        string newPageTitle = (string)paramArray[0];
+                        string newPageSummary = (string)paramArray[1];
+                        string[] newPageEntryIds = (string[])paramArray[2];
+
+                        var newPageEntries = newPageEntryIds
+                        .Where(BestiaryTextDB.CustomEntries.ContainsKey)
+                        .Take(9)
+                        .Select(id => BestiaryTextDB.CustomEntries[id]);
+
+                        BestiaryTextDB.ExtraPagesSummary.Add(newPageTitle, newPageSummary);
+                        BestiaryTextDB.ExtraPagesEntries.Add(newPageTitle, newPageEntries);
+
+                        callBack?.Invoke(REGISTER_CUSTOM_PAGE, true);
+
                         break;
 
                     default:
@@ -228,6 +307,32 @@ namespace BestiaryMod
             {
                 callBack?.Invoke("error", "Data passed is invalid for " + message);
             }
+        }
+
+        private Entry ReadEntityFromCSV(string monsterName)
+        {
+            var monsterData = BestiaryModCSVParser.LoadDictionary($"{monsterName}.csv");
+
+            if (monsterData == null) return null;
+
+            var monsterEntry = new Entry(monsterName)
+            {
+                Title = monsterData["Title"],
+                ButtonTextureName = monsterData["ButtonTextureName"],
+                Summary = monsterData["Summary"],
+                Advice = monsterData["Advice"],
+                Material = monsterData["Material"],
+                Language = monsterData["Language"],
+                Abilities = monsterData["Abilities"].Split('\n'),
+                NamedSpells = monsterData["NamedSpells"].Split('\n'),
+            };
+            int TextureArchive;
+            if (int.TryParse(monsterData["TextureArchive"], out TextureArchive))
+            {
+                monsterEntry.TextureArchive = TextureArchive;
+            }
+
+            return monsterEntry;
         }
 
         private void Start()
@@ -621,5 +726,11 @@ namespace BestiaryMod
                 default: return string.Empty;
             }
         }
+    }
+
+    static class BestiaryCodeExtentions
+    {
+        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, TValue> createValueFunc) =>
+            dictionary.TryGetValue(key, out var value) ? value : dictionary[key] = createValueFunc(key);
     }
 }
