@@ -176,4 +176,8 @@ The chance of the item spawning is lower now
 Makes the mod updatable from other mods. (No need to built-in support for Unleveled Spells)
 Fixed the darkened monster textures
 Added text color settings (for alternative skins)
+
+2.1
+All credit goes to Jagget
+Added ability for mods to modify existing pages, and to register extra pages 
 ```
