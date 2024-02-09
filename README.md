@@ -203,4 +203,8 @@ Added text color settings (for alternative skins)
 2.1
 All credit goes to Jagget
 Added ability for mods to modify existing pages, and to register extra pages
+
+2.2
+All credit goes to Jagget
+Performance improvements, better DREAM compactibility
 ```
