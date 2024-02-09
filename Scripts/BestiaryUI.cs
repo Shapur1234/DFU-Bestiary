@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using DaggerfallConnect;
 using DaggerfallConnect.Arena2;
-
 using DaggerfallWorkshop;
 using DaggerfallWorkshop.Game;
 using DaggerfallWorkshop.Game.UserInterface;
 using DaggerfallWorkshop.Game.UserInterfaceWindows;
 using DaggerfallWorkshop.Utility.AssetInjection;
-
 using UnityEngine;
 
 // ReSharper disable CheckNamespace
@@ -26,35 +24,14 @@ namespace BestiaryMod
                 Frame = 0;
                 AttackModeOffset = 0;
                 Flip = false;
-
-                switch (Archive)
-                {
-                    case 275:
-                        Mirrored = true;
-                        break;
-                    default:
-                        Mirrored = false;
-                        break;
-                }
-
-                Texture2D tempTexture;
-
-                if (!TextureReplacement.TryImportTexture(Archive, 1, 0, out tempTexture))
-                {
-                    tempTexture = textureReader.GetTexture2D(Archive, 1, 0);
-                }
-
-                if (tempTexture.width > tempTexture.height)
-                    maxTextureSize = new Vector2(imagePanelMaxSize[0], tempTexture.height);
-                else
-                    maxTextureSize = new Vector2(tempTexture.width, imagePanelMaxSize[1]);
+                Mirrored = Archive == 275;
 
                 attackButton.BackgroundTexture = attackFalseTexture;
 
                 UpdateTextures();
             }
 
-            public bool ReadTexture(int archive, int record, int frame, out Texture2D tex)
+            private void ReadTexture(int archive, int record, int frame, out Texture2D tex)
             {
                 Texture2D externalTexture;
                 Texture2D originalTexture = null;
@@ -68,23 +45,23 @@ namespace BestiaryMod
                     // No original texture
                 }
 
-                TextureReplacement.TryImportTexture(archive, record, frame, out externalTexture);
+                TextureReplacement.TryImportTexture(archive, record, frame, TextureMap.Albedo, true, out externalTexture);
 
                 if (externalTexture != null)
                 {
                     tex = externalTexture;
-                    return true;
+                    return;
                 }
 
 
                 if (originalTexture != null)
                 {
                     tex = originalTexture;
-                    return true;
+                    return;
                 }
 
                 tex = null;
-                return false;
+                return;
             }
 
             public void UpdateTextures()
@@ -117,18 +94,10 @@ namespace BestiaryMod
                 if (pictureTexture == null)
                     ReadTexture(Archive, Record + AttackModeOffset, Frame, out pictureTexture);
 
-                // Let ppl deside if they want to use blurred images
+                // Let ppl decide if they want to use blurred images
                 pictureTexture.filterMode = (FilterMode)DaggerfallUnity.Settings.GUIFilterMode;
 
-                UpdateImagePanel(this);
                 ApplyTexture(pictureTexture, this);
-                return;
-            }
-
-            private void UpdateImagePanel(TextureInfo inputTextureInfo)
-            {
-                imagePanel.Size = inputTextureInfo.maxTextureSize;
-                imagePanel.Position = new Vector2(imagePanelBasePos[0] + ((imagePanelMaxSize[0] - imagePanel.Size[0]) / 2), imagePanelBasePos[1] + ((imagePanelMaxSize[0] - imagePanel.Size[1]) / 2));
             }
 
             private void ApplyTexture(Texture2D texture, TextureInfo inputTextureInfo)
@@ -148,10 +117,12 @@ namespace BestiaryMod
                 else
                     doFlip = false;
 
-                if (doFlip)
-                    imagePanel.BackgroundTexture = FlipTexture(DuplicateTexture(texture));
-                else
-                    imagePanel.BackgroundTexture = texture;
+                var max = texture.width > texture.height ? texture.width : texture.height;
+                var scale = 102.0f / max;
+
+                _imagePanel.Size = new Vector2(texture.width, texture.height);
+                _imagePanel.Scale = doFlip ? new Vector2(-scale, scale) : new Vector2(scale, scale);
+                _imagePanel.BackgroundTexture = texture;
             }
 
             public void IterateAnimationFrame()
@@ -189,6 +160,7 @@ namespace BestiaryMod
                     if (Record > 4)
                         Record = 0;
                 }
+
                 UpdateTextures();
             }
 
@@ -221,6 +193,7 @@ namespace BestiaryMod
                     if (Record < 0)
                         Record = 4;
                 }
+
                 UpdateTextures();
             }
 
@@ -231,21 +204,23 @@ namespace BestiaryMod
 
             public bool Flip { get; set; }
             public bool Mirrored { get; }
-            public Vector2 maxTextureSize { get; }
         }
 
         public bool isShowing;
 
         #region textureNameVars
+
         private const string blankTextureName = "blank";
         private const string backgroundTextureName = "base_background";
         private const string attackTrueTextureName = "button_attack_true";
         private const string attackFalseTextureName = "button_attack_false";
         private const string rightArrowTextureName = "button_arrow_right";
         private const string leftArrowTextureName = "button_arrow_left";
+
         #endregion
 
         #region textureVars
+
         private List<Texture2D> contentButtonTextures = new List<Texture2D>();
         private static Texture2D attackFalseTexture;
         private Texture2D attackTrueTexture;
@@ -253,11 +228,15 @@ namespace BestiaryMod
         private Texture2D blankTexture;
         private Texture2D leftArrowTexture;
         private Texture2D rightArrowTexture;
+
         #endregion
 
         #region uiVars
+
         private Vector2 pageNamePos = new Vector2(71, 14);
-        private readonly List<Vector2> buttonAllPos = new List<Vector2> {
+
+        private readonly List<Vector2> buttonAllPos = new List<Vector2>
+        {
             new Vector2(5, 162),
             new Vector2(48, 162),
             new Vector2(91, 162),
@@ -268,6 +247,7 @@ namespace BestiaryMod
             new Vector2(48, 186),
             new Vector2(91, 186)
         };
+
         private readonly Vector2 entryButtonSize = new Vector2(40, 9);
         private readonly Vector2 pageNameSize = new Vector2(52, 10);
         private static readonly Vector2 imagePanelBasePos = new Vector2(18, 51);
@@ -281,7 +261,8 @@ namespace BestiaryMod
         Vector2 pagePanelPosition = Vector2.zero;
         Vector2 pagePanelSize = Vector2.zero;
 
-        static Panel imagePanel;
+        private static Panel _imageContainerPanel;
+        private static Panel _imagePanel;
         private Panel mainPanel;
 
         List<TextLabel> bookLabels = new List<TextLabel>();
@@ -301,6 +282,7 @@ namespace BestiaryMod
         private Button leftRotateButton;
         private Button exitButton;
         private static Button attackButton;
+
         #endregion
 
         private static DaggerfallWorkshop.Utility.TextureReader textureReader;
@@ -310,8 +292,9 @@ namespace BestiaryMod
         private int animationDelay;
         private static string arena2Path;
 
-        public BestiaryUI(IUserInterfaceManager uiManager)
-            : base(uiManager)
+        private static Page CurrentPage => BestiaryMain.AllText.Pages[currentPageIndex];
+
+        public BestiaryUI(IUserInterfaceManager uiManager) : base(uiManager)
         {
             pauseWhileOpened = true;
             AllowCancel = false;
@@ -341,16 +324,22 @@ namespace BestiaryMod
             if (Input.GetKeyUp(KeyCode.Escape))
                 CloseWindow();
 
-            if (BestiaryMain.SettingAnimate && currentTexture != null)
+            if (!BestiaryMain.SettingAnimate || currentTexture == null)
             {
-                animationDelay += 1;
-                if (animationDelay >= BestiaryMain.SettingAnimationUpdateDelay)
-                {
-                    animationDelay = 0;
-                    currentTexture.IterateAnimationFrame();
-                }
+                return;
             }
+
+            animationDelay += 1;
+
+            if (animationDelay < BestiaryMain.SettingAnimationUpdateDelay)
+            {
+                return;
+            }
+
+            animationDelay = 0;
+            currentTexture.IterateAnimationFrame();
         }
+
         public override void OnPush()
         {
             base.OnPush();
@@ -358,6 +347,7 @@ namespace BestiaryMod
             {
                 LayoutBookLabels();
             }
+
             isShowing = true;
         }
 
@@ -396,6 +386,7 @@ namespace BestiaryMod
             for (int i = 0; i < 9; i++)
                 contentButtonTextures.Add(DaggerfallUI.GetTextureFromResources(blankTextureName));
         }
+
         private void LoadPage()
         {
             ResetButtonTextures();
@@ -412,7 +403,6 @@ namespace BestiaryMod
                 LoadSummary();
                 UpdatePageNameLabel();
             }
-
         }
 
         private void ResetButtonTextures()
@@ -425,9 +415,9 @@ namespace BestiaryMod
         {
             if (BestiaryMain.AllText.Pages.Count < currentPageIndex + 1) return;
 
-            for (int i = 0; i < BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() && i < contentButtonTextures.Count; i++)
+            for (var i = 0; i < CurrentPage.FilterEntriesCount() && i < contentButtonTextures.Count; i++)
             {
-                contentButtonTextures[i] = DaggerfallUI.GetTextureFromResources(BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[i].ButtonTextureName);
+                contentButtonTextures[i] = DaggerfallUI.GetTextureFromResources(CurrentPage.FilterEntries()[i].ButtonTextureName);
                 if (!contentButtonTextures[i])
                     throw new Exception("BestiaryUI: Could not load contentButtonTextures" + (i) + ".");
 
@@ -439,34 +429,36 @@ namespace BestiaryMod
         {
             if (BestiaryMain.AllText.Pages.Count < currentPageIndex + 1) return;
 
-            pageNameLabel.Text = BestiaryMain.AllText.Pages[currentPageIndex].Title;
+            pageNameLabel.Text = CurrentPage.Title;
             pageNameLabel.Position = new Vector2(pageNamePos[0] + ((pageNameSize[0] - pageNameLabel.TextWidth) / 2), pageNamePos[1]);
         }
+
         private void LoadSummary(bool updateTexture = true)
         {
             if (BestiaryMain.AllText.Pages.Count < currentPageIndex + 1) return;
 
             currentEntryIndex = 69;
 
-            var imageIndexToLoad = UnityEngine.Random.Range(0, BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount());
-            if (updateTexture && currentTexture == null || BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[imageIndexToLoad].TextureArchive != currentTexture.Archive)
-                currentTexture = new TextureInfo(BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[imageIndexToLoad].TextureArchive);
+            var imageIndexToLoad = UnityEngine.Random.Range(0, CurrentPage.FilterEntriesCount());
+            if (updateTexture && currentTexture == null || CurrentPage.FilterEntries()[imageIndexToLoad].TextureArchive != currentTexture.Archive)
+                currentTexture = new TextureInfo(CurrentPage.FilterEntries()[imageIndexToLoad].TextureArchive);
 
-            monsterNameLabel.Text = BestiaryMain.AllText.Pages[currentPageIndex].PageSummary.Title;
+            monsterNameLabel.Text = CurrentPage.PageSummary.Title;
 
             bookLabels.Clear();
-            bookLabels = BestiaryMain.AllText.Pages[currentPageIndex].PageSummary.TextLabels;
+            bookLabels = CurrentPage.PageSummary.TextLabels;
             LayoutBookLabels();
         }
+
         private void LoadEntry()
         {
-            if (currentTexture == null || BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[currentEntryIndex].TextureArchive != currentTexture.Archive)
-                currentTexture = new TextureInfo(BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[currentEntryIndex].TextureArchive);
+            if (currentTexture == null || CurrentPage.FilterEntries()[currentEntryIndex].TextureArchive != currentTexture.Archive)
+                currentTexture = new TextureInfo(CurrentPage.FilterEntries()[currentEntryIndex].TextureArchive);
 
-            monsterNameLabel.Text = BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[currentEntryIndex].Title;
+            monsterNameLabel.Text = CurrentPage.FilterEntries()[currentEntryIndex].Title;
 
             bookLabels.Clear();
-            bookLabels = BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[currentEntryIndex].TextLabels;
+            bookLabels = CurrentPage.FilterEntries()[currentEntryIndex].TextLabels;
             LayoutBookLabels();
         }
 
@@ -508,10 +500,13 @@ namespace BestiaryMod
             NativePanel.OnMouseScrollUp += Panel_OnMouseScrollUp;
             LayoutBookLabels();
 
-            imagePanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
-            imagePanel.Size = imagePanelMaxSize;
-            imagePanel.Position = imagePanelBasePos;
-            imagePanel.BackgroundTextureLayout = BackgroundLayout.ScaleToFit;
+            _imageContainerPanel = DaggerfallUI.AddPanel(mainPanel, AutoSizeModes.None);
+            _imageContainerPanel.Size = imagePanelMaxSize;
+            _imageContainerPanel.Position = imagePanelBasePos;
+
+            _imagePanel = DaggerfallUI.AddPanel(_imageContainerPanel, AutoSizeModes.Scale);
+            _imagePanel.HorizontalAlignment = HorizontalAlignment.Center;
+            _imagePanel.VerticalAlignment = VerticalAlignment.Middle;
 
             titleLabel = new TextLabel();
             titleLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
@@ -528,6 +523,7 @@ namespace BestiaryMod
                 titleLabel.Position = new Vector2(15, 20);
                 titleLabel.TextScale = 0.7f;
             }
+
             mainPanel.Components.Add(titleLabel);
 
             monsterNameLabel = new TextLabel();
@@ -539,7 +535,7 @@ namespace BestiaryMod
             monsterNameLabel.Position = Vector2.zero;
             monsterNameLabel.MaxWidth = (int)monsterNamePanel.Size.x;
             monsterNameLabel.RectRestrictedRenderArea = monsterNamePanel.RectRestrictedRenderArea;
-            monsterNameLabel.RestrictedRenderAreaCoordinateType = TextLabel.RestrictedRenderArea_CoordinateType.ParentCoordinates;
+            monsterNameLabel.RestrictedRenderAreaCoordinateType = BaseScreenComponent.RestrictedRenderArea_CoordinateType.ParentCoordinates;
 
             monsterNamePanel.Components.Add(monsterNameLabel);
 
@@ -555,7 +551,7 @@ namespace BestiaryMod
             exitButton.OnMouseClick += ExitButton_OnMouseClick;
             mainPanel.Components.Add(exitButton);
 
-            for (int i = 0; i < 9; i++)
+            for (var i = 0; i < 9; i++)
             {
                 contentButtons.Add(new Button());
                 contentButtons[i].Position = buttonAllPos[i];
@@ -590,6 +586,7 @@ namespace BestiaryMod
                         contentButtons[i].OnMouseClick += ContentButton8_OnMouseClick;
                         break;
                 }
+
                 mainPanel.Components.Add(contentButtons[i]);
             }
 
@@ -651,52 +648,6 @@ namespace BestiaryMod
 
             pageNameLabel.HorizontalTextAlignment = TextLabel.HorizontalTextAlignmentSetting.Center;
             mainPanel.Components.Add(pageNameLabel);
-
-        }
-
-        //From here: https://girlscancode.wordpress.com/2015/03/02/unity3d-flipping-a-texture/.
-        private static Texture2D FlipTexture(Texture2D original)
-        {
-            Texture2D flipped = new Texture2D(original.width, original.height, original.format, original.mipmapCount > 1);
-            // Let ppl deside if they want to use blurred images
-            flipped.filterMode = (FilterMode)DaggerfallUnity.Settings.GUIFilterMode;
-
-            int xN = original.width;
-            int yN = original.height;
-
-            for (int i = 0; i < xN; i++)
-                for (int j = 0; j < yN; j++)
-                    flipped.SetPixel(xN - i - 1, j, original.GetPixel(i, j));
-
-            flipped.Apply();
-            return flipped;
-        }
-
-        //From here: https://stackoverflow.com/questions/44733841/how-to-make-texture2d-readable-via-script.
-        private static Texture2D DuplicateTexture(Texture2D source)
-        {
-            // RenderTextureFormat.Default, RenderTextureReadWrite.Linear causing textures to go dark
-            // Create a RenderTexture to temporarily render the unreadable texture
-            RenderTexture renderTex = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.ARGB32);
-
-            // Set the active RenderTexture and draw the unreadable texture onto it
-            RenderTexture.active = renderTex;
-            Graphics.Blit(source, renderTex);
-
-            // Create a new texture and read the pixels from the RenderTexture to copy the data
-            Texture2D readableText = new Texture2D(source.width, source.height, TextureFormat.ARGB32, source.mipmapCount > 1)
-            {
-                // Need to set here too. Otherwise it takes some default value
-                filterMode = (FilterMode)DaggerfallUnity.Settings.GUIFilterMode,
-            };
-            readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
-            readableText.Apply();
-
-            // Release the temporary RenderTexture
-            RenderTexture.active = null;
-            RenderTexture.ReleaseTemporary(renderTex);
-
-            return readableText;
         }
 
         private void ChangePage(bool right)
@@ -715,19 +666,20 @@ namespace BestiaryMod
                 if (currentPageIndex < 0)
                     currentPageIndex = BestiaryMain.AllText.Pages.Count - 1;
             }
+
             LoadPage();
         }
 
-        protected void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        private void ExitButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
             CloseWindow();
         }
 
-        protected void SetActiveTextureForButton(short i)
+        private void SetActiveTextureForButton(short i)
         {
             LoadButtons();
-            var activeTexture = DaggerfallUI.GetTextureFromResources(BestiaryMain.AllText.Pages[currentPageIndex].FilterEntries()[i].ButtonTextureName + "_active");
+            var activeTexture = DaggerfallUI.GetTextureFromResources(CurrentPage.FilterEntries()[i].ButtonTextureName + "_active");
             if (activeTexture != null)
             {
                 contentButtons[i].BackgroundTexture = activeTexture;
@@ -744,7 +696,7 @@ namespace BestiaryMod
             ScrollBook(scrollAmount);
         }
 
-        void ScrollBook(float amount)
+        private void ScrollBook(float amount)
         {
             // Stop scrolling at top or bottom of book layout
             if (amount < 0 && scrollPosition - pagePanel.Size.y - amount < -maxHeight)
@@ -761,18 +713,18 @@ namespace BestiaryMod
             }
         }
 
-        void LayoutBookLabels()
+        private void LayoutBookLabels()
         {
             maxHeight = 0;
             scrollPosition = 0;
             pagePanel.Components.Clear();
             float x = 0, y = 0;
-            foreach (TextLabel label in bookLabels)
+            foreach (var label in bookLabels)
             {
                 label.Position = new Vector2(x, y);
                 label.MaxWidth = (int)pagePanel.Size.x;
                 label.RectRestrictedRenderArea = pagePanel.RectRestrictedRenderArea;
-                label.RestrictedRenderAreaCoordinateType = TextLabel.RestrictedRenderArea_CoordinateType.ParentCoordinates;
+                label.RestrictedRenderAreaCoordinateType = BaseScreenComponent.RestrictedRenderArea_CoordinateType.ParentCoordinates;
                 pagePanel.Components.Add(label);
                 y += label.Size.y;
                 maxHeight += label.Size.y;
@@ -783,192 +735,197 @@ namespace BestiaryMod
         }
 
 
-        protected void ContentButton0_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        private void ContentButton0_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 0)
+            if (CurrentPage.FilterEntriesCount() <= 0) return;
+
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 0)
             {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                if (currentEntryIndex != 0)
-                {
-                    currentEntryIndex = 0;
-                    SetActiveTextureForButton(0);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
+                LoadPage();
             }
-        }
-        protected void ContentButton1_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 1)
+            else
             {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                if (currentEntryIndex != 1)
-                {
-                    currentEntryIndex = 1;
-                    SetActiveTextureForButton(1);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
-            }
-        }
-        protected void ContentButton2_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 2)
-            {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                if (currentEntryIndex != 2)
-                {
-                    currentEntryIndex = 2;
-                    SetActiveTextureForButton(2);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
-            }
-        }
-        protected void ContentButton3_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 3)
-            {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                if (currentEntryIndex != 3)
-                {
-                    currentEntryIndex = 3;
-                    SetActiveTextureForButton(3);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
-            }
-        }
-        protected void ContentButton4_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 4)
-            {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                if (currentEntryIndex != 4)
-                {
-                    currentEntryIndex = 4;
-                    SetActiveTextureForButton(4);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
-            }
-        }
-        protected void ContentButton5_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 5)
-            {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                if (currentEntryIndex != 5)
-                {
-                    currentEntryIndex = 5;
-                    SetActiveTextureForButton(5);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
-            }
-        }
-        protected void ContentButton6_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 6)
-            {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                if (currentEntryIndex != 6)
-                {
-                    currentEntryIndex = 6;
-                    SetActiveTextureForButton(6);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
-            }
-        }
-        protected void ContentButton7_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 7)
-            {
-                DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
-                if (currentEntryIndex != 7)
-                {
-                    currentEntryIndex = 7;
-                    SetActiveTextureForButton(7);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
-            }
-        }
-        protected void ContentButton8_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages[currentPageIndex].FilterEntriesCount() > 8)
-            {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                if (currentEntryIndex != 8)
-                {
-                    currentEntryIndex = 8;
-                    SetActiveTextureForButton(8);
-                    LoadEntry();
-                }
-                else
-                {
-                    LoadPage();
-                }
-            }
-        }
-        protected void pageRightButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
-        {
-            if (BestiaryMain.AllText.Pages.Count > 1)
-            {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                ChangePage(true);
+                currentEntryIndex = 0;
+                SetActiveTextureForButton(0);
+                LoadEntry();
             }
         }
 
-        protected void pageLeftButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        private void ContentButton1_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
-            if (BestiaryMain.AllText.Pages.Count > 1)
+            if (CurrentPage.FilterEntriesCount() <= 1) return;
+
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 1)
             {
-                DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
-                ChangePage(false);
+                LoadPage();
+            }
+            else
+            {
+                currentEntryIndex = 1;
+                SetActiveTextureForButton(1);
+                LoadEntry();
             }
         }
 
-        protected void RightRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        private void ContentButton2_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (CurrentPage.FilterEntriesCount() <= 2) return;
+
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 2)
+            {
+                LoadPage();
+            }
+            else
+            {
+                currentEntryIndex = 2;
+                SetActiveTextureForButton(2);
+                LoadEntry();
+            }
+        }
+
+        private void ContentButton3_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (CurrentPage.FilterEntriesCount() <= 3) return;
+
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 3)
+            {
+                LoadPage();
+            }
+            else
+            {
+                currentEntryIndex = 3;
+                SetActiveTextureForButton(3);
+                LoadEntry();
+            }
+        }
+
+        private void ContentButton4_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (CurrentPage.FilterEntriesCount() <= 4) return;
+
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 4)
+            {
+                LoadPage();
+            }
+            else
+            {
+                currentEntryIndex = 4;
+                SetActiveTextureForButton(4);
+                LoadEntry();
+            }
+        }
+
+        private void ContentButton5_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (CurrentPage.FilterEntriesCount() <= 5) return;
+
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 5)
+            {
+                LoadPage();
+            }
+            else
+            {
+                currentEntryIndex = 5;
+                SetActiveTextureForButton(5);
+                LoadEntry();
+            }
+        }
+
+        private void ContentButton6_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (CurrentPage.FilterEntriesCount() <= 6) return;
+
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 6)
+            {
+                LoadPage();
+            }
+            else
+            {
+                currentEntryIndex = 6;
+                SetActiveTextureForButton(6);
+                LoadEntry();
+            }
+        }
+
+        private void ContentButton7_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (CurrentPage.FilterEntriesCount() <= 7) return;
+
+            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 7)
+            {
+                LoadPage();
+            }
+            else
+            {
+                currentEntryIndex = 7;
+                SetActiveTextureForButton(7);
+                LoadEntry();
+            }
+        }
+
+        private void ContentButton8_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (CurrentPage.FilterEntriesCount() <= 8) return;
+
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+
+            if (currentEntryIndex == 8)
+            {
+                LoadPage();
+            }
+            else
+            {
+                currentEntryIndex = 8;
+                SetActiveTextureForButton(8);
+                LoadEntry();
+            }
+        }
+
+        private void pageRightButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (BestiaryMain.AllText.Pages.Count <= 1) return;
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+            ChangePage(true);
+        }
+
+        private void pageLeftButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        {
+            if (BestiaryMain.AllText.Pages.Count <= 1) return;
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
+            ChangePage(false);
+        }
+
+        private void RightRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
             if (currentTexture != null)
                 currentTexture.DecreaseRecord();
         }
 
-        protected void LeftRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        private void LeftRotateButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
             if (currentTexture != null)
                 currentTexture.IncreaseRecord();
         }
 
-        protected void AttackButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
+        private void AttackButton_OnMouseClick(BaseScreenComponent sender, Vector2 position)
         {
             DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
             if (currentTexture == null)
@@ -976,18 +933,11 @@ namespace BestiaryMod
                 return;
             }
 
-            if (currentTexture.AttackModeOffset == 0)
-            {
-                currentTexture.AttackModeOffset = 5;
-                attackButton.BackgroundTexture = attackTrueTexture;
-                currentTexture.UpdateTextures();
-            }
-            else
-            {
-                currentTexture.AttackModeOffset = 0;
-                attackButton.BackgroundTexture = attackFalseTexture;
-                currentTexture.UpdateTextures();
-            }
+            currentTexture.AttackModeOffset = currentTexture.AttackModeOffset == 0 ? 5 : 0;
+
+            attackButton.BackgroundTexture = currentTexture.AttackModeOffset == 5 ? attackTrueTexture : attackFalseTexture;
+            
+            currentTexture.UpdateTextures();
         }
     }
 }

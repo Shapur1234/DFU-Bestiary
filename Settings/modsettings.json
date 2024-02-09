@@ -87,7 +87,7 @@
                 {
                     "Value": true,
                     "Name": "EnableEightDirectionRotation",
-                    "Description": "Allow rotation of the monster image in the book. Not recommended for DREAM. If monster images are laggy, try disabling this.",
+                    "Description": "Allow rotation of the monster image in the book.",
                     "$version": "v1",
                     "$type": "DaggerfallWorkshop.Game.Utility.ModSupport.ModSettings.ToggleKey"
                 },
