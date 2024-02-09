@@ -196,7 +196,7 @@ Reworked page rendering
 Fix humanoid bug
 Vampires could also carry the book
 The chance of the item spawning is lower now
-Makes the mod updatable from other mods. (No need to built-in support for Unleveled Spells)
+Makes the mod updateable from other mods. (No need to built-in support for Unleveled Spells)
 Fixed the darkened monster textures
 Added text color settings (for alternative skins)
 
@@ -206,5 +206,5 @@ Added ability for mods to modify existing pages, and to register extra pages
 
 2.2
 All credit goes to Jagget
-Performance improvements, better DREAM compactibility
+Performance improvements, better DREAM compatibility
 ```
