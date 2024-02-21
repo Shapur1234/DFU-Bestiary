@@ -24,7 +24,6 @@ namespace BestiaryMod
                 Frame = 0;
                 AttackModeOffset = 0;
                 Flip = false;
-                Mirrored = Archive == 275;
 
                 attackButton.BackgroundTexture = attackFalseTexture;
 
@@ -61,7 +60,6 @@ namespace BestiaryMod
                 }
 
                 tex = null;
-                return;
             }
 
             public void UpdateTextures()
@@ -102,20 +100,7 @@ namespace BestiaryMod
 
             private void ApplyTexture(Texture2D texture, TextureInfo inputTextureInfo)
             {
-                bool doFlip;
-
-                if (BestiaryMain.SettingEnableAllDirectionRotation)
-                {
-                    if (inputTextureInfo.Flip && inputTextureInfo.Record != 0)
-                        doFlip = true;
-                    else
-                        doFlip = false;
-
-                    if (inputTextureInfo.Mirrored)
-                        doFlip = !doFlip;
-                }
-                else
-                    doFlip = false;
+                var doFlip = DoFlip(inputTextureInfo);
 
                 var max = texture.width > texture.height ? texture.width : texture.height;
                 var scale = 102.0f / max;
@@ -201,9 +186,39 @@ namespace BestiaryMod
             public int Record { get; set; }
             public int Frame { get; set; }
             public int AttackModeOffset { get; set; }
-
             public bool Flip { get; set; }
-            public bool Mirrored { get; }
+
+            private bool DoFlip(TextureInfo inputTextureInfo)
+            {
+                bool doFlip;
+
+                if (BestiaryMain.SettingEnableAllDirectionRotation)
+                {
+                    if (inputTextureInfo.Flip && inputTextureInfo.Record != 0)
+                        doFlip = true;
+                    else
+                        doFlip = false;
+                }
+                else
+                {
+                    doFlip = false;
+                }
+
+                // Special cases
+                switch (Archive)
+                {
+                    // Ghost, 3rd record
+                    case 273 when Record == 2:
+                    // Scorpion, all records
+                    case 275:
+                    // Wraith, 3rd record
+                    case 278 when Record == 2:
+                        doFlip = !doFlip;
+                        break;
+                }
+
+                return doFlip;
+            }
         }
 
         public bool isShowing;
@@ -865,7 +880,7 @@ namespace BestiaryMod
         {
             if (CurrentPage.FilterEntriesCount() <= 7) return;
 
-            DaggerfallUI.Instance.PlayOneShot(DaggerfallWorkshop.SoundClips.ButtonClick);
+            DaggerfallUI.Instance.PlayOneShot(SoundClips.ButtonClick);
 
             if (currentEntryIndex == 7)
             {
@@ -936,7 +951,7 @@ namespace BestiaryMod
             currentTexture.AttackModeOffset = currentTexture.AttackModeOffset == 0 ? 5 : 0;
 
             attackButton.BackgroundTexture = currentTexture.AttackModeOffset == 5 ? attackTrueTexture : attackFalseTexture;
-            
+
             currentTexture.UpdateTextures();
         }
     }
